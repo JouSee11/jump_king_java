@@ -5,4 +5,6 @@ module cz.cvut.fel.pjv.talacjos.jump_up_pjv {
 
     opens cz.cvut.fel.pjv.talacjos.jump_up_pjv to javafx.fxml;
     exports cz.cvut.fel.pjv.talacjos.jump_up_pjv;
+    exports cz.cvut.fel.pjv.talacjos.jump_up_pjv.Main;
+    opens cz.cvut.fel.pjv.talacjos.jump_up_pjv.Main to javafx.fxml;
 }
