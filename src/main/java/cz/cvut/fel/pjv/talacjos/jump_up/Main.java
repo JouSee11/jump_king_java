@@ -1,5 +1,6 @@
 package cz.cvut.fel.pjv.talacjos.jump_up;
 
+import cz.cvut.fel.pjv.talacjos.jump_up.controller.SceneController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,11 +11,10 @@ import java.io.IOException;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("hello-view.fxml"));
+        stage.setTitle("JumpUP");
 
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
-        stage.setScene(scene);
+        SceneController sceneController = new SceneController(stage);
+        sceneController.showGameScene();
         stage.show();
     }
 
