@@ -61,7 +61,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                cz.cvut.fel.pjv.talacjos.jump_up_pjv/cz.cvut.fel.pjv.talacjos.jump_up_pjv.Main.Main
+                                cz.cvut.fel.pjv.talacjos.jump_up_pjv/cz.cvut.fel.pjv.talacjos.jump_up.Main
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

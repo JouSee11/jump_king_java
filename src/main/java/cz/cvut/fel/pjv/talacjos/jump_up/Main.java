@@ -1,4 +1,4 @@
-package cz.cvut.fel.pjv.talacjos.jump_up_pjv.Main;
+package cz.cvut.fel.pjv.talacjos.jump_up;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
