@@ -4,7 +4,7 @@ import javafx.geometry.Bounds;
 
 import java.util.List;
 
-public class CollisionHandler {
+public class CollisionHandler{
 
     // First check and handle vertical movement, then horizontal
     public void handleCollisions(Player player, List<Platform> platforms, double floorY, double gameWidth) {
