@@ -4,9 +4,10 @@ public class Player extends Entity{
     private double velocityX = 0;
     private double velocityY = 0;
     private boolean isOnGround = true;
+    private boolean isJumping = false;
     private int jumpDirection = 0;
 
-    private double jumpPower = 300;
+    private double jumpPower = 1100;
     private double moveSpeed = 250;
 
     public Player(double x, double y, double width, double height) {
@@ -36,6 +37,7 @@ public class Player extends Entity{
     }
 
     public void setOnGround(boolean onGround) {
+
         isOnGround = onGround;
     }
 
@@ -58,5 +60,17 @@ public class Player extends Entity{
 
     public int getJumpDirection() {
         return jumpDirection;
+    }
+
+    // if player is in the air because of jump
+    public void setJumping(boolean jumping) {
+        if (isJumping && !jumping) {
+            setVelocityX(0);
+        }
+        isJumping = jumping;
+    }
+
+    public boolean getJumping() {
+        return isJumping;
     }
 }

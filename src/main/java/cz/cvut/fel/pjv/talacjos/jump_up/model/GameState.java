@@ -20,15 +20,11 @@ public class GameState {
         this.platformList = new ArrayList<Platform>();
 
         //
-        addPlayer(new Player(100, Constants.GAME_HEIGHT - Constants.PLAYER_HEIGHT, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT));
+        addPlayer(new Player(100, 200, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT));
         addPlatforms();
     }
 
     public void update(double deltaTime) {
-        // Apply gravity if player is not on ground
-        if (!player.isOnGround()) {
-            player.setVelocityY(player.getVelocityY() + Constants.GRAVITY * deltaTime);
-        }
 
         // Apply velocity to position (X and Y separately)
         double newX = player.getX() + player.getVelocityX() * deltaTime;
@@ -41,10 +37,7 @@ public class GameState {
         // Handle all collisions
         collisionHandler.handleCollisions(player, platformList, floorY, Constants.GAME_WIDTH);
 
-        // Apply friction if on ground (prevents sliding)
-        if (player.isOnGround() && Math.abs(player.getVelocityX()) < 10) {
-            player.setVelocityX(0);
-        }
+        player.setVelocityY(player.getVelocityY() + Constants.GRAVITY * deltaTime);
     }
 
     //player control
@@ -70,7 +63,7 @@ public class GameState {
     //jumping
     public void prepareJump() {
         player.setVelocityX(0);
-        player.setJumpDirection(0);
+//        player.setJumpDirection(0);
     }
 
 
@@ -82,14 +75,18 @@ public class GameState {
 //        }
 //    }
 
+    public void playerJump(){
+        player.setVelocityY(-player.getJumpPower());
+    }
+
     public void playerJumpExecute() {
-        if (player.isOnGround()) {
-            // Set vertical velocity for jump (negative means upward)
-            player.setVelocityY(-player.getJumpPower());
-            // Apply horizontal velocity based on the aimed jump direction.
-            player.setVelocityX(player.getMoveSpeed() * player.getJumpDirection());
-            player.setOnGround(false);
-        }
+        // Set vertical velocity for jump (negative means upward)
+        player.setVelocityY(-player.getJumpPower());
+        // Apply horizontal velocity based on the aimed jump direction.
+        player.setVelocityX(player.getMoveSpeed() * player.getJumpDirection());
+        player.setOnGround(false);
+        player.setJumping(true);
+
     }
 
 
@@ -97,14 +94,14 @@ public class GameState {
 
     //platform control
     private void addPlatforms() {
-        addSinglePlatform(100, 800, 100, 20);
-        addSinglePlatform(200, 300, 100, 20);
+        addSinglePlatform(100, 300, 280, 150);
+        addSinglePlatform(400, 360, 100, 230);
 
         System.out.println(platformList);
     }
 
     private void addSinglePlatform(double x, double y, double width, double height) {
-        Platform platform = new Platform(x, y, width, height);
+        Platform platform = new Platform(x, Constants.GAME_HEIGHT - y, width, height);
         platformList.add(platform);
     }
 
