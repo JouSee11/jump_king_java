@@ -46,6 +46,9 @@ public class GameState {
 
         // Control space bar press time
         spacerUpdate(deltaTime);
+
+        //update player animation
+        player.updateAnimation(deltaTime);
     }
 
     private void spacerUpdate(double deltaTime){
@@ -96,25 +99,13 @@ public class GameState {
         return player;
     }
 
-    //player move
-//    public void movePlayerX(double coefficient) {
-//        player.setVelocityX(player.getMoveSpeed() * coefficient);
-//    }
-//
-//
-//    public void movePlayerY(double coefficient) {
-//        player.setVelocityY(player.getJumpPower() * coefficient);
-//        System.out.println(player.getVelocityY() * coefficient);
-//    }
 
     //jumping
     public void prepareJump() {
         player.setVelocityX(0);
+        player.setSquatting(true);
     }
 
-//    public void playerJump(){
-//        player.setVelocityY(-player.getJumpPower());
-//    }
 
     public void playerJumpExecute() {
         double jumpVelocity = calculateJumpVelocity(jumpHoldTime);
@@ -124,6 +115,7 @@ public class GameState {
         // Apply horizontal velocity based on the aimed jump direction.
         player.setVelocityX(player.getMoveSpeed() * player.getJumpDirection());
         player.setOnGround(false);
+        player.setSquatting(false);
         player.setJumping(true);
         jumpHoldTime = 0;
     }
@@ -135,13 +127,13 @@ public class GameState {
     }
 
 
-
-
     //platform control
     private void addPlatforms() {
         addSinglePlatform(100, 100, 280, 150);
         addSinglePlatform(700, 200, 100, 230);
         addSinglePlatform(300, 350, 300, 100);
+        addSinglePlatform(700, 600, 100, 50);
+        addSinglePlatform(400, 800, 100, 50);
 
         System.out.println(platformList);
     }

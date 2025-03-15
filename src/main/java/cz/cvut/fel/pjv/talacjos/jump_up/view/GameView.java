@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 
@@ -57,10 +58,24 @@ public class GameView {
             gc.fillRect(platform.getX(), platform.getY(), platform.getWidth(), platform.getHeight());
         }
 
-        // Render player
+        // Render player with animation
         Player player = gameState.getPlayer();
-        gc.setFill(Color.RED);
-        gc.fillRect(player.getX(), player.getY(), player.getWidth(), player.getHeight());
+        Image currentFrame = player.getCurrentAnimation().getCurrentFrame();
+
+        // Handle flipping the sprite based on direction
+        if (player.isFacingRight()) {
+            gc.drawImage(currentFrame, player.getX(), player.getY(), player.getWidth(), player.getHeight());
+        } else {
+            // Flip the image horizontally when facing left
+            gc.save(); // Save current graphics state
+            gc.translate(player.getX() + player.getWidth(), player.getY()); // Move origin to right edge
+            gc.scale(-1, 1); // Flip horizontally
+            gc.drawImage(currentFrame, 0, 0, player.getWidth(), player.getHeight()); // Draw at new origin
+            gc.restore(); // Restore original graphics state
+        }
+
+//        gc.setFill(Color.RED);
+//        gc.fillRect(player.getX(), player.getY(), player.getWidth(), player.getHeight());
     }
 
     public Scene getScene() {
