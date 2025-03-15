@@ -29,6 +29,11 @@ public class GameState {
 
         // Apply velocity to position (X and Y separately)
         double newX = player.getX() + player.getVelocityX() * deltaTime;
+        //make the jumps longer
+        if (player.isJumping()) {
+            newX = player.getX() + (player.getVelocityX() * Constants.JUMP_LENGTH_COEFFICIENT) * deltaTime;
+        }
+
         double newY = player.getY() + player.getVelocityY() * deltaTime;
 
         // Update positions
@@ -42,7 +47,7 @@ public class GameState {
         player.setVelocityY(player.getVelocityY() + Constants.GRAVITY * deltaTime);
 
         // Control horizontal velocity when on ground -X
-        playerHorizontalMovementUpdate();
+        playerRunUpdate();
 
         // Control space bar press time
         spacerUpdate(deltaTime);
@@ -74,7 +79,7 @@ public class GameState {
         }
     }
 
-    private void playerHorizontalMovementUpdate() {
+    private void playerRunUpdate() {
         if (player.isOnGround()) {
             if (gameController.isSpacePressed()) {
                 player.setVelocityX(0);

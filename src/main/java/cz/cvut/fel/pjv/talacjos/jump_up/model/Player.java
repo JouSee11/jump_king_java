@@ -3,8 +3,6 @@ package cz.cvut.fel.pjv.talacjos.jump_up.model;
 import cz.cvut.fel.pjv.talacjos.jump_up.view.SpriteAnimation;
 import javafx.scene.image.Image;
 
-import java.net.URL;
-
 public class Player extends Entity{
     //player stats
     private double velocityX = 0;
@@ -16,7 +14,9 @@ public class Player extends Entity{
 
     //phycics stats
     private double jumpPower = 1500;
-    private double moveSpeed = 350;
+    private double moveSpeed = 300;
+
+
 
     //animation properties
     private SpriteAnimation runAnimation;
@@ -88,7 +88,7 @@ public class Player extends Entity{
         }
         isJumping = jumping;
     }
-    public boolean getJumping() {
+    public boolean isJumping() {
         return isJumping;
     }
 
@@ -109,7 +109,7 @@ public class Player extends Entity{
         Image[] squatFrames = loadFrames("squat/squat", 1);
 
         idleAnimation = new SpriteAnimation(idleFrames, 1, true);
-        runAnimation = new SpriteAnimation(runFrames, 0.3, true);
+        runAnimation = new SpriteAnimation(runFrames, 0.4, true);
         jumpAnimation = new SpriteAnimation(jumpFrames, 0.3, true);
         fallAnimation = new SpriteAnimation(fallFrames, 0.3, true);
         squatAnimation = new SpriteAnimation(squatFrames, 0.3, true);
