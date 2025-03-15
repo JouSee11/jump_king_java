@@ -7,8 +7,8 @@ public class Player extends Entity{
     private boolean isJumping = false;
     private int jumpDirection = 0;
 
-    private double jumpPower = 1100;
-    private double moveSpeed = 250;
+    private double jumpPower = 1500;
+    private double moveSpeed = 300;
 
     public Player(double x, double y, double width, double height) {
         super(x, y, width, height);

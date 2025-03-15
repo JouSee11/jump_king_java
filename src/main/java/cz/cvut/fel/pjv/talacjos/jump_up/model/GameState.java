@@ -12,15 +12,16 @@ public class GameState {
 
     private final List<Platform> platformList;
     private Player player;
-
     private double floorY = Constants.GAME_HEIGHT;
+    private double jumpHoldTime = 0;
+
 
     public GameState(GameController gameController) {
         this.gameController = gameController;
         this.platformList = new ArrayList<Platform>();
 
         //
-        addPlayer(new Player(100, 200, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT));
+        addPlayer(new Player(200, floorY, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT));
         addPlatforms();
     }
 
@@ -37,7 +38,53 @@ public class GameState {
         // Handle all collisions
         collisionHandler.handleCollisions(player, platformList, floorY, Constants.GAME_WIDTH);
 
+        // Apply gravity
         player.setVelocityY(player.getVelocityY() + Constants.GRAVITY * deltaTime);
+
+        // Control horizontal velocity when on ground -X
+        playerHorizontalMovementUpdate();
+
+        // Control space bar press time
+        spacerUpdate(deltaTime);
+    }
+
+    private void spacerUpdate(double deltaTime){
+        if (gameController.isSpacePressed() && player.isOnGround()) {
+            jumpHoldTime += deltaTime;
+
+            //if we have maximum wait time, we execute the jump and "release" the space bar
+            if (jumpHoldTime >= Constants.MAX_JUMP_WAIT) {
+                // Set jump direction
+                player.setJumpDirection(0);
+                if (gameController.isLeftPressed()) {
+                    player.setJumpDirection(-1);
+                } else if (gameController.isRightPressed()) {
+                    player.setJumpDirection(1);
+                }
+
+                playerJumpExecute();
+                jumpHoldTime = 0;
+                gameController.setSpacePressed(false);
+            }
+        } else {
+            jumpHoldTime = 0;
+        }
+    }
+
+    private void playerHorizontalMovementUpdate() {
+        if (player.isOnGround()) {
+            if (gameController.isSpacePressed()) {
+                player.setVelocityX(0);
+            } else {
+                if (gameController.isLeftPressed() && !gameController.isRightPressed()) {
+                    player.setVelocityX(-player.getMoveSpeed());
+                } else if (gameController.isRightPressed() && !gameController.isLeftPressed()) {
+                    player.setVelocityX(player.getMoveSpeed());
+                } else {
+                    player.setVelocityX(0);
+                }
+            }
+        }
     }
 
     //player control
@@ -50,43 +97,41 @@ public class GameState {
     }
 
     //player move
-    public void movePlayerX(double coefficient) {
-        player.setVelocityX(player.getMoveSpeed() * coefficient);
-    }
-
-
-    public void movePlayerY(double coefficient) {
-        player.setVelocityY(player.getJumpPower() * coefficient);
-        System.out.println(player.getVelocityY() * coefficient);
-    }
+//    public void movePlayerX(double coefficient) {
+//        player.setVelocityX(player.getMoveSpeed() * coefficient);
+//    }
+//
+//
+//    public void movePlayerY(double coefficient) {
+//        player.setVelocityY(player.getJumpPower() * coefficient);
+//        System.out.println(player.getVelocityY() * coefficient);
+//    }
 
     //jumping
     public void prepareJump() {
         player.setVelocityX(0);
-//        player.setJumpDirection(0);
     }
 
-
-//    public void playerJumpExecute() {
-//        if (player.isOnGround()) {
-//            player.setVelocityY(-player.getJumpPower());
-//            player.setVelocityX(player.getMoveSpeed() * player.getJumpDirection());
-//            player.setOnGround(false);
-//        }
+//    public void playerJump(){
+//        player.setVelocityY(-player.getJumpPower());
 //    }
 
-    public void playerJump(){
-        player.setVelocityY(-player.getJumpPower());
-    }
-
     public void playerJumpExecute() {
+        double jumpVelocity = calculateJumpVelocity(jumpHoldTime);
+
         // Set vertical velocity for jump (negative means upward)
-        player.setVelocityY(-player.getJumpPower());
+        player.setVelocityY(jumpVelocity);
         // Apply horizontal velocity based on the aimed jump direction.
         player.setVelocityX(player.getMoveSpeed() * player.getJumpDirection());
         player.setOnGround(false);
         player.setJumping(true);
+        jumpHoldTime = 0;
+    }
 
+    private double calculateJumpVelocity(double jumpHoldTime) {
+        double ratio = Math.min(jumpHoldTime / Constants.MAX_JUMP_WAIT, 1.0);
+        double velocityRatio = Constants.MIN_JUMP_COEFFICIENT + (1 - Constants.MIN_JUMP_COEFFICIENT) * ratio; //usual formula for calculating jump ratio
+        return -player.getJumpPower() * velocityRatio;
     }
 
 
@@ -94,8 +139,9 @@ public class GameState {
 
     //platform control
     private void addPlatforms() {
-        addSinglePlatform(100, 300, 280, 150);
-        addSinglePlatform(400, 360, 100, 230);
+        addSinglePlatform(100, 100, 280, 150);
+        addSinglePlatform(700, 200, 100, 230);
+        addSinglePlatform(300, 350, 300, 100);
 
         System.out.println(platformList);
     }
@@ -109,6 +155,7 @@ public class GameState {
         return platformList;
     }
 
+    //later will we declared in the json map file
     public double getFloorY() {
         return floorY;
     }

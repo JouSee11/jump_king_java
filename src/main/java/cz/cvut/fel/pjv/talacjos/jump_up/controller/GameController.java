@@ -65,16 +65,16 @@ public class GameController {
 
             case LEFT:
                 leftPressed = true;
-                if (player.isOnGround() && !spacePressed) {
-                    gameState.movePlayerX(-1);
-                }
+//                if (player.isOnGround() && !spacePressed) {
+//                    gameState.movePlayerX(-1);
+//                }
                 break;
 
             case RIGHT:
                 rightPressed = true;
-                if (player.isOnGround() && !spacePressed) {
-                    gameState.movePlayerX(1);
-                }
+//                if (player.isOnGround() && !spacePressed) {
+//                    gameState.movePlayerX(1);
+//                }
                 break;
 
             case SPACE:
@@ -95,18 +95,19 @@ public class GameController {
 
             case LEFT:
                 leftPressed = false;
-                if (!rightPressed && player.isOnGround() && !spacePressed) {
-                    player.setVelocityX(0);
-                }
+//                if (!rightPressed && player.isOnGround() && !spacePressed) {
+//                    player.setVelocityX(0);
+//                }
                 break;
 
             case RIGHT:
                 rightPressed = false;
-                if (!leftPressed && player.isOnGround() && !spacePressed) {
-                    player.setVelocityX(0);
-                }
+//                if (!leftPressed && player.isOnGround() && !spacePressed) {
+//                    player.setVelocityX(0);
+//                }
                 break;
-            case SPACE:                spacePressed = false;
+            case SPACE:
+                spacePressed = false;
                 if (player.isOnGround()) {
                     //set the direction of the jump
                     player.setJumpDirection(0);
@@ -130,6 +131,15 @@ public class GameController {
     public boolean isRightPressed() {
         return rightPressed;
     }
+
+    public boolean isSpacePressed() {
+        return spacePressed;
+    }
+
+    public void setSpacePressed(boolean spacePressed) {
+        this.spacePressed = spacePressed;
+    }
+
 
     public void startGame() {
         gameLoop.start();
