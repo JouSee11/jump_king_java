@@ -12,7 +12,7 @@ public class Player extends Entity{
     private boolean isSquatting = false;
     private int jumpDirection = 0;
 
-    //phycics stats
+    //phycics stats - not a constant because it can be changed by powerups
     private double jumpPower = 1500;
     private double moveSpeed = 300;
 

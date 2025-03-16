@@ -1,30 +1,55 @@
 package cz.cvut.fel.pjv.talacjos.jump_up.model;
 
+import cz.cvut.fel.pjv.talacjos.jump_up.Constants;
 import javafx.geometry.Bounds;
 
 import java.util.List;
 
 public class CollisionHandler{
+    private GameState gameState;
+
+    public CollisionHandler(GameState gameState) {
+        this.gameState = gameState;
+    }
 
     // First check and handle vertical movement, then horizontal
-    public void handleCollisions(Player player, List<Platform> platforms, double floorY, double gameWidth) {
+    public void handleCollisions(Player player, List<Platform> platforms, double floorY, int curLevel, int maxLevel) {
         // Reset ground state before checking
         player.setOnGround(false);
 
-        // Check floor collision (highest priority)
-        if (player.getY() + player.getHeight() > floorY) {
+        // Check player on the floor on level 1 (highest priority)
+        if (player.getY() + player.getHeight() > Constants.GAME_HEIGHT && curLevel == 1) {
             player.setY(floorY - player.getHeight());
             player.setVelocityY(0);
             player.setOnGround(true);
             player.setJumping(false);
         }
 
+        // check if the player is colliding with the "celling" and is on the top level
+        if (player.getY() < 0 && curLevel == maxLevel) {
+            player.setY(0);
+            player.setVelocityY(0);
+        }
+
+        // check next level and move player to the next level - DOWN
+        if (player.getY() > Constants.GAME_HEIGHT && curLevel > 1) {
+            changeLevel(player, curLevel - 1, "down");
+        }
+        // check next level and move player to the next level - UP
+        if (player.getY() + player.getHeight() < 0 && curLevel < maxLevel) {
+            changeLevel(player, curLevel + 1, "up");
+/*            gameState.setCurLevel(curLevel + 1);
+            player.setY(Constants.GAME_HEIGHT);
+            System.out.println(player.getY());
+            System.out.println("Next level");*/
+        }
+
         // Handle boundary constraints (edges of screen)
         if (player.getX() < 0) {
             player.setX(0);
             bounceBack(player);
-        } else if (player.getX() + player.getWidth() > gameWidth) {
-            player.setX(gameWidth - player.getWidth());
+        } else if (player.getX() + player.getWidth() > Constants.GAME_WIDTH) {
+            player.setX(Constants.GAME_WIDTH - player.getWidth());
             bounceBack(player);
         }
 
@@ -87,6 +112,23 @@ public class CollisionHandler{
         } else {
             player.setVelocityY(0);
         }
+    }
+
+    private void changeLevel(Player player, int level, String direction) {
+        /*            gameState.setCurLevel(curLevel + 1);
+            player.setY(Constants.GAME_HEIGHT);
+            System.out.println(player.getY());
+            System.out.println("Next level");*/
+        gameState.setCurLevel(level);
+
+        if (direction.equals("down")) {
+            player.setY(0);
+        } else {
+            player.setY(Constants.GAME_HEIGHT - player.getHeight());
+        }
+
+        System.out.println("Next level " + direction);
+
     }
 
 }

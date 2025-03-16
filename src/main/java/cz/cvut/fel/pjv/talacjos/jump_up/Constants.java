@@ -10,6 +10,7 @@ public class Constants {
     public static final double MAX_JUMP_WAIT = 0.5;
     public static final double MIN_JUMP_COEFFICIENT = 0.1;
     public static final double JUMP_LENGTH_COEFFICIENT = 1.4; //how jump is longer compared to run
+    public static final double TERMINAL_VELOCITY = 2000;
 
     //player stats
     public static final double PLAYER_WIDTH = 90;

@@ -8,21 +8,28 @@ import java.util.List;
 
 public class GameState {
     GameController gameController;
-    private final CollisionHandler collisionHandler = new CollisionHandler();
+    private final CollisionHandler collisionHandler = new CollisionHandler(this);
 
-    private final List<Platform> platformList;
+    private List<Platform> platformList;
     private Player player;
     private double floorY = Constants.GAME_HEIGHT;
     private double jumpHoldTime = 0;
+
+    private int curLevel;
+    private int maxLevel;
 
 
     public GameState(GameController gameController) {
         this.gameController = gameController;
         this.platformList = new ArrayList<Platform>();
 
-        //
-        addPlayer(new Player(200, floorY, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT));
+        //add player and platforms
+        addPlayer(new Player(200, 0, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT));
         addPlatforms();
+
+        //set levels data
+        setCurLevel(1);
+        setMaxLevel(7);
     }
 
     public void update(double deltaTime) {
@@ -41,10 +48,10 @@ public class GameState {
         player.setY(newY);
 
         // Handle all collisions
-        collisionHandler.handleCollisions(player, platformList, floorY, Constants.GAME_WIDTH);
+        collisionHandler.handleCollisions(player, platformList, floorY, curLevel, maxLevel);
 
         // Apply gravity
-        player.setVelocityY(player.getVelocityY() + Constants.GRAVITY * deltaTime);
+        player.setVelocityY(Math.min( Constants.TERMINAL_VELOCITY, player.getVelocityY() + Constants.GRAVITY * deltaTime));
 
         // Control horizontal velocity when on ground -X
         playerRunUpdate();
@@ -134,11 +141,14 @@ public class GameState {
 
     //platform control
     private void addPlatforms() {
-        addSinglePlatform(100, 100, 280, 150, PlatformTypes.DIRT);
-        addSinglePlatform(700, 200, 100, 230, "dirt");
-        addSinglePlatform(300, 350, 300, 100, "dirt");
-        addSinglePlatform(700, 600, 100, 50, "dirt");
-        addSinglePlatform(400, 800, 100, 50, "dirt");
+        platformList = new ArrayList<Platform>();
+//        addSinglePlatform(0, 400, 300, 400, PlatformTypes.DIRT);
+        addSinglePlatform(800, 200, 500, 200, PlatformTypes.STONE);
+        addSinglePlatform(500, 100, 500, 100, PlatformTypes.STONE);
+//        addSinglePlatform(300, 300, 100, 100, PlatformTypes.STONE);
+        addSinglePlatform(700, 600, 100, 50, PlatformTypes.DIRT);
+        addSinglePlatform(500, 650, 100, 50, PlatformTypes.DIRT);
+        addSinglePlatform(200, 700, 100, 50, PlatformTypes.DIRT);
 
         System.out.println(platformList);
     }
@@ -159,5 +169,22 @@ public class GameState {
 
     public void setFloorY(double floorY) {
         this.floorY = floorY;
+    }
+
+    //level control
+    public void setCurLevel(int curLevel) {
+        this.curLevel = curLevel;
+    }
+
+    public void setMaxLevel(int maxLevel) {
+        this.maxLevel = maxLevel;
+    }
+
+    public int getCurLevel() {
+        return curLevel;
+    }
+
+    public int getMaxLevel() {
+        return maxLevel;
     }
 }

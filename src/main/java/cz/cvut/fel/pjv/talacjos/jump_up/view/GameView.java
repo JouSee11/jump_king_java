@@ -54,16 +54,17 @@ public class GameView {
         scene.setOnKeyPressed(gameController::handleKeyPress);
         scene.setOnKeyReleased(gameController::handleKeyRelease);
 
-        loadBackgroundImage();
     }
 
     //render the game updates every game loop !!!
     public void render() {
+
         //render game state - later
         GraphicsContext gc = canvas.getGraphicsContext2D();
         //clear the previous frame
         gc.clearRect(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
 
+        loadBackgroundImage();
         // Render background image
         gc.drawImage(backgroundImage, 0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
 
@@ -135,8 +136,10 @@ public class GameView {
 
 
     private void loadBackgroundImage() {
-        int randomImg = (int) (Math.random() * 7) + 1;
-        backgroundImage = new Image(getClass().getResource("/images/background/background" + randomImg + ".png").toExternalForm());
+//        int randomImg = (int) (Math.random() * 7) + 1;
+        int imgNumber = gameState.getCurLevel();
+        backgroundImage = new Image(getClass().getResource("/images/background/background" + imgNumber + ".png").toExternalForm());
+//        backgroundImage = new Image(getClass().getResource("/images/background/background1" + ".png").toExternalForm());
     }
 
     public Scene getScene() {

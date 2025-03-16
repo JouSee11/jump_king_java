@@ -4,37 +4,37 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 public class Platform extends Entity{
-    private String type;
+    private PlatformTypes type;
     private Image image;
 
-    public Platform(double x, double y, double width, double height, String type) {
+    public Platform(double x, double y, double width, double height, PlatformTypes type) {
         super(x, y, width, height);
-        this.type = PlatformTypes.valueOf(type).getType();
-        loadImage(type);
+        this.type = type;
+        loadImage(this.type.getType());
     }
 
     //for no type specified
     public Platform(double x, double y, double width, double height) {
-        this(x, y, width, height, "dirt");
+        this(x, y, width, height, PlatformTypes.DIRT);
     }
 
-    public void setType(String type) {
-        this.type = PlatformTypes.valueOf(type).getType();
-        loadImage(type);
+    public void setType(PlatformTypes type) {
+        this.type = type;
+        loadImage(this.type.getType());
     }
 
-    public String getType() {
+    public PlatformTypes getType() {
         return type;
     }
 
     public Color getBorderColor() {
-        return  PlatformTypes.valueOf(type).getColor();
+        return  type.getColor();
     }
 
     private void loadImage(String type) {
         //get random image for the specified type
         int randomImg = (int) (Math.random() * 3) + 1;
-        String imageLink = getClass().getResource("/images/platform/" + type + randomImg + ".png").toExternalForm();
+        String imageLink = getClass().getResource("/images/platform/" + type + "/" + type  + randomImg + ".png").toExternalForm();
         image = new Image(imageLink);
     }
 
