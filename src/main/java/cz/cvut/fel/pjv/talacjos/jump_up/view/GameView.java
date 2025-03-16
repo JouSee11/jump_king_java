@@ -7,13 +7,21 @@ import cz.cvut.fel.pjv.talacjos.jump_up.model.GameState;
 import cz.cvut.fel.pjv.talacjos.jump_up.model.Platform;
 import cz.cvut.fel.pjv.talacjos.jump_up.model.Player;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.RadialGradient;
+import javafx.scene.paint.Stop;
 
 public class GameView {
     private final Scene scene;
@@ -24,6 +32,8 @@ public class GameView {
 
     //image parts
     private Image backgroundImage;
+
+    private double azimuth = 0.0;
 
 
     public GameView(SceneController sceneController, GameController gameController, GameState gameState) {
@@ -37,6 +47,8 @@ public class GameView {
 
         scene = new Scene(root, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
         //add styles to scene - later
+        sceneController.addStyles("game_main", scene);
+
 
         //handle key events
         scene.setOnKeyPressed(gameController::handleKeyPress);
@@ -45,6 +57,7 @@ public class GameView {
         loadBackgroundImage();
     }
 
+    //render the game updates every game loop !!!
     public void render() {
         //render game state - later
         GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -52,17 +65,57 @@ public class GameView {
         gc.clearRect(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
 
         // Render background image
-//        gc.setFill(Color.SKYBLUE);
-//        gc.fillRect(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
         gc.drawImage(backgroundImage, 0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
 
         // Render platforms
-        gc.setFill(Color.GREEN);
-        for (Platform platform : gameState.getPlatformList()) {
-            gc.fillRect(platform.getX(), platform.getY(), platform.getWidth(), platform.getHeight());
-        }
+        renderPlatform(gc);
 
         // Render player with animation
+        renderPlayer(gc);
+
+    }
+
+    private void renderPlatform(GraphicsContext gc) {
+        double cornerRadius = 7;
+
+        for (Platform platform : gameState.getPlatformList()) {
+            Image platformImage = platform.getImage();
+
+            if (platformImage != null) {
+                // Get dimensions
+                double platformWidth = platform.getWidth();
+                double platformHeight = platform.getHeight();
+                double imageWidth = platformImage.getWidth();
+                double imageHeight = platformImage.getHeight();
+
+                // Tile the image across the platform
+                for (double x = 0; x < platformWidth; x += imageWidth) {
+                    for (double y = 0; y < platformHeight; y += imageHeight) {
+                        double tileWidth = Math.min(imageWidth, platformWidth - x);
+                        double tileHeight = Math.min(imageHeight, platformHeight - y);
+
+                        gc.drawImage(
+                                platformImage,
+                                0, 0, tileWidth, tileHeight,  // Source rectangle
+                                platform.getX() + x, platform.getY() + y, tileWidth, tileHeight  // Destination rectangle
+                        );
+                    }
+                }
+            } else {
+                // Fallback to solid color
+                gc.setFill(Color.GREEN);
+                gc.fillRect(platform.getX(), platform.getY(), platform.getWidth(), platform.getHeight());
+            }
+
+            //add border
+            gc.setStroke(platform.getBorderColor());
+            gc.setLineWidth(6);
+            gc.strokeRoundRect(platform.getX(), platform.getY(), platform.getWidth(),
+                    platform.getHeight(), cornerRadius*2, cornerRadius*2);
+        }
+    }
+
+    private void renderPlayer(GraphicsContext gc) {
         Player player = gameState.getPlayer();
         Image currentFrame = player.getCurrentAnimation().getCurrentFrame();
 
@@ -77,13 +130,13 @@ public class GameView {
             gc.drawImage(currentFrame, 0, 0, player.getWidth(), player.getHeight()); // Draw at new origin
             gc.restore(); // Restore original graphics state
         }
-
-//        gc.setFill(Color.RED);
-//        gc.fillRect(player.getX(), player.getY(), player.getWidth(), player.getHeight());
     }
 
+
+
     private void loadBackgroundImage() {
-        backgroundImage = new Image(getClass().getResource("/images/background1.png").toExternalForm());
+        int randomImg = (int) (Math.random() * 7) + 1;
+        backgroundImage = new Image(getClass().getResource("/images/background/background" + randomImg + ".png").toExternalForm());
     }
 
     public Scene getScene() {

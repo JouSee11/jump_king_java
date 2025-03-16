@@ -1,0 +1,26 @@
+package cz.cvut.fel.pjv.talacjos.jump_up.model;
+
+import javafx.scene.paint.Color;
+
+public enum PlatformTypes {
+    DIRT("dirt", Color.DARKGREEN),
+    STONE("stone", Color.GRAY),
+    CLOUD("cloud", Color.LIGHTBLUE),
+    WOOD("wood", Color.BROWN);
+
+    private final String type;
+    private final Color color;
+
+    PlatformTypes(String type, Color color) {
+        this.type = type;
+        this.color = color;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+}

@@ -134,17 +134,17 @@ public class GameState {
 
     //platform control
     private void addPlatforms() {
-        addSinglePlatform(100, 100, 280, 150);
-        addSinglePlatform(700, 200, 100, 230);
-        addSinglePlatform(300, 350, 300, 100);
-        addSinglePlatform(700, 600, 100, 50);
-        addSinglePlatform(400, 800, 100, 50);
+        addSinglePlatform(100, 100, 280, 150, PlatformTypes.DIRT);
+        addSinglePlatform(700, 200, 100, 230, "dirt");
+        addSinglePlatform(300, 350, 300, 100, "dirt");
+        addSinglePlatform(700, 600, 100, 50, "dirt");
+        addSinglePlatform(400, 800, 100, 50, "dirt");
 
         System.out.println(platformList);
     }
 
-    private void addSinglePlatform(double x, double y, double width, double height) {
-        Platform platform = new Platform(x, Constants.GAME_HEIGHT - y, width, height);
+    private void addSinglePlatform(double x, double y, double width, double height, PlatformTypes type) {
+        Platform platform = new Platform(x, Constants.GAME_HEIGHT - y, width, height, type);
         platformList.add(platform);
     }
 
