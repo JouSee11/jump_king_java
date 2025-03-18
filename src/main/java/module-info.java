@@ -1,6 +1,8 @@
 module cz.cvut.fel.pjv.talacjos.jump_up {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.desktop;
+    requires javafx.media;
 
 
     opens cz.cvut.fel.pjv.talacjos.jump_up to javafx.fxml;

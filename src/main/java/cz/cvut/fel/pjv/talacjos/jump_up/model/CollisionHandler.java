@@ -107,6 +107,7 @@ public class CollisionHandler{
 
     private void bounceBack(Player player) {
         //if the player is jumping bounce back
+        gameState.audioClip.play();
         if (!player.isOnGround()) {
             player.setVelocityX(-1 * player.getVelocityX());
         } else {

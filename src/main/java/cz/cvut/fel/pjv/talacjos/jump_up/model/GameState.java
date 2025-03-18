@@ -2,6 +2,7 @@ package cz.cvut.fel.pjv.talacjos.jump_up.model;
 
 import cz.cvut.fel.pjv.talacjos.jump_up.Constants;
 import cz.cvut.fel.pjv.talacjos.jump_up.controller.GameController;
+import javafx.scene.media.AudioClip;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,9 @@ public class GameState {
     private int curLevel;
     private int maxLevel;
 
+    //playing sounds temporary
+    public AudioClip audioClip;
+
 
     public GameState(GameController gameController) {
         this.gameController = gameController;
@@ -25,7 +29,9 @@ public class GameState {
 
         //add player and platforms
         addPlayer(new Player(200, 0, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT));
-        addPlatforms();
+//        addPlatforms();
+
+        audioClip = new AudioClip(getClass().getResource("/sounds/bing.mp3").toExternalForm());
 
         //set levels data
         setCurLevel(1);
@@ -153,9 +159,53 @@ public class GameState {
         System.out.println(platformList);
     }
 
+
     private void addSinglePlatform(double x, double y, double width, double height, PlatformTypes type) {
         Platform platform = new Platform(x, Constants.GAME_HEIGHT - y, width, height, type);
         platformList.add(platform);
+    }
+
+    private void addPlatformsLevel(int curLevel) {
+        platformList.clear();
+        switch (curLevel) {
+            case 1:
+                addSinglePlatform(800, 200, 500, 200, PlatformTypes.STONE);
+                addSinglePlatform(500, 100, 500, 100, PlatformTypes.STONE);
+                addSinglePlatform(200, 600, 500, 100, PlatformTypes.STONE);
+
+                break;
+            case 2:
+                addSinglePlatform(800, 200, 500, 200, PlatformTypes.STONE);
+                addSinglePlatform(500, 100, 500, 100, PlatformTypes.STONE);
+                addSinglePlatform(300, 600, 100, 100, PlatformTypes.STONE);
+                break;
+            case 3:
+                addSinglePlatform(800, 200, 500, 200, PlatformTypes.STONE);
+                addSinglePlatform(500, 100, 500, 100, PlatformTypes.STONE);
+                addSinglePlatform(300, 300, 100, 100, PlatformTypes.STONE);
+                addSinglePlatform(100, 600, 100, 50, PlatformTypes.DIRT);
+                break;
+            case 4:
+                addSinglePlatform(800, 200, 500, 200, PlatformTypes.STONE);
+                addSinglePlatform(500, 100, 500, 100, PlatformTypes.STONE);
+                addSinglePlatform(300, 300, 100, 100, PlatformTypes.STONE);
+                addSinglePlatform(700, 600, 100, 50, PlatformTypes.DIRT);
+                addSinglePlatform(500, 650, 100, 50, PlatformTypes.DIRT);
+                break;
+            case 5:
+                addSinglePlatform(800, 200, 500, 200, PlatformTypes.STONE);
+                addSinglePlatform(500, 100, 500, 100, PlatformTypes.STONE);
+                addSinglePlatform(300, 300, 100, 100, PlatformTypes.STONE);
+                addSinglePlatform(700, 600, 100, 50, PlatformTypes.DIRT);
+                addSinglePlatform(500, 650, 100, 50, PlatformTypes.DIRT);
+                addSinglePlatform(200, 700, 100, 50, PlatformTypes.DIRT);
+                break;
+            case 6:
+                addSinglePlatform(800, 200, 500, 200, PlatformTypes.STONE);
+                break;
+            default:
+                break;
+                }
     }
 
     public List<Platform> getPlatformList() {
@@ -174,6 +224,7 @@ public class GameState {
     //level control
     public void setCurLevel(int curLevel) {
         this.curLevel = curLevel;
+        addPlatformsLevel(curLevel);
     }
 
     public void setMaxLevel(int maxLevel) {
