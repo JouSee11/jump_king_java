@@ -19,10 +19,6 @@ public class GameState {
     private int curLevel;
     private int maxLevel;
 
-    //playing sounds temporary
-    public AudioClip audioClip;
-
-
     public GameState(GameController gameController) {
         this.gameController = gameController;
         this.platformList = new ArrayList<Platform>();
@@ -30,8 +26,6 @@ public class GameState {
         //add player and platforms
         addPlayer(new Player(200, 0, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT));
 //        addPlatforms();
-
-        audioClip = new AudioClip(getClass().getResource("/sounds/bing.mp3").toExternalForm());
 
         //set levels data
         setCurLevel(1);

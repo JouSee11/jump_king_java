@@ -33,9 +33,6 @@ public class GameView {
     //image parts
     private Image backgroundImage;
 
-    private double azimuth = 0.0;
-
-
     public GameView(SceneController sceneController, GameController gameController, GameState gameState) {
         this.sceneController = sceneController;
         this.gameState = gameState;

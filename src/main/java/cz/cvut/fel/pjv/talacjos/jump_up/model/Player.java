@@ -102,8 +102,8 @@ public class Player extends Entity{
 
     //animation controls
     private void loadAnimations() {
-        Image[] idleFrames = loadFrames("idle/crazy_frog", 2);
-        Image[] runFrames = loadFrames("run/run", 3);
+        Image[] idleFrames = loadFrames("idle/idle", 2);
+        Image[] runFrames = loadFrames("run/knight_test/run", 10);
         Image[] jumpFrames = loadFrames("jump/jump", 1);
         Image[] fallFrames = loadFrames("fall/fall", 1);
         Image[] squatFrames = loadFrames("squat/squat", 1);
