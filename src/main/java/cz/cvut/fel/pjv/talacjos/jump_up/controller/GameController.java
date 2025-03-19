@@ -83,6 +83,14 @@ public class GameController {
                     gameState.prepareJump();
                 }
                 break;
+            //for testing purposes - skip levels
+            case N:
+                int currentLevel = gameState.getCurLevel();
+                int maxLevel = gameState.getMaxLevel();
+                if (currentLevel < maxLevel) {
+                    gameState.setCurLevel(currentLevel+1);
+                }
+                break;
             default:
                 break;
         }

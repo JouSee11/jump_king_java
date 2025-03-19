@@ -13,13 +13,13 @@ public class CollisionHandler{
     }
 
     // First check and handle vertical movement, then horizontal
-    public void handleCollisions(Player player, List<Platform> platforms, double floorY, int curLevel, int maxLevel) {
+    public void handleCollisions(Player player, List<Platform> platforms, int curLevel, int maxLevel) {
         // Reset ground state before checking
         player.setOnGround(false);
 
-        // Check player on the floor on level 1 (highest priority)
+        // Check player on the floor on level 1
         if (player.getY() + player.getHeight() > Constants.GAME_HEIGHT && curLevel == 1) {
-            player.setY(floorY - player.getHeight());
+            player.setY(Constants.GAME_HEIGHT - player.getHeight());
             player.setVelocityY(0);
             player.setOnGround(true);
             player.setJumping(false);

@@ -23,4 +23,13 @@ public enum PlatformTypes {
     public Color getColor() {
         return color;
     }
+
+    public static PlatformTypes getPlatformType(String type) {
+        for (PlatformTypes platformType : PlatformTypes.values()) {
+            if (platformType.getType().equalsIgnoreCase(type)) {
+                return platformType;
+            }
+        }
+        return null;
+    }
 }

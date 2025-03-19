@@ -2,18 +2,19 @@ package cz.cvut.fel.pjv.talacjos.jump_up.model;
 
 import cz.cvut.fel.pjv.talacjos.jump_up.Constants;
 import cz.cvut.fel.pjv.talacjos.jump_up.controller.GameController;
-import javafx.scene.media.AudioClip;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class GameState {
     GameController gameController;
     private final CollisionHandler collisionHandler = new CollisionHandler(this);
 
-    private List<Platform> platformList;
+    private List<Platform> curPlatformList;
+    private HashMap<Integer, Level> levelsDataList;
+
     private Player player;
-    private double floorY = Constants.GAME_HEIGHT;
     private double jumpHoldTime = 0;
 
     private int curLevel;
@@ -21,11 +22,11 @@ public class GameState {
 
     public GameState(GameController gameController) {
         this.gameController = gameController;
-        this.platformList = new ArrayList<Platform>();
+        this.curPlatformList = new ArrayList<Platform>();
 
-        //add player and platforms
-        addPlayer(new Player(200, 0, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT));
-//        addPlatforms();
+        //load data from json files
+        loadPlayerData();
+        loadLevelsData();
 
         //set levels data
         setCurLevel(1);
@@ -48,7 +49,7 @@ public class GameState {
         player.setY(newY);
 
         // Handle all collisions
-        collisionHandler.handleCollisions(player, platformList, floorY, curLevel, maxLevel);
+        collisionHandler.handleCollisions(player, curPlatformList, curLevel, maxLevel);
 
         // Apply gravity
         player.setVelocityY(Math.min( Constants.TERMINAL_VELOCITY, player.getVelocityY() + Constants.GRAVITY * deltaTime));
@@ -102,11 +103,6 @@ public class GameState {
         }
     }
 
-    //player control
-    private void addPlayer(Player player) {
-        this.player = player;
-    }
-
     public Player getPlayer() {
         return player;
     }
@@ -138,88 +134,27 @@ public class GameState {
         return -player.getJumpPower() * velocityRatio;
     }
 
-
-    //platform control
-    private void addPlatforms() {
-        platformList = new ArrayList<Platform>();
-//        addSinglePlatform(0, 400, 300, 400, PlatformTypes.DIRT);
-        addSinglePlatform(800, 200, 500, 200, PlatformTypes.STONE);
-        addSinglePlatform(500, 100, 500, 100, PlatformTypes.STONE);
-//        addSinglePlatform(300, 300, 100, 100, PlatformTypes.STONE);
-        addSinglePlatform(700, 600, 100, 50, PlatformTypes.DIRT);
-        addSinglePlatform(500, 650, 100, 50, PlatformTypes.DIRT);
-        addSinglePlatform(200, 700, 100, 50, PlatformTypes.DIRT);
-
-        System.out.println(platformList);
+    private void loadLevelsData() {
+        levelsDataList = JsonDataLoader.loadLevelsJson("src/main/resources/maps/Map2/levels.json");
     }
 
-
-    private void addSinglePlatform(double x, double y, double width, double height, PlatformTypes type) {
-        Platform platform = new Platform(x, Constants.GAME_HEIGHT - y, width, height, type);
-        platformList.add(platform);
-    }
-
-    private void addPlatformsLevel(int curLevel) {
-        platformList.clear();
-        switch (curLevel) {
-            case 1:
-                addSinglePlatform(800, 200, 500, 200, PlatformTypes.STONE);
-                addSinglePlatform(500, 100, 500, 100, PlatformTypes.STONE);
-                addSinglePlatform(200, 600, 500, 100, PlatformTypes.STONE);
-
-                break;
-            case 2:
-                addSinglePlatform(800, 200, 500, 200, PlatformTypes.STONE);
-                addSinglePlatform(500, 100, 500, 100, PlatformTypes.STONE);
-                addSinglePlatform(300, 600, 100, 100, PlatformTypes.STONE);
-                break;
-            case 3:
-                addSinglePlatform(800, 200, 500, 200, PlatformTypes.STONE);
-                addSinglePlatform(500, 100, 500, 100, PlatformTypes.STONE);
-                addSinglePlatform(300, 300, 100, 100, PlatformTypes.STONE);
-                addSinglePlatform(100, 600, 100, 50, PlatformTypes.DIRT);
-                break;
-            case 4:
-                addSinglePlatform(800, 200, 500, 200, PlatformTypes.STONE);
-                addSinglePlatform(500, 100, 500, 100, PlatformTypes.STONE);
-                addSinglePlatform(300, 300, 100, 100, PlatformTypes.STONE);
-                addSinglePlatform(700, 600, 100, 50, PlatformTypes.DIRT);
-                addSinglePlatform(500, 650, 100, 50, PlatformTypes.DIRT);
-                break;
-            case 5:
-                addSinglePlatform(800, 200, 500, 200, PlatformTypes.STONE);
-                addSinglePlatform(500, 100, 500, 100, PlatformTypes.STONE);
-                addSinglePlatform(300, 300, 100, 100, PlatformTypes.STONE);
-                addSinglePlatform(700, 600, 100, 50, PlatformTypes.DIRT);
-                addSinglePlatform(500, 650, 100, 50, PlatformTypes.DIRT);
-                addSinglePlatform(200, 700, 100, 50, PlatformTypes.DIRT);
-                break;
-            case 6:
-                addSinglePlatform(800, 200, 500, 200, PlatformTypes.STONE);
-                break;
-            default:
-                break;
-                }
+    private void loadPlayerData() {
+        player = JsonDataLoader.loadPlayerJson("src/main/resources/maps/Map2/player.json");
     }
 
     public List<Platform> getPlatformList() {
-        return platformList;
-    }
-
-    //later will we declared in the json map file
-    public double getFloorY() {
-        return floorY;
-    }
-
-    public void setFloorY(double floorY) {
-        this.floorY = floorY;
+        return curPlatformList;
     }
 
     //level control
     public void setCurLevel(int curLevel) {
         this.curLevel = curLevel;
-        addPlatformsLevel(curLevel);
+        curPlatformList = levelsDataList.get(curLevel).getPlatforms(); //set the platforms for the current level
+//        addPlatformsLevel(curLevel);
     }
+
+
+
 
     public void setMaxLevel(int maxLevel) {
         this.maxLevel = maxLevel;

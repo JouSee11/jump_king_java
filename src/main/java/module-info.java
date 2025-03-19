@@ -3,6 +3,7 @@ module cz.cvut.fel.pjv.talacjos.jump_up {
     requires javafx.fxml;
     requires java.desktop;
     requires javafx.media;
+    requires com.google.gson;
 
 
     opens cz.cvut.fel.pjv.talacjos.jump_up to javafx.fxml;
