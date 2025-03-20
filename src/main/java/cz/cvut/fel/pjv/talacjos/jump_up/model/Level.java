@@ -6,6 +6,7 @@ import java.util.List;
 public class Level {
     private int id;
     private List<Platform> platforms;
+    private List<Key> keys;
     //late add keys and powerups
 
     public int getId() {
@@ -23,6 +24,14 @@ public class Level {
 
     public void setPlatforms(List<Platform> platforms) {
         this.platforms = platforms;
+    }
+
+    public List<Key> getKeys() {
+        return keys;
+    }
+
+    public void setKeys(List<Key> keys) {
+        this.keys = keys;
     }
 
     @Override

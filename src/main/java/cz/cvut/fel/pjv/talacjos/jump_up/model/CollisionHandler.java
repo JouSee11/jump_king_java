@@ -2,7 +2,9 @@ package cz.cvut.fel.pjv.talacjos.jump_up.model;
 
 import cz.cvut.fel.pjv.talacjos.jump_up.Constants;
 import javafx.geometry.Bounds;
+import javafx.scene.shape.Rectangle;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CollisionHandler{
@@ -13,7 +15,12 @@ public class CollisionHandler{
     }
 
     // First check and handle vertical movement, then horizontal
-    public void handleCollisions(Player player, List<Platform> platforms, int curLevel, int maxLevel) {
+    public void handleCollisions() {
+        //get the data from the game state that are relevant for collisions handling
+        Player player = gameState.getPlayer();
+        int curLevel = gameState.getCurLevel();
+        int maxLevel = gameState.getMaxLevel();
+
         // Reset ground state before checking
         player.setOnGround(false);
 
@@ -38,10 +45,6 @@ public class CollisionHandler{
         // check next level and move player to the next level - UP
         if (player.getY() + player.getHeight() < 0 && curLevel < maxLevel) {
             changeLevel(player, curLevel + 1, "up");
-/*            gameState.setCurLevel(curLevel + 1);
-            player.setY(Constants.GAME_HEIGHT);
-            System.out.println(player.getY());
-            System.out.println("Next level");*/
         }
 
         // Handle boundary constraints (edges of screen)
@@ -53,25 +56,35 @@ public class CollisionHandler{
             bounceBack(player);
         }
 
-
         // Handle platform collisions - first vertical then horizontal
-        for (Platform platform : platforms) {
+        for (Platform platform : gameState.getPlatformList()) {
             if (checkCollision(player, platform)) {
-                resolveCollision(player, platform);
+                resolveCollisionPlatform(player, platform);
             }
+        }
+
+        //handle key collect collision
+        List<Key> keyToCollect = new ArrayList<Key>();
+        for (Key key : gameState.getKeyList()) {
+            if(checkCollision(player, key)) {
+                keyToCollect.add(key);
+            }
+        }
+        for (Key key : keyToCollect) {
+            gameState.keyCollected(key);
         }
     }
 //
 
 //
-    private boolean checkCollision(Player player, Platform platform) {
-            Bounds platformBounds = platform.getBoundsInParent();
+    private boolean checkCollision(Player player, Rectangle mapObject) {
+            Bounds platformBounds = mapObject.getBoundsInParent();
             Bounds playerBounds = player.getBoundsInParent();
 
             return playerBounds.intersects(platformBounds);
     }
 
-    private void resolveCollision(Player player, Platform platform) {
+    private void resolveCollisionPlatform(Player player, Platform platform) {
         //Calculate horizontal overlap
         double overlapLeft = player.getX() + player.getWidth() - platform.getX();
         double overlapRight = platform.getX() + platform.getWidth() - player.getX();
@@ -105,20 +118,17 @@ public class CollisionHandler{
 
     }
 
+
     private void bounceBack(Player player) {
         //if the player is jumping bounce back
         if (!player.isOnGround()) {
-            player.setVelocityX(-1 * player.getVelocityX());
+            player.setVelocityX(-Constants.BOUNCE_COEFFICIENT * player.getVelocityX());
         } else {
             player.setVelocityY(0);
         }
     }
 
     private void changeLevel(Player player, int level, String direction) {
-        /*            gameState.setCurLevel(curLevel + 1);
-            player.setY(Constants.GAME_HEIGHT);
-            System.out.println(player.getY());
-            System.out.println("Next level");*/
         gameState.setCurLevel(level);
 
         if (direction.equals("down")) {
@@ -126,6 +136,8 @@ public class CollisionHandler{
         } else {
             player.setY(Constants.GAME_HEIGHT - player.getHeight());
         }
+
+        System.out.println(player.getVelocityY());
 
         System.out.println("Next level " + direction);
 

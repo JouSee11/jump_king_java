@@ -2,21 +2,18 @@ package cz.cvut.fel.pjv.talacjos.jump_up.model;
 
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
-public class Platform extends Entity{
+public class Platform extends Rectangle {
     private PlatformTypes type;
     private Image image;
 
-    public Platform(double x, double y, double width, double height, PlatformTypes type) {
+    public Platform(int x, int y, int width, int height, PlatformTypes type) {
         super(x, y, width, height);
         this.type = type;
         loadImage(this.type.getType());
     }
 
-    //for no type specified
-    public Platform(double x, double y, double width, double height) {
-        this(x, y, width, height, PlatformTypes.DIRT);
-    }
 
     public void setType(PlatformTypes type) {
         this.type = type;

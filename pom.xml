@@ -71,7 +71,7 @@
                 <executions>
                     <execution>
                         <!-- Default configuration for running with: mvn clean javafx:run -->
-                        <id>default-cli</id>
+                        <keyId>default-cli</keyId>
                         <configuration>
                             <mainClass>
                                 cz.cvut.fel.pjv.talacjos.jump_up_pjv/cz.cvut.fel.pjv.talacjos.jump_up.Main

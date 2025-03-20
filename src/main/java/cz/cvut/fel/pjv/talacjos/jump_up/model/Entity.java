@@ -1,5 +1,7 @@
 package cz.cvut.fel.pjv.talacjos.jump_up.model;
 
+import cz.cvut.fel.pjv.talacjos.jump_up.view.SpriteAnimation;
+import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 
 abstract public class Entity extends Rectangle {
@@ -7,4 +9,32 @@ abstract public class Entity extends Rectangle {
         super(x, y, width, height);
     }
 
+    protected SpriteAnimation currentAnimation;
+
+    //load animation frames
+    protected Image[] loadFrames(String path, int frameCount) {
+        Image[] frames = new Image[frameCount];
+        for (int i = 0; i < frameCount; i++) {
+            System.out.println("here" + i);
+            System.out.println("/images/player/" + path + (i+1) + ".png");
+            //load image and check if it was loaded
+            String imageLink = getClass().getResource("/images" + path + (i+1) + ".png").toExternalForm();
+
+            if (imageLink == null) {
+                System.out.println("Image not found: " + path + i + ".png");
+                frames[i] = new Image(getDefaultImage());
+            } else {
+                frames[i] = new Image(imageLink);;
+            }
+        }
+        return frames;
+    }
+
+    public SpriteAnimation getCurrentAnimation() {
+        return currentAnimation;
+    }
+
+    abstract protected String getDefaultImage();
+
+    abstract public void updateAnimation(double deltaTime);
 }

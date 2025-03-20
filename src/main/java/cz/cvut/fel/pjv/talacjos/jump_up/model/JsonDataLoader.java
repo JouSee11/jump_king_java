@@ -35,31 +35,14 @@ public class JsonDataLoader {
 
                 //get all platforms for level and add them to the level object
                 JsonArray platformsArray = levelObj.getAsJsonArray("platforms");
-                List<Platform> platforms = new ArrayList<Platform>();
+                List<Platform> platforms = getPlatformList(platformsArray);
 
-                //go through all platforms
-                for (JsonElement platformElement : platformsArray) {
-                    JsonObject platformObj = platformElement.getAsJsonObject();
-
-                    double x = platformObj.get("x").getAsDouble();
-                    double y = platformObj.get("y").getAsDouble();
-                    double width = platformObj.get("width").getAsDouble();
-                    double height = platformObj.get("height").getAsDouble();
-                    String type = platformObj.get("type").getAsString();
-
-                    PlatformTypes platformType = PlatformTypes.getPlatformType(type);
-                    Platform platform = new Platform(
-                            x,
-                            Constants.GAME_HEIGHT - y,
-                            width,
-                            height,
-                            platformType);
-
-                platforms.add(platform);
-
-                }
+                //get all keys for the level
+                JsonArray keysArray = levelObj.getAsJsonArray("keys");
+                List<Key> keys = getKeyList(keysArray);
 
                 level.setPlatforms(platforms);
+                level.setKeys(keys);
                 levels.put(level.getId(), level);
 
             }
@@ -68,6 +51,52 @@ public class JsonDataLoader {
         }
         return levels;
     }
+
+    private static List<Key> getKeyList(JsonArray keysArray) {
+        List<Key> keys = new ArrayList<Key>();
+
+        //go through all keys for the level
+        for (JsonElement keyElement : keysArray) {
+            JsonObject keyObj = keyElement.getAsJsonObject();
+
+            int x = keyObj.get("x").getAsInt();
+            int y = keyObj.get("y").getAsInt();
+            int id = keyObj.get("id").getAsInt();
+
+
+            Key key = new Key(x, y, id);
+            keys.add(key);
+        }
+        return keys;
+    }
+
+    private static List<Platform> getPlatformList(JsonArray platformsArray) {
+        List<Platform> platforms = new ArrayList<Platform>();
+
+        //go through all platforms
+        for (JsonElement platformElement : platformsArray) {
+            JsonObject platformObj = platformElement.getAsJsonObject();
+
+            int x = platformObj.get("x").getAsInt();
+            int y = platformObj.get("y").getAsInt();
+            int width = platformObj.get("width").getAsInt();
+            int height = platformObj.get("height").getAsInt();
+            String type = platformObj.get("type").getAsString();
+
+            PlatformTypes platformType = PlatformTypes.getPlatformType(type);
+            Platform platform = new Platform(
+                    x,
+                    Constants.GAME_HEIGHT - y,
+                    width,
+                    height,
+                    platformType);
+
+            platforms.add(platform);
+        }
+        return platforms;
+    }
+
+
 
     public static Player loadPlayerJson(String filePath) {
         Gson gson = new Gson();
@@ -86,6 +115,24 @@ public class JsonDataLoader {
         }
 
         return player;
+    }
 
+    public static int[] loadKeysStatsJson(String filePath) {
+        Gson gson = new Gson();
+
+        int[] keysStats = new int[2];
+
+        try (FileReader reader = new FileReader(filePath)) {
+            JsonObject jsonObject = gson.fromJson(reader, JsonObject.class).getAsJsonObject("keys");
+//            JsonObject keysStatsObject = jsonObject.getAsJsonObject("keys");
+
+            keysStats[0] = jsonObject.get("allCount").getAsInt();
+            keysStats[1] = jsonObject.get("collected").getAsInt();
+
+            return keysStats;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

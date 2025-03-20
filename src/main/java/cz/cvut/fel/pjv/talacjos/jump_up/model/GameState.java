@@ -12,7 +12,9 @@ public class GameState {
     private final CollisionHandler collisionHandler = new CollisionHandler(this);
 
     private List<Platform> curPlatformList;
-    private HashMap<Integer, Level> levelsDataList;
+    private List<Key> curKeyList;
+
+    private HashMap<Integer, Level> levelsDataMap;
 
     private Player player;
     private double jumpHoldTime = 0;
@@ -20,13 +22,18 @@ public class GameState {
     private int curLevel;
     private int maxLevel;
 
+    private int collectedKeys;
+    private int allKeys;
+
     public GameState(GameController gameController) {
         this.gameController = gameController;
         this.curPlatformList = new ArrayList<Platform>();
+        this.curKeyList = new ArrayList<Key>();
 
         //load data from json files
         loadPlayerData();
         loadLevelsData();
+        loadKeysData();
 
         //set levels data
         setCurLevel(1);
@@ -49,7 +56,7 @@ public class GameState {
         player.setY(newY);
 
         // Handle all collisions
-        collisionHandler.handleCollisions(player, curPlatformList, curLevel, maxLevel);
+        collisionHandler.handleCollisions();
 
         // Apply gravity
         player.setVelocityY(Math.min( Constants.TERMINAL_VELOCITY, player.getVelocityY() + Constants.GRAVITY * deltaTime));
@@ -62,6 +69,15 @@ public class GameState {
 
         //update player animation
         player.updateAnimation(deltaTime);
+
+        //update keys animation
+        updateKeysAnimation(deltaTime);
+    }
+
+    private void updateKeysAnimation(double deltaTime) {
+        for (Key key : curKeyList) {
+            key.updateAnimation(deltaTime);
+        }
     }
 
     private void spacerUpdate(double deltaTime){
@@ -93,9 +109,9 @@ public class GameState {
                 player.setVelocityX(0);
             } else {
                 if (gameController.isLeftPressed() && !gameController.isRightPressed()) {
-                    player.setVelocityX(-player.getMoveSpeed());
+                    player.setVelocityX(-Constants.MOVE_SPEED * player.getMoveSpeedMultiplier());
                 } else if (gameController.isRightPressed() && !gameController.isLeftPressed()) {
-                    player.setVelocityX(player.getMoveSpeed());
+                    player.setVelocityX(Constants.MOVE_SPEED * player.getMoveSpeedMultiplier());
                 } else {
                     player.setVelocityX(0);
                 }
@@ -121,7 +137,7 @@ public class GameState {
         // Set vertical velocity for jump (negative means upward)
         player.setVelocityY(jumpVelocity);
         // Apply horizontal velocity based on the aimed jump direction.
-        player.setVelocityX(player.getMoveSpeed() * player.getJumpDirection());
+        player.setVelocityX(Constants.MOVE_SPEED * player.getMoveSpeedMultiplier() * player.getJumpDirection());
         player.setOnGround(false);
         player.setSquatting(false);
         player.setJumping(true);
@@ -131,30 +147,57 @@ public class GameState {
     private double calculateJumpVelocity(double jumpHoldTime) {
         double ratio = Math.min(jumpHoldTime / Constants.MAX_JUMP_WAIT, 1.0);
         double velocityRatio = Constants.MIN_JUMP_COEFFICIENT + (1 - Constants.MIN_JUMP_COEFFICIENT) * ratio; //usual formula for calculating jump ratio
-        return -player.getJumpPower() * velocityRatio;
+        return -Constants.JUMP_POWER * velocityRatio * player.getJumpPowerMultiplier();
     }
 
     private void loadLevelsData() {
-        levelsDataList = JsonDataLoader.loadLevelsJson("src/main/resources/maps/Map2/levels.json");
+        levelsDataMap = JsonDataLoader.loadLevelsJson("src/main/resources/maps/Map2/levels.json");
     }
 
     private void loadPlayerData() {
         player = JsonDataLoader.loadPlayerJson("src/main/resources/maps/Map2/player.json");
     }
 
+    private void loadKeysData() {
+        int[] keyStatResp = JsonDataLoader.loadKeysStatsJson("src/main/resources/maps/Map2/collectables.json");
+        allKeys = keyStatResp[0];
+        collectedKeys = keyStatResp[1];
+    }
+
+    public int[] getKeyStats() {
+        return new int[]{allKeys, collectedKeys};
+    }
+
+    public void setCollectedKeys(int collectedKeys) {
+        this.collectedKeys = collectedKeys;
+    }
+
+    public int getCollectedKeys() {
+        return collectedKeys;
+    }
+
     public List<Platform> getPlatformList() {
         return curPlatformList;
+    }
+
+    public List<Key> getKeyList() {
+        return curKeyList;
     }
 
     //level control
     public void setCurLevel(int curLevel) {
         this.curLevel = curLevel;
-        curPlatformList = levelsDataList.get(curLevel).getPlatforms(); //set the platforms for the current level
+        curPlatformList = levelsDataMap.get(curLevel).getPlatforms(); //set the platforms for the current level
+        curKeyList = levelsDataMap.get(curLevel).getKeys();
 //        addPlatformsLevel(curLevel);
     }
 
+    public void keyCollected(Key key) {
+        collectedKeys++;
+        curKeyList.remove(key);
+        levelsDataMap.get(curLevel).getKeys().remove(key);
 
-
+    }
 
     public void setMaxLevel(int maxLevel) {
         this.maxLevel = maxLevel;

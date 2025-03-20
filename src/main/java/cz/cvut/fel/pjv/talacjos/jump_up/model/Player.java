@@ -13,9 +13,8 @@ public class Player extends Entity{
     private int jumpDirection = 0;
 
     //phycics stats - not a constant because it can be changed by powerups
-    private double jumpPower = 1500;
-    private double moveSpeed = 300;
-
+    private double jumpPowerMultiplier = 1.0;
+    private double moveSpeedMultiplier = 1.0;
 
 
     //animation properties
@@ -25,7 +24,7 @@ public class Player extends Entity{
     private SpriteAnimation fallAnimation;
     private SpriteAnimation squatAnimation;
 
-    private SpriteAnimation currentAnimation;
+//    private SpriteAnimation currentAnimation;
     private boolean facingRight = true;
 
     public Player(double x, double y, double width, double height) {
@@ -56,21 +55,26 @@ public class Player extends Entity{
     }
 
     public void setOnGround(boolean onGround) {
-
         isOnGround = onGround;
     }
 
-    public double getMoveSpeed() {
-        return moveSpeed;
+    public double getMoveSpeedMultiplier() {
+        return moveSpeedMultiplier;
+    }
+
+    public void setMoveSpeedMultiplier(double moveSpeedMultiplier) {
+        this.moveSpeedMultiplier = moveSpeedMultiplier;
     }
 
     //jump controls
-    public void setJumpPower(double jumpPower) {
-        this.jumpPower = jumpPower;
+
+
+    public void setJumpPowerMultiplier(double jumpPowerMultiplier) {
+        this.jumpPowerMultiplier = jumpPowerMultiplier;
     }
 
-    public double getJumpPower() {
-        return jumpPower;
+    public double getJumpPowerMultiplier() {
+        return jumpPowerMultiplier;
     }
 
     public void setJumpDirection(int jumpDirection) {
@@ -100,13 +104,15 @@ public class Player extends Entity{
         return isSquatting;
     }
 
+
+
     //animation controls
     private void loadAnimations() {
-        Image[] idleFrames = loadFrames("idle/idle", 2);
-        Image[] runFrames = loadFrames("run/run", 3);
-        Image[] jumpFrames = loadFrames("jump/jump", 1);
-        Image[] fallFrames = loadFrames("fall/fall", 1);
-        Image[] squatFrames = loadFrames("squat/squat", 1);
+        Image[] idleFrames = loadFrames("/player/idle/idle", 2);
+        Image[] runFrames = loadFrames("/player/run/run", 3);
+        Image[] jumpFrames = loadFrames("/player/jump/jump", 1);
+        Image[] fallFrames = loadFrames("/player/fall/fall", 1);
+        Image[] squatFrames = loadFrames("/player/squat/squat", 1);
 
         idleAnimation = new SpriteAnimation(idleFrames, 1, true);
         runAnimation = new SpriteAnimation(runFrames, 0.4, true);
@@ -117,28 +123,12 @@ public class Player extends Entity{
         currentAnimation = idleAnimation;
     }
 
-    private Image[] loadFrames(String path, int frameCount) {
-        Image[] frames = new Image[frameCount];
-        for (int i = 0; i < frameCount; i++) {
-            System.out.println("here" + i);
-            System.out.println("/images/player/" + path + (i+1) + ".png");
-            //load image and check if it was loaded
-            String imageLink = getClass().getResource("/images/player/" + path + (i+1) + ".png").toExternalForm();
-
-            if (imageLink == null) {
-                System.out.println("Image not found: " + path + i + ".png");
-                frames[i] = new Image(getDefaultImage());
-            } else {
-                frames[i] = new Image(imageLink);;
-            }
-        }
-        return frames;
-    }
-
-    private String getDefaultImage() {
+    @Override
+    protected String getDefaultImage() {
         return getClass().getResource("/images/player/playerDefault.png").toExternalForm();
     }
 
+    @Override
     public void updateAnimation(double deltaTime) {
         // Update animation based on player state
         if (!isOnGround()) {
@@ -164,10 +154,6 @@ public class Player extends Entity{
         }
 
         currentAnimation.update(deltaTime);
-    }
-
-    public SpriteAnimation getCurrentAnimation() {
-        return currentAnimation;
     }
 
     public boolean isFacingRight() {

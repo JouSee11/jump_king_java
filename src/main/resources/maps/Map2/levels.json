@@ -8,6 +8,10 @@
         {"x": 300, "y": 600, "width": 150, "height": 50, "type": "stone"},
         {"x": 600, "y": 500, "width": 120, "height": 50, "type": "stone"},
         {"x": 800, "y": 400, "width": 300, "height": 200, "type": "dirt"}
+      ],
+      "keys": [
+        {"x": 100, "y":  300, "id": 1},
+        {"x": 1000, "y":  700, "id": 2}
       ]
     },
     {
@@ -20,7 +24,8 @@
         {"x": 600, "y": 450, "width": 80, "height": 50, "type": "stone"},
         {"x": 300, "y": 350, "width": 80, "height": 50, "type": "stone"},
         {"x": 500, "y": 200, "width": 400, "height": 100, "type": "stone"}
-      ]
+      ],
+      "keys": []
     },
     {
       "id": 3,
@@ -32,6 +37,10 @@
         {"x": 400, "y": 450, "width": 80, "height": 50, "type": "stone"},
         {"x": 200, "y": 350, "width": 80, "height": 50, "type": "stone"},
         {"x": 400, "y": 250, "width": 350, "height": 50, "type": "stone"}
+      ],
+      "keys": [
+        {"x":  600, "y":  400, "id": 3},
+        {"x":  200, "y":  700, "id": 4}
       ]
     },
     {
@@ -46,7 +55,8 @@
         {"x": 650, "y": 400, "width": 60, "height": 40, "type": "stone"},
         {"x": 500, "y": 300, "width": 60, "height": 40, "type": "dirt"},
         {"x": 300, "y": 200, "width": 400, "height": 60, "type": "stone"}
-      ]
+      ],
+      "keys": []
     },
     {
       "id": 5,
@@ -62,6 +72,9 @@
         {"x": 300, "y": 350, "width": 50, "height": 50, "type": "stone"},
         {"x": 450, "y": 250, "width": 50, "height": 50, "type": "stone"},
         {"x": 600, "y": 150, "width": 350, "height": 60, "type": "stone"}
+      ],
+      "keys": [
+        {"x":  700, "y":  100, "id": 5}
       ]
     },
     {
@@ -80,7 +93,8 @@
         {"x": 950, "y": 200, "width": 40, "height": 40, "type": "stone"},
         {"x": 800, "y": 100, "width": 40, "height": 40, "type": "stone"},
         {"x": 550, "y": 150, "width": 150, "height": 80, "type": "stone"}
-      ]
+      ],
+      "keys": []
     },
     {
       "id": 7,
@@ -101,7 +115,8 @@
         {"x": 300, "y": 150, "width": 40, "height": 40, "type": "stone"},
         {"x": 500, "y": 200, "width": 40, "height": 40, "type": "stone"},
         {"x": 650, "y": 150, "width": 400, "height": 100, "type": "stone"}
-      ]
+      ],
+      "keys": []
     }
   ]
 }
