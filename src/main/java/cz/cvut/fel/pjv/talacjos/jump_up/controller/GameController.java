@@ -27,7 +27,7 @@ public class GameController {
         this.gameView = new GameView(sceneController, this, gameState);
 
         //init sounds
-        SoundController.getInstance();
+        SoundController.getInstance().playSound("startingMsg");
 
 
         setupGameLoop();

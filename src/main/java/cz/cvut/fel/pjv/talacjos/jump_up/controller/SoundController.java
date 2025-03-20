@@ -39,6 +39,7 @@ public class SoundController {
 
         loadEffect("collectSuccess", "/sounds/SFX/collectSuccess.mp3");
         loadEffect("collectedAllKeys", "/sounds/SFX/voices/allKeysCollected.mp3");
+        loadEffect("startingMsg", "/sounds/SFX/voices/startingMessage.mp3");
     }
 
     private void loadEffect(String name, String path) {
