@@ -20,8 +20,8 @@ public class Key extends Entity{
     }
 
     private void loadAnimation() {
-        Image[] frames = loadFrames("/keys/key", 4);
-        currentAnimation = new SpriteAnimation(frames, 0.7, true);
+        Image[] frames = loadFrames("/keys/key", 5);
+        currentAnimation = new SpriteAnimation(frames, 1, true);
     }
 
     @Override
