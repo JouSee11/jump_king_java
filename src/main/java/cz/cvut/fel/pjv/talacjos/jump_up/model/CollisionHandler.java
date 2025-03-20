@@ -1,6 +1,7 @@
 package cz.cvut.fel.pjv.talacjos.jump_up.model;
 
 import cz.cvut.fel.pjv.talacjos.jump_up.Constants;
+import cz.cvut.fel.pjv.talacjos.jump_up.controller.SoundController;
 import javafx.geometry.Bounds;
 import javafx.scene.shape.Rectangle;
 

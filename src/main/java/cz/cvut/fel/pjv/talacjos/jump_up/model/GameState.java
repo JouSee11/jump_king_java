@@ -2,6 +2,7 @@ package cz.cvut.fel.pjv.talacjos.jump_up.model;
 
 import cz.cvut.fel.pjv.talacjos.jump_up.Constants;
 import cz.cvut.fel.pjv.talacjos.jump_up.controller.GameController;
+import cz.cvut.fel.pjv.talacjos.jump_up.controller.SoundController;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -197,6 +198,12 @@ public class GameState {
         curKeyList.remove(key);
         levelsDataMap.get(curLevel).getKeys().remove(key);
 
+        SoundController.getInstance().playSound("collectSuccess");
+        if (collectedKeys == allKeys) {
+            SoundController.getInstance().playSound("collectedAllKeys");
+        } else {
+            SoundController.getInstance().playRandomKeyCollect();
+        }
     }
 
     public void setMaxLevel(int maxLevel) {

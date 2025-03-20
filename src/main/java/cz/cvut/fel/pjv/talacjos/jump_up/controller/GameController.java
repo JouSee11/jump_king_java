@@ -25,7 +25,10 @@ public class GameController {
         this.gameState = new GameState(this);
         // game view
         this.gameView = new GameView(sceneController, this, gameState);
-        //add the player
+
+        //init sounds
+        SoundController.getInstance();
+
 
         setupGameLoop();
     }
