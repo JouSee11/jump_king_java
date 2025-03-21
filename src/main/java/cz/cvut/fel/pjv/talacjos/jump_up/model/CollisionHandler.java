@@ -105,15 +105,7 @@ public class CollisionHandler{
         double verticalOverlap = Math.min(overlapTop, overlapBottom);
 
         //Resolve collision based on smallest overlap
-        if (horizontalOverlap < verticalOverlap) {
-            if (overlapLeft < overlapRight) {
-                player.setX(platform.getX() - player.getWidth()); // player hit the platform from left
-            } else {
-                player.setX(platform.getX() + platform.getWidth()); // player hit the platform from right
-            }
-            //if the player is jumping bounce back
-            bounceBack(player);
-        } else {
+        if (verticalOverlap < horizontalOverlap) {
             if (overlapTop < overlapBottom) {
                 player.setY(platform.getY() - player.getHeight()); // player hit the platform from top (landed on the platform)
                 player.setOnGround(true);
@@ -128,6 +120,15 @@ public class CollisionHandler{
 
             }
             player.setVelocityY(0);
+
+        } else {
+            if (overlapLeft < overlapRight) {
+                player.setX(platform.getX() - player.getWidth()); // player hit the platform from left
+            } else {
+                player.setX(platform.getX() + platform.getWidth()); // player hit the platform from right
+            }
+
+            bounceBack(player);
         }
 
     }
@@ -138,7 +139,8 @@ public class CollisionHandler{
         if (!player.isOnGround()) {
             player.setVelocityX(-Constants.BOUNCE_COEFFICIENT * player.getVelocityX());
 
-            if (player.isJumping()) {
+            System.out.println(player.getVelocityX());
+            if (player.getVelocityX() != 0) {
                 SoundController.getInstance().playRandomBump();
             }
         } else {
