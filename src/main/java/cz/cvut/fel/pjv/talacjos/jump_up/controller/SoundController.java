@@ -40,6 +40,21 @@ public class SoundController {
         loadEffect("collectSuccess", "/sounds/SFX/collectSuccess.mp3");
         loadEffect("collectedAllKeys", "/sounds/SFX/voices/allKeysCollected.mp3");
         loadEffect("startingMsg", "/sounds/SFX/voices/startingMessage.mp3");
+
+        //player movement
+        loadEffect("jump", "/sounds/SFX/jump/jump.mp3");
+        loadEffect("jump1", "/sounds/SFX/jump/jump1.mp3");
+        loadEffect("jump2", "/sounds/SFX/jump/jump2.mp3");
+        loadEffect("jump3", "/sounds/SFX/jump/jump3.mp3");
+        loadEffect("jump4", "/sounds/SFX/jump/jump4.mp3");
+        loadEffect("jump5", "/sounds/SFX/jump/jump5.mp3");
+
+        loadEffect("bump", "/sounds/SFX/bump/bump.mp3");
+        loadEffect("bump1", "/sounds/SFX/bump/bump1.mp3");
+        loadEffect("bump2", "/sounds/SFX/bump/bump2.mp3");
+
+        loadEffect("fall", "/sounds/SFX/fall.mp3");
+
     }
 
     private void loadEffect(String name, String path) {
@@ -59,6 +74,22 @@ public class SoundController {
         clip.play();
     }
 
+    public void playRandomJump() {
+        AudioClip clipDef = soundEffects.get("jump");
+        int randomIndex = (int) (Math.random() * 5) + 1;
+        AudioClip clip = soundEffects.get("jump"  + randomIndex);
+        clip.play(0.1);
+        clipDef.play();
+    }
+
+    public void playRandomBump(){
+        AudioClip clipDef = soundEffects.get("bump");
+//        int randomIndex = (int) (Math.random() * 2) + 1;
+//        AudioClip clip = soundEffects.get("bump"  + randomIndex);
+//        clip.play(0.2);
+        clipDef.play(0.7);
+    }
+
     public void playSound(String name) {
         if (muted) return;
 
@@ -67,6 +98,7 @@ public class SoundController {
             clip.play();
         }
     }
+
 
 
     public void playMusic(String musicFile) {

@@ -11,6 +11,8 @@ import java.util.List;
 public class CollisionHandler{
     private GameState gameState;
 
+    private boolean wasOnGround  = false;
+
     public CollisionHandler(GameState gameState) {
         this.gameState = gameState;
     }
@@ -23,6 +25,7 @@ public class CollisionHandler{
         int maxLevel = gameState.getMaxLevel();
 
         // Reset ground state before checking
+        wasOnGround = player.isOnGround();
         player.setOnGround(false);
 
         // Check player on the floor on level 1
@@ -30,6 +33,8 @@ public class CollisionHandler{
             player.setY(Constants.GAME_HEIGHT - player.getHeight());
             player.setVelocityY(0);
             player.setOnGround(true);
+
+            playSoundFall(player);
             player.setJumping(false);
         }
 
@@ -37,6 +42,9 @@ public class CollisionHandler{
         if (player.getY() < 0 && curLevel == maxLevel) {
             player.setY(0);
             player.setVelocityY(0);
+
+            SoundController.getInstance().playRandomBump();
+
         }
 
         // check next level and move player to the next level - DOWN
@@ -108,11 +116,16 @@ public class CollisionHandler{
         } else {
             if (overlapTop < overlapBottom) {
                 player.setY(platform.getY() - player.getHeight()); // player hit the platform from top (landed on the platform)
-
                 player.setOnGround(true);
+
+                playSoundFall(player);
+
                 player.setJumping(false);
             } else  {
                 player.setY(platform.getY() + platform.getHeight()); // player hit the platform from bottom
+
+                SoundController.getInstance().playRandomBump();
+
             }
             player.setVelocityY(0);
         }
@@ -124,6 +137,10 @@ public class CollisionHandler{
         //if the player is jumping bounce back
         if (!player.isOnGround()) {
             player.setVelocityX(-Constants.BOUNCE_COEFFICIENT * player.getVelocityX());
+
+            if (player.isJumping()) {
+                SoundController.getInstance().playRandomBump();
+            }
         } else {
             player.setVelocityY(0);
         }
@@ -141,7 +158,12 @@ public class CollisionHandler{
         System.out.println(player.getVelocityY());
 
         System.out.println("Next level " + direction);
+    }
 
+    private void playSoundFall(Player player) {
+        if (player.isJumping() || !wasOnGround) {
+            SoundController.getInstance().playSound("fall");
+        }
     }
 
 }

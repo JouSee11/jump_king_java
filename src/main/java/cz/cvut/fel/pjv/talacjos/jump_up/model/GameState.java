@@ -143,6 +143,9 @@ public class GameState {
         player.setSquatting(false);
         player.setJumping(true);
         jumpHoldTime = 0;
+
+        SoundController.getInstance().playRandomJump();
+
     }
 
     private double calculateJumpVelocity(double jumpHoldTime) {
