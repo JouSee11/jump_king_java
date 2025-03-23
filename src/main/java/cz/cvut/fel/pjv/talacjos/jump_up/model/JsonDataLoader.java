@@ -39,10 +39,15 @@ public class JsonDataLoader {
 
                 //get all keys for the level
                 JsonArray keysArray = levelObj.getAsJsonArray("keys");
-                List<Key> keys = getKeyList(keysArray);
+                List<Key> keys = getCollectableList(keysArray, "key");
+
+                //get all powerups for the level
+                JsonArray powerUpsArray = levelObj.getAsJsonArray("powerUp");
+                List<PowerUp> powerUps = getCollectableList(powerUpsArray, "powerUp");
 
                 level.setPlatforms(platforms);
                 level.setKeys(keys);
+                level.setPowerUps(powerUps);
                 levels.put(level.getId(), level);
 
             }
@@ -52,23 +57,64 @@ public class JsonDataLoader {
         return levels;
     }
 
-    private static List<Key> getKeyList(JsonArray keysArray) {
-        List<Key> keys = new ArrayList<Key>();
+    private static <T extends Entity> List<T> getCollectableList(JsonArray collectableArray, String type) {
+        List<T> collectables = new ArrayList<T>();
 
         //go through all keys for the level
-        for (JsonElement keyElement : keysArray) {
-            JsonObject keyObj = keyElement.getAsJsonObject();
+        for (JsonElement collectableElement : collectableArray) {
+            JsonObject collectableObj = collectableElement.getAsJsonObject();
 
-            int x = keyObj.get("x").getAsInt();
-            int y = keyObj.get("y").getAsInt();
-            int id = keyObj.get("id").getAsInt();
+            int x = collectableObj.get("x").getAsInt();
+            int y = collectableObj.get("y").getAsInt();
+            int id = collectableObj.get("id").getAsInt();
 
 
-            Key key = new Key(x, y, id);
-            keys.add(key);
+            if (type.equals("key")) {
+                Key key = new Key(x, y, id);
+                collectables.add((T) key);
+            } else {
+                PowerUp powerUp = new PowerUp(x, y, id);
+                collectables.add((T) powerUp);
+            }
         }
-        return keys;
+        return collectables;
     }
+
+//    private static List<Key> getKeyList(JsonArray keysArray) {
+//        List<Key> keys = new ArrayList<Key>();
+//
+//        //go through all keys for the level
+//        for (JsonElement keyElement : keysArray) {
+//            JsonObject keyObj = keyElement.getAsJsonObject();
+//
+//            int x = keyObj.get("x").getAsInt();
+//            int y = keyObj.get("y").getAsInt();
+//            int id = keyObj.get("id").getAsInt();
+//
+//
+//            Key key = new Key(x, y, id);
+//            keys.add(key);
+//        }
+//        return keys;
+//    }
+//
+//    private static List<PowerUp> getPowerUpList(JsonArray powerUpsArray) {
+//        List<PowerUp> powerUps = new ArrayList<PowerUp>();
+//
+//        //go through all keys for the level
+//        for (JsonElement powerUpElement : powerUpsArray) {
+//            JsonObject powerUpObj = powerUpElement.getAsJsonObject();
+//
+//            int x = powerUpObj.get("x").getAsInt();
+//            int y = powerUpObj.get("y").getAsInt();
+//            int id = powerUpObj.get("id").getAsInt();
+//
+//
+//            PowerUp powerup = new PowerUp(x, y, id);
+//            powerUps.add(powerup);
+//        }
+//        return powerUps;
+//    }
 
     private static List<Platform> getPlatformList(JsonArray platformsArray) {
         List<Platform> platforms = new ArrayList<Platform>();

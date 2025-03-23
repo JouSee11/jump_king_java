@@ -3,23 +3,19 @@ package cz.cvut.fel.pjv.talacjos.jump_up.view;
 import cz.cvut.fel.pjv.talacjos.jump_up.Constants;
 import cz.cvut.fel.pjv.talacjos.jump_up.controller.GameController;
 import cz.cvut.fel.pjv.talacjos.jump_up.controller.SceneController;
-import cz.cvut.fel.pjv.talacjos.jump_up.model.GameState;
-import cz.cvut.fel.pjv.talacjos.jump_up.model.Key;
-import cz.cvut.fel.pjv.talacjos.jump_up.model.Platform;
-import cz.cvut.fel.pjv.talacjos.jump_up.model.Player;
+import cz.cvut.fel.pjv.talacjos.jump_up.model.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
+import javafx.scene.effect.BlendMode;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 
 public class GameView {
     private final Scene scene;
@@ -86,6 +82,12 @@ public class GameView {
         //Render key with animation
         renderKey(gc);
 
+        //render powerups with animation
+        renderPowerUp(gc);
+
+        //apply color filters - when some item was colected
+        applyColorFilter(gc);
+
     }
 
     private void renderPlatform(GraphicsContext gc) {
@@ -132,6 +134,13 @@ public class GameView {
         for (Key key : gameState.getKeyList()) {
             Image curFrame = key.getCurrentAnimation().getCurrentFrame();
             gc.drawImage(curFrame, key.getX(), key.getY(), key.getWidth(), key.getHeight());
+        }
+    }
+
+    private void renderPowerUp(GraphicsContext gc) {
+        for (PowerUp powerup : gameState.getCurPowerupList()) {
+            Image curFrame = powerup.getCurrentAnimation().getCurrentFrame();
+            gc.drawImage(curFrame, powerup.getX(), powerup.getY(), powerup.getWidth(), powerup.getHeight());
         }
     }
 
@@ -187,6 +196,33 @@ public class GameView {
         backgroundImage = new Image(getClass().getResource("/images/background/background" + imgNumber + ".png").toExternalForm());
 //        backgroundImage = new Image(getClass().getResource("/images/background/background1" + ".png").toExternalForm());
     }
+
+    private void applyColorFilter(GraphicsContext gc) {
+        if (!gameState.isPowerUpActive()) {
+            return;
+        }
+
+        // Save the current state
+        gc.save();
+
+        // Set blend mode to preserve contrast
+        gc.setGlobalBlendMode(BlendMode.OVERLAY);
+
+        // Set a semi-transparent blue color
+        gc.setGlobalAlpha(0.3);
+
+//        Color[] colors = {Color.RED, Color.ALICEBLUE, Color.BLUE, Color.GRAY, Color.GREEN};
+//        Color randomColor = colors[(int)(Math.random() * colors.length)];
+        gc.setFill(Color.BLUE);
+
+        // Draw over the entire canvas
+        gc.fillRect(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
+
+        // Restore previous state
+        gc.restore();
+    }
+
+
 
     public Scene getScene() {
         return scene;

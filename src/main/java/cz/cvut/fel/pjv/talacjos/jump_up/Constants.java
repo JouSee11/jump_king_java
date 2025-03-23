@@ -23,7 +23,7 @@ public class Constants {
     public static final double PLAYER_HEIGHT = 100;
 
     //collectables stats
-    public static final int KEY_SIZE = 50;
+    public static final int COLLECTABLE_SIZE = 50;
 
     private Constants() {}
 

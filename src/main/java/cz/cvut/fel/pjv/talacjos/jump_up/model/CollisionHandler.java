@@ -82,6 +82,17 @@ public class CollisionHandler{
         for (Key key : keyToCollect) {
             gameState.keyCollected(key);
         }
+
+        //handle powerup collect collision
+        List<PowerUp> powerUpsToCollect = new ArrayList<PowerUp>();
+        for (PowerUp powerUp : gameState.getCurPowerupList()) {
+            if(checkCollision(player, powerUp)) {
+                powerUpsToCollect.add(powerUp);
+            }
+        }
+        for (PowerUp powerUp : powerUpsToCollect) {
+            gameState.powerUpCollected(powerUp);
+        }
     }
 //
 
@@ -139,7 +150,6 @@ public class CollisionHandler{
         if (!player.isOnGround()) {
             player.setVelocityX(-Constants.BOUNCE_COEFFICIENT * player.getVelocityX());
 
-            System.out.println(player.getVelocityX());
             if (player.getVelocityX() != 0) {
                 SoundController.getInstance().playRandomBump();
             }

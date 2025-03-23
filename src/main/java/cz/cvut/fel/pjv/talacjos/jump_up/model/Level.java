@@ -7,6 +7,7 @@ public class Level {
     private int id;
     private List<Platform> platforms;
     private List<Key> keys;
+    private List<PowerUp> powerUps;
     //late add keys and powerups
 
     public int getId() {
@@ -16,7 +17,6 @@ public class Level {
     public void setId(int id) {
         this.id = id;
     }
-
 
     public List<Platform> getPlatforms() {
         return platforms;
@@ -32,6 +32,14 @@ public class Level {
 
     public void setKeys(List<Key> keys) {
         this.keys = keys;
+    }
+
+    public List<PowerUp> getPowerUps() {
+        return powerUps;
+    }
+
+    public void setPowerUps(List<PowerUp> powerUps) {
+        this.powerUps = powerUps;
     }
 
     @Override

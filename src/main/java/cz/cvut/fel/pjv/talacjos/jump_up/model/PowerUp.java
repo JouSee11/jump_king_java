@@ -4,23 +4,23 @@ import cz.cvut.fel.pjv.talacjos.jump_up.Constants;
 import cz.cvut.fel.pjv.talacjos.jump_up.view.SpriteAnimation;
 import javafx.scene.image.Image;
 
-public class Key extends Entity{
-    private int keyId;
+public class PowerUp extends Entity {
+    private int powerUpId;
 
-    public Key(double x, double y, int id) {
+    public PowerUp(double x, double y, int id) {
         super(x, y, Constants.COLLECTABLE_SIZE, Constants.COLLECTABLE_SIZE);
-        this.keyId = id;
+        this.powerUpId = id;
 
         loadAnimation();
     }
 
     @Override
     protected String getDefaultImage() {
-        return getClass().getResource("/images/keys/keyDefault.png").toExternalForm();
+        return getClass().getResource("/images/powerup/powerupDefault.png").toExternalForm();
     }
 
     private void loadAnimation() {
-        Image[] frames = loadFrames("/keys/key", 5);
+        Image[] frames = loadFrames("/powerup/powerup", 3);
         currentAnimation = new SpriteAnimation(frames, 1, true);
     }
 
@@ -29,11 +29,11 @@ public class Key extends Entity{
         currentAnimation.update(deltaTime);
     }
 
-    public void setKeyId(int keyId) {
-        this.keyId = keyId;
+    public void setPowerUpId(int powerUpId) {
+        this.powerUpId = powerUpId;
     }
 
-    public int getKeyId() {
-        return keyId;
+    public int getPowerUpId() {
+        return powerUpId;
     }
 }

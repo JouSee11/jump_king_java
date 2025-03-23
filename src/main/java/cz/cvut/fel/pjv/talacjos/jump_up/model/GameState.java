@@ -14,6 +14,7 @@ public class GameState {
 
     private List<Platform> curPlatformList;
     private List<Key> curKeyList;
+    private List<PowerUp> curPowerupList;
 
     private HashMap<Integer, Level> levelsDataMap;
 
@@ -26,10 +27,13 @@ public class GameState {
     private int collectedKeys;
     private int allKeys;
 
+    private boolean powerUpActive = false;
+
     public GameState(GameController gameController) {
         this.gameController = gameController;
         this.curPlatformList = new ArrayList<Platform>();
         this.curKeyList = new ArrayList<Key>();
+        this.curPowerupList = new ArrayList<PowerUp>();
 
         //load data from json files
         loadPlayerData();
@@ -71,13 +75,14 @@ public class GameState {
         //update player animation
         player.updateAnimation(deltaTime);
 
-        //update keys animation
-        updateKeysAnimation(deltaTime);
+        //update collectable animation
+        updateCollectableAnimation(deltaTime, curKeyList);
+        updateCollectableAnimation(deltaTime, curPowerupList);
     }
 
-    private void updateKeysAnimation(double deltaTime) {
-        for (Key key : curKeyList) {
-            key.updateAnimation(deltaTime);
+    private <T extends Entity> void updateCollectableAnimation(double deltaTime, List<T>  entities) {
+        for (T entity : entities) {
+            entity.updateAnimation(deltaTime);
         }
     }
 
@@ -188,11 +193,16 @@ public class GameState {
         return curKeyList;
     }
 
+    public List<PowerUp> getCurPowerupList() {
+        return curPowerupList;
+    }
+
     //level control
     public void setCurLevel(int curLevel) {
         this.curLevel = curLevel;
         curPlatformList = levelsDataMap.get(curLevel).getPlatforms(); //set the platforms for the current level
         curKeyList = levelsDataMap.get(curLevel).getKeys();
+        curPowerupList = levelsDataMap.get(curLevel).getPowerUps();
 //        addPlatformsLevel(curLevel);
     }
 
@@ -207,6 +217,20 @@ public class GameState {
         } else {
             SoundController.getInstance().playRandomKeyCollect();
         }
+    }
+
+    public void powerUpCollected(PowerUp powerUp) {
+        curPowerupList.remove(powerUp);
+        levelsDataMap.get(curLevel).getPowerUps().remove(powerUp);
+        powerUpActive = true;
+    }
+
+    public void setPowerUpActive(boolean powerUpActive) {
+        this.powerUpActive = powerUpActive;
+    }
+
+    public boolean isPowerUpActive() {
+        return powerUpActive;
     }
 
     public void setMaxLevel(int maxLevel) {

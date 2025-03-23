@@ -33,7 +33,7 @@ public class GameController {
         setupGameLoop();
     }
 
-    //setup the game scene
+    //set up the game scene
     public Scene setGameScene() {
         return gameView.getScene();
     }
