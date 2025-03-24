@@ -1,9 +1,9 @@
-package cz.cvut.fel.pjv.talacjos.jump_up.model;
+package cz.cvut.fel.pjv.talacjos.jump_up.model.world_items;
 
 import cz.cvut.fel.pjv.talacjos.jump_up.view.SpriteAnimation;
 import javafx.scene.image.Image;
 
-public class Player extends Entity{
+public class Player extends Entity {
     //player stats
     private double velocityX = 0;
     private double velocityY = 0;
@@ -66,11 +66,13 @@ public class Player extends Entity{
         this.moveSpeedMultiplier = moveSpeedMultiplier;
     }
 
-    //jump controls
-
-
     public void setJumpPowerMultiplier(double jumpPowerMultiplier) {
         this.jumpPowerMultiplier = jumpPowerMultiplier;
+    }
+
+    public void powerUpActivate() {
+        this.jumpPowerMultiplier = 2.0;
+        this.moveSpeedMultiplier = 2.0;
     }
 
     public double getJumpPowerMultiplier() {

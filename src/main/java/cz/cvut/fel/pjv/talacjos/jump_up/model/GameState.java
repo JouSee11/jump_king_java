@@ -3,6 +3,7 @@ package cz.cvut.fel.pjv.talacjos.jump_up.model;
 import cz.cvut.fel.pjv.talacjos.jump_up.Constants;
 import cz.cvut.fel.pjv.talacjos.jump_up.controller.GameController;
 import cz.cvut.fel.pjv.talacjos.jump_up.controller.SoundController;
+import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -220,9 +221,15 @@ public class GameState {
     }
 
     public void powerUpCollected(PowerUp powerUp) {
+        //remove the powerup from the map
         curPowerupList.remove(powerUp);
         levelsDataMap.get(curLevel).getPowerUps().remove(powerUp);
+
+        // add the powerup to the player
         powerUpActive = true;
+        player.powerUpActivate();
+
+        SoundController.getInstance().playSound("powerUpCollected");
     }
 
     public void setPowerUpActive(boolean powerUpActive) {

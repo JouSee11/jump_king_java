@@ -1,8 +1,12 @@
 package cz.cvut.fel.pjv.talacjos.jump_up.model;
 
+import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.Key;
+import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.Platform;
+import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.PowerUp;
+
 import java.util.List;
 
-//one level = like one screen
+//one level = one screen
 public class Level {
     private int id;
     private List<Platform> platforms;

@@ -1,4 +1,4 @@
-package cz.cvut.fel.pjv.talacjos.jump_up.model;
+package cz.cvut.fel.pjv.talacjos.jump_up.model.world_items;
 
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;

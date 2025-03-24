@@ -1,6 +1,5 @@
 package cz.cvut.fel.pjv.talacjos.jump_up.view;
 
-import cz.cvut.fel.pjv.talacjos.jump_up.model.Player;
 import javafx.scene.image.Image;
 
 public class SpriteAnimation {

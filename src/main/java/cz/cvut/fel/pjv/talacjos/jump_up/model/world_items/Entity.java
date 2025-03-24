@@ -1,4 +1,4 @@
-package cz.cvut.fel.pjv.talacjos.jump_up.model;
+package cz.cvut.fel.pjv.talacjos.jump_up.model.world_items;
 
 import cz.cvut.fel.pjv.talacjos.jump_up.view.SpriteAnimation;
 import javafx.scene.image.Image;

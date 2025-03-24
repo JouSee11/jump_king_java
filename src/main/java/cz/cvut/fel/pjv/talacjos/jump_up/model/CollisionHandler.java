@@ -2,6 +2,10 @@ package cz.cvut.fel.pjv.talacjos.jump_up.model;
 
 import cz.cvut.fel.pjv.talacjos.jump_up.Constants;
 import cz.cvut.fel.pjv.talacjos.jump_up.controller.SoundController;
+import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.Key;
+import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.Platform;
+import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.Player;
+import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.PowerUp;
 import javafx.geometry.Bounds;
 import javafx.scene.shape.Rectangle;
 

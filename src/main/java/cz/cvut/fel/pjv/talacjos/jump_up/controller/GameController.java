@@ -1,12 +1,10 @@
 package cz.cvut.fel.pjv.talacjos.jump_up.controller;
 
-import cz.cvut.fel.pjv.talacjos.jump_up.Constants;
 import cz.cvut.fel.pjv.talacjos.jump_up.model.GameState;
-import cz.cvut.fel.pjv.talacjos.jump_up.model.Player;
+import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.Player;
 import cz.cvut.fel.pjv.talacjos.jump_up.view.GameView;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 public class GameController {
