@@ -41,6 +41,8 @@ public class SoundController {
         loadEffect("collectedAllKeys", "/sounds/SFX/voices/allKeysCollected.mp3");
         loadEffect("startingMsg", "/sounds/SFX/voices/startingMessage.mp3");
 
+        loadEffect("powerUpCollected", "/sounds/SFX/powerUpCollect.mp3");
+
         //player movement
         loadEffect("jump", "/sounds/SFX/jump/jump.mp3");
         loadEffect("jump1", "/sounds/SFX/jump/jump1.mp3");
@@ -87,7 +89,7 @@ public class SoundController {
 //        int randomIndex = (int) (Math.random() * 2) + 1;
 //        AudioClip clip = soundEffects.get("bump"  + randomIndex);
 //        clip.play(0.2);
-        clipDef.play(0.7);
+        clipDef.play(0.4);
     }
 
     public void playSound(String name) {

@@ -29,6 +29,8 @@ public class GameState {
     private int allKeys;
 
     private boolean powerUpActive = false;
+    private int powerUpTimeRemaining = 0;
+    private Thread powerUpTimerThread;
 
     public GameState(GameController gameController) {
         this.gameController = gameController;
@@ -229,7 +231,44 @@ public class GameState {
         powerUpActive = true;
         player.powerUpActivate();
 
+        //start the timer thread
+        powerUpTimeRemaining = Constants.POWERUP_DURATION;
+        startPowerUpTimerThread();
+
         SoundController.getInstance().playSound("powerUpCollected");
+    }
+
+    private void deactivatePowerUp() {
+        powerUpActive = false;
+        powerUpTimeRemaining = 0;
+        player.powerUpDeactivate();
+        stopPowerUpTimerThread();
+    }
+
+    private void startPowerUpTimerThread() {
+        //stop the thread if it is already running
+        stopPowerUpTimerThread();
+
+        powerUpTimerThread = new Thread(() -> {
+           try {
+               while(powerUpTimeRemaining > 0) {
+                   Thread.sleep(1000); //wait 1 second for the timer
+                    powerUpTimeRemaining--;
+               }
+               javafx.application.Platform.runLater(this::deactivatePowerUp);
+               System.out.println("Power up timer thread has been started");
+           } catch (InterruptedException e) {
+           }
+        });
+        powerUpTimerThread.setDaemon(true);
+        powerUpTimerThread.start();
+
+    }
+
+    private void stopPowerUpTimerThread() {
+        if (powerUpTimerThread != null && powerUpTimerThread.isAlive()) {
+            powerUpTimerThread.interrupt();
+        }
     }
 
     public void setPowerUpActive(boolean powerUpActive) {

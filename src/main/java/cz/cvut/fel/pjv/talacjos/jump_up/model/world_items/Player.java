@@ -75,6 +75,11 @@ public class Player extends Entity {
         this.moveSpeedMultiplier = 2.0;
     }
 
+    public void powerUpDeactivate() {
+        this.jumpPowerMultiplier = 1.0;
+        this.moveSpeedMultiplier = 1.0;
+    }
+
     public double getJumpPowerMultiplier() {
         return jumpPowerMultiplier;
     }

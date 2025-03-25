@@ -21,6 +21,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class GameView {
     private final Scene scene;
     private final SceneController sceneController;
@@ -28,8 +31,10 @@ public class GameView {
 
     private final Canvas canvas;
 
-    //image parts
+    //cashing data - optimalisation
     private Image backgroundImage;
+    private final Map<Integer, Image> backgroundCache = new HashMap<Integer, Image>();
+//    private Map<String, Image> platformsImageCache = new HashMap<String, Image>();
 
     //ui parts
     private Label keyCountLabel;
@@ -195,10 +200,11 @@ public class GameView {
 
 
     private void loadBackgroundImage() {
-//        int randomImg = (int) (Math.random() * 7) + 1;
-        int imgNumber = gameState.getCurLevel();
-        backgroundImage = new Image(getClass().getResource("/images/background/background" + imgNumber + ".png").toExternalForm());
-//        backgroundImage = new Image(getClass().getResource("/images/background/background1" + ".png").toExternalForm());
+        int curLevel = gameState.getCurLevel();
+        if (!backgroundCache.containsKey(curLevel)) {
+            backgroundCache.put(curLevel, new Image(getClass().getResource("/images/background/background" + curLevel + ".png").toExternalForm()));
+        }
+        backgroundImage = backgroundCache.get(curLevel);
     }
 
     private void applyColorFilter(GraphicsContext gc) {
