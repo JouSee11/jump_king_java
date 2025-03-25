@@ -71,7 +71,7 @@ public class Player extends Entity {
     }
 
     public void powerUpActivate() {
-        this.jumpPowerMultiplier = 2.0;
+        this.jumpPowerMultiplier = 1.7;
         this.moveSpeedMultiplier = 2.0;
     }
 

@@ -38,7 +38,10 @@ public class GameView {
 
     //ui parts
     private Label keyCountLabel;
+    private Label powerUpTimerLabel;
+
     private ImageView keyIconView;
+    private ImageView timerIconView;
 
     public GameView(SceneController sceneController, GameController gameController, GameState gameState) {
         this.sceneController = sceneController;
@@ -60,6 +63,7 @@ public class GameView {
 
         //show ui parts
         renderKeyCountUI(gameArea);
+        renderPowerUpTimerUi(gameArea);
 
         //handle key events
         scene.setOnKeyPressed(gameController::handleKeyPress);
@@ -84,6 +88,7 @@ public class GameView {
 
         //update interface elements
         updateKeyCountUI();
+        updatePowerUpTimer(gc);
 
         // Render player with animation
         renderPlayer(gc);
@@ -193,6 +198,30 @@ public class GameView {
         root.getChildren().add(keyBox);
     }
 
+    private void renderPowerUpTimerUi(StackPane root) {
+        powerUpTimerLabel = new Label("");
+        powerUpTimerLabel.getStyleClass().add("power-up-timer");
+        powerUpTimerLabel.setVisible(false);
+
+        //load icon
+        Image timerImage = new Image(getClass().getResource("/images/assets/timer.png").toExternalForm());
+        timerIconView = new ImageView(timerImage);
+        timerIconView.setFitWidth(30);
+        timerIconView.setFitHeight(30);
+        timerIconView.setVisible(false);
+
+        // Create HBox to hold icon and label horizontally
+        HBox keyBox = new HBox(10); // 10px spacing
+        keyBox.getChildren().addAll(timerIconView, powerUpTimerLabel);
+        keyBox.setAlignment(Pos.BOTTOM_LEFT);
+
+        // Position the HBox in the bottom right corner
+        StackPane.setMargin(keyBox, new Insets(0, 0, 20, 40));
+
+        // Add to root
+        root.getChildren().add(keyBox);
+    }
+
     private void updateKeyCountUI() {
         int[] keyStats = gameState.getKeyStats();
         keyCountLabel.setText(keyStats[1] + "/" + keyStats[0]);
@@ -207,6 +236,19 @@ public class GameView {
         backgroundImage = backgroundCache.get(curLevel);
     }
 
+    private void updatePowerUpTimer(GraphicsContext gc) {
+        if (gameState.isPowerUpActive()) {
+            int timeRemaining = gameState.getPowerUpTimeRemaining();
+            String formattedString = String.format("%02d:%02d", timeRemaining / 60, timeRemaining % 60);
+            powerUpTimerLabel.setText(formattedString);
+            powerUpTimerLabel.setVisible(true);
+            timerIconView.setVisible(true);
+        } else {
+            powerUpTimerLabel.setVisible(false);
+            timerIconView.setVisible(false);
+        }
+    }
+
     private void applyColorFilter(GraphicsContext gc) {
         if (!gameState.isPowerUpActive()) {
             return;
@@ -219,7 +261,7 @@ public class GameView {
         gc.setGlobalBlendMode(BlendMode.OVERLAY);
 
         // Set a semi-transparent blue color
-        gc.setGlobalAlpha(0.3);
+        gc.setGlobalAlpha(0.4);
 
 //        Color[] colors = {Color.RED, Color.ALICEBLUE, Color.BLUE, Color.GRAY, Color.GREEN};
 //        Color randomColor = colors[(int)(Math.random() * colors.length)];

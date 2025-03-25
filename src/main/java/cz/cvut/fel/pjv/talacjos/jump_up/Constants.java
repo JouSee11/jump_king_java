@@ -24,7 +24,7 @@ public class Constants {
 
     //collectables stats
     public static final int COLLECTABLE_SIZE = 50;
-    public static final int POWERUP_DURATION = 4;
+    public static final int POWERUP_DURATION = 10;
 
     private Constants() {}
 

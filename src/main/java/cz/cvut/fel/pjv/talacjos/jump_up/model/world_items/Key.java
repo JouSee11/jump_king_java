@@ -21,7 +21,7 @@ public class Key extends Entity {
 
     private void loadAnimation() {
         Image[] frames = loadFrames("/keys/key", 5);
-        currentAnimation = new SpriteAnimation(frames, 1, true);
+        currentAnimation = new SpriteAnimation(frames, 1.5, true);
     }
 
     @Override

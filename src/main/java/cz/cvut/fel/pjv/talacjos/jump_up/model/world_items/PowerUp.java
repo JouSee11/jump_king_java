@@ -21,7 +21,7 @@ public class PowerUp extends Entity {
 
     private void loadAnimation() {
         Image[] frames = loadFrames("/powerup/powerup", 3);
-        currentAnimation = new SpriteAnimation(frames, 1, true);
+        currentAnimation = new SpriteAnimation(frames, 1.5, true);
     }
 
     @Override

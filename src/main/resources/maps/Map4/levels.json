@@ -1,0 +1,124 @@
+{
+  "levels": [
+    {
+      "id": 1,
+      "platforms": [
+        { "x": 50, "y": 800, "width": 300, "height": 50, "type": "stone" },
+        { "x": 400, "y": 700, "width": 200, "height": 50, "type": "dirt" },
+        { "x": 650, "y": 600, "width": 150, "height": 50, "type": "stone" },
+        { "x": 820, "y": 520, "width": 120, "height": 50, "type": "dirt" }
+      ],
+      "keys": [
+        { "x": 680, "y": 560, "id": 1 }
+      ],
+      "powerUp": [
+        { "x": 250, "y": 760, "id": 1 }
+      ]
+    },
+    {
+      "id": 2,
+      "platforms": [
+        { "x": 100, "y": 750, "width": 200, "height": 50, "type": "stone" },
+        { "x": 350, "y": 650, "width": 150, "height": 50, "type": "dirt" },
+        { "x": 550, "y": 550, "width": 120, "height": 50, "type": "stone" },
+        { "x": 700, "y": 450, "width": 180, "height": 50, "type": "dirt" },
+        { "x": 500, "y": 350, "width": 150, "height": 50, "type": "stone" }
+      ],
+      "keys": [
+        { "x": 720, "y": 400, "id": 2 }
+      ],
+      "powerUp": [
+        { "x": 360, "y": 610, "id": 2 }
+      ]
+    },
+    {
+      "id": 3,
+      "platforms": [
+        { "x": 50, "y": 800, "width": 150, "height": 50, "type": "stone" },
+        { "x": 250, "y": 700, "width": 100, "height": 50, "type": "dirt" },
+        { "x": 150, "y": 600, "width": 150, "height": 50, "type": "stone" },
+        { "x": 350, "y": 500, "width": 120, "height": 50, "type": "dirt" },
+        { "x": 250, "y": 400, "width": 150, "height": 50, "type": "stone" },
+        { "x": 450, "y": 300, "width": 100, "height": 50, "type": "dirt" }
+      ],
+      "keys": [
+        { "x": 470, "y": 260, "id": 3 }
+      ],
+      "powerUp": [
+        { "x": 260, "y": 360, "id": 3 }
+      ]
+    },
+    {
+      "id": 4,
+      "platforms": [
+        { "x": 50, "y": 800, "width": 200, "height": 50, "type": "stone" },
+        { "x": 300, "y": 800, "width": 200, "height": 50, "type": "dirt" },
+        { "x": 550, "y": 800, "width": 200, "height": 50, "type": "stone" },
+        { "x": 800, "y": 800, "width": 200, "height": 50, "type": "dirt" }
+      ],
+      "keys": [
+        { "x": 900, "y": 750, "id": 4 }
+      ],
+      "powerUp": []
+    },
+    {
+      "id": 5,
+      "platforms": [
+        { "x": 50, "y": 750, "width": 150, "height": 50, "type": "dirt" },
+        { "x": 250, "y": 650, "width": 120, "height": 50, "type": "stone" },
+        { "x": 450, "y": 550, "width": 150, "height": 50, "type": "dirt" },
+        { "x": 650, "y": 450, "width": 150, "height": 50, "type": "stone" },
+        { "x": 850, "y": 350, "width": 180, "height": 50, "type": "dirt" },
+        { "x": 700, "y": 250, "width": 120, "height": 50, "type": "stone" },
+        { "x": 500, "y": 150, "width": 150, "height": 50, "type": "dirt" }
+      ],
+      "keys": [
+        { "x": 860, "y": 310, "id": 5 }
+      ],
+      "powerUp": [
+        { "x": 260, "y": 610, "id": 4 }
+      ]
+    },
+    {
+      "id": 6,
+      "platforms": [
+        { "x": 100, "y": 800, "width": 150, "height": 50, "type": "stone" },
+        { "x": 300, "y": 750, "width": 150, "height": 50, "type": "dirt" },
+        { "x": 500, "y": 700, "width": 150, "height": 50, "type": "stone" },
+        { "x": 700, "y": 650, "width": 150, "height": 50, "type": "dirt" },
+        { "x": 900, "y": 600, "width": 150, "height": 50, "type": "stone" },
+        { "x": 750, "y": 500, "width": 150, "height": 50, "type": "dirt" },
+        { "x": 550, "y": 400, "width": 150, "height": 50, "type": "stone" },
+        { "x": 350, "y": 300, "width": 150, "height": 50, "type": "dirt" }
+      ],
+      "keys": [
+        { "x": 920, "y": 560, "id": 6 }
+      ],
+      "powerUp": [
+        { "x": 560, "y": 360, "id": 5 }
+      ]
+    },
+    {
+      "id": 7,
+      "platforms": [
+        { "x": 50, "y": 800, "width": 100, "height": 50, "type": "stone" },
+        { "x": 200, "y": 750, "width": 100, "height": 50, "type": "dirt" },
+        { "x": 350, "y": 700, "width": 100, "height": 50, "type": "stone" },
+        { "x": 500, "y": 650, "width": 100, "height": 50, "type": "dirt" },
+        { "x": 650, "y": 600, "width": 100, "height": 50, "type": "stone" },
+        { "x": 800, "y": 550, "width": 100, "height": 50, "type": "dirt" },
+        { "x": 950, "y": 500, "width": 100, "height": 50, "type": "stone" },
+        { "x": 800, "y": 400, "width": 150, "height": 50, "type": "dirt" },
+        { "x": 600, "y": 300, "width": 150, "height": 50, "type": "stone" },
+        { "x": 400, "y": 200, "width": 150, "height": 50, "type": "dirt" },
+        { "x": 250, "y": 100, "width": 150, "height": 50, "type": "stone" }
+      ],
+      "keys": [
+        { "x": 970, "y": 460, "id": 7 }
+      ],
+      "powerUp": [
+        { "x": 420, "y": 160, "id": 6 }
+      ]
+    }
+  ]
+}
