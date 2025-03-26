@@ -163,15 +163,15 @@ public class GameState {
     }
 
     private void loadLevelsData() {
-        levelsDataMap = JsonDataLoader.loadLevelsJson("src/main/resources/maps/Map4/levels.json");
+        levelsDataMap = JsonDataLoader.loadLevelsJson("src/main/resources/maps/Map3/levels.json");
     }
 
     private void loadPlayerData() {
-        player = JsonDataLoader.loadPlayerJson("src/main/resources/maps/Map4/player.json");
+        player = JsonDataLoader.loadPlayerJson("src/main/resources/maps/Map3/player.json");
     }
 
     private void loadKeysData() {
-        int[] keyStatResp = JsonDataLoader.loadKeysStatsJson("src/main/resources/maps/Map4/collectables.json");
+        int[] keyStatResp = JsonDataLoader.loadKeysStatsJson("src/main/resources/maps/Map3/collectables.json");
         allKeys = keyStatResp[0];
         collectedKeys = keyStatResp[1];
     }

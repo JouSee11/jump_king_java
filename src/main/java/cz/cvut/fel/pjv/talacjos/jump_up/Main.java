@@ -13,6 +13,10 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         stage.setTitle("JumpUP");
 
+        //set window size
+        stage.setMinHeight(930);
+        stage.setMinWidth(1200);
+
         SceneController sceneController = new SceneController(stage);
         sceneController.showGameScene();
         stage.show();
