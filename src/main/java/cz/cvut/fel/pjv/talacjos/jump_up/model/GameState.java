@@ -23,6 +23,9 @@ public class GameState {
     private Player player;
     private double jumpHoldTime = 0;
 
+    private boolean actionButtonPressed = false;
+    private boolean collisionEnd = false;
+
     private int curLevel;
     private int maxLevel;
 
@@ -46,7 +49,8 @@ public class GameState {
         loadKeysData();
 
         //set levels data
-        setCurLevel(1);
+        setCollectedKeys(4);
+        setCurLevel(7);
         setMaxLevel(7);
     }
 
@@ -197,6 +201,10 @@ public class GameState {
         return collectedKeys;
     }
 
+    public int getAllKeys() {
+        return allKeys;
+    }
+
     public List<Platform> getPlatformList() {
         return curPlatformList;
     }
@@ -211,6 +219,22 @@ public class GameState {
 
     public End getEnd() {
         return end;
+    }
+
+    public void setActionButtonPressed(boolean actionButtonPressed) {
+        this.actionButtonPressed = actionButtonPressed;
+    }
+
+    public boolean isActionButtonPressed() {
+        return actionButtonPressed;
+    }
+
+    public boolean isCollisionEnd() {
+        return collisionEnd;
+    }
+
+    public void setCollisionEnd(boolean collisionEnd) {
+        this.collisionEnd = collisionEnd;
     }
 
     //level control
@@ -228,9 +252,9 @@ public class GameState {
         curKeyList.remove(key);
         levelsDataMap.get(curLevel).getKeys().remove(key);
 
-        SoundController.getInstance().playSound("collectSuccess");
+        SoundController.getInstance().playSound("collectSuccess", 1);
         if (collectedKeys == allKeys) {
-            SoundController.getInstance().playSound("collectedAllKeys");
+            SoundController.getInstance().playSound("collectedAllKeys", 1);
         } else {
             SoundController.getInstance().playRandomKeyCollect();
         }
@@ -249,7 +273,7 @@ public class GameState {
         powerUpTimeRemaining = Constants.POWERUP_DURATION;
         startPowerUpTimerThread();
 
-        SoundController.getInstance().playSound("powerUpCollected");
+        SoundController.getInstance().playSound("powerUpCollected", 1);
     }
 
     private void deactivatePowerUp() {

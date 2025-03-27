@@ -25,7 +25,7 @@ public class GameController {
         this.gameView = new GameView(sceneController, this, gameState);
 
         //init sounds
-        SoundController.getInstance().playSound("startingMsg");
+        SoundController.getInstance().playSound("startingMsg", 1);
 
 
         setupGameLoop();
@@ -92,6 +92,8 @@ public class GameController {
                     gameState.setCurLevel(currentLevel+1);
                 }
                 break;
+            case E:
+                gameState.setActionButtonPressed(true);
             default:
                 break;
         }
@@ -128,6 +130,8 @@ public class GameController {
                     gameState.playerJumpExecute();
                 }
                 break;
+            case E:
+                gameState.setActionButtonPressed(false);
             default:
                 break;
         }

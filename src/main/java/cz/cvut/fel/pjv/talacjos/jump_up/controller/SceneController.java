@@ -2,6 +2,7 @@ package cz.cvut.fel.pjv.talacjos.jump_up.controller;
 
 import cz.cvut.fel.pjv.talacjos.jump_up.view.GameView;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class SceneController{
@@ -28,6 +29,7 @@ public class SceneController{
             System.err.println("WARNING: " + "styles file - " + name + ".css not found");
             return;
         }
+        Font.loadFont(getClass().getResourceAsStream("/font/Jacquard12.ttf"), 12);
         scene.getStylesheets().add(stylesLink);
     }
 

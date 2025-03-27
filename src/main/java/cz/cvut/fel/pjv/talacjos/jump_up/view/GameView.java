@@ -227,7 +227,16 @@ public class GameView {
         if (end == null) {return;}
 
         Image currentFrame = end.getCurrentAnimation().getCurrentFrame();
-        gc.drawImage(currentFrame, end.getX(), Constants.GAME_HEIGHT - end.getY(), end.getWidth(), end.getHeight());
+        gc.drawImage(currentFrame, end.getX(), end.getY(), end.getWidth(), end.getHeight());
+
+        //render the key press icon above the end if player collide end
+        if (gameState.isCollisionEnd()) {
+            int iconSize = 30;
+            String curState = gameState.isActionButtonPressed() ? "_pressed" : "";
+            Image keypress_img = new Image(getClass().getResource("/images/map_end/E_icon" + curState + ".png").toExternalForm());
+            double x_center = end.getX() - iconSize / 2 + end.getWidth() / 2;
+            gc.drawImage(keypress_img, x_center, end.getY() - 40, iconSize, iconSize);
+        }
 
     }
 

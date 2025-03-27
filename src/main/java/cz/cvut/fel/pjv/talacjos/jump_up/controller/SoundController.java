@@ -17,6 +17,8 @@ public class SoundController {
     private double musicVolume = 0.5;
     private boolean muted = false;
 
+    private String lastPlayedSound;
+
     private SoundController() {
         soundEffects = new HashMap<>();
         loadSounds();
@@ -57,6 +59,7 @@ public class SoundController {
 
         loadEffect("fall", "/sounds/SFX/fall.mp3");
 
+        loadEffect("denied", "/sounds/SFX/denied.mp3");
     }
 
     private void loadEffect(String name, String path) {
@@ -72,32 +75,25 @@ public class SoundController {
 
     public void playRandomKeyCollect() {
         int randomIndex = (int) (Math.random() * 5) + 1;
-        AudioClip clip = soundEffects.get("keyCollect"  + randomIndex);
-        clip.play();
+        String soundName = "keyCollect"  + randomIndex;
+        playSound(soundName,1);
     }
 
     public void playRandomJump() {
-        AudioClip clipDef = soundEffects.get("jump");
+        playSound("jump", 1);
         int randomIndex = (int) (Math.random() * 5) + 1;
-        AudioClip clip = soundEffects.get("jump"  + randomIndex);
-        clip.play(0.1);
-        clipDef.play();
+        String jumpEffectName = "jump"  + randomIndex;
+        playSound(jumpEffectName,0.2);
     }
 
-    public void playRandomBump(){
-        AudioClip clipDef = soundEffects.get("bump");
-//        int randomIndex = (int) (Math.random() * 2) + 1;
-//        AudioClip clip = soundEffects.get("bump"  + randomIndex);
-//        clip.play(0.2);
-        clipDef.play(0.4);
-    }
+    public void playSound(String name, double volume) {
+        if (muted || name.equalsIgnoreCase(lastPlayedSound)) return;
 
-    public void playSound(String name) {
-        if (muted) return;
 
         AudioClip clip = soundEffects.get(name);
         if (clip != null) {
-            clip.play();
+            clip.play(volume);
+            lastPlayedSound = name;
         }
     }
 

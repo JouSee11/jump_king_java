@@ -2,10 +2,7 @@ package cz.cvut.fel.pjv.talacjos.jump_up.model;
 
 import cz.cvut.fel.pjv.talacjos.jump_up.Constants;
 import cz.cvut.fel.pjv.talacjos.jump_up.controller.SoundController;
-import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.Key;
-import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.Platform;
-import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.Player;
-import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.PowerUp;
+import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.*;
 import javafx.geometry.Bounds;
 import javafx.scene.shape.Rectangle;
 
@@ -31,6 +28,7 @@ public class CollisionHandler{
         // Reset ground state before checking
         wasOnGround = player.isOnGround();
         player.setOnGround(false);
+        gameState.setCollisionEnd(false);
 
         // Check player on the floor on level 1
         if (player.getY() + player.getHeight() > Constants.GAME_HEIGHT && curLevel == 1) {
@@ -47,7 +45,7 @@ public class CollisionHandler{
             player.setY(0);
             player.setVelocityY(0);
 
-            SoundController.getInstance().playRandomBump();
+            SoundController.getInstance().playSound("bump", 0.6);
 
         }
 
@@ -99,7 +97,7 @@ public class CollisionHandler{
         }
 
         //handle end collision
-        //TODO handle collison with end and check if the number of keys is the maximum of keys
+        checkEndCollision(player);
     }
 //
 
@@ -111,7 +109,7 @@ public class CollisionHandler{
             return playerBounds.intersects(platformBounds);
     }
 
-    private void resolveCollisionPlatform(Player player, Platform platform) {
+    private void resolveCollisionPlatform(Player player, Rectangle platform) {
         //Calculate horizontal overlap
         double overlapLeft = player.getX() + player.getWidth() - platform.getX();
         double overlapRight = platform.getX() + platform.getWidth() - player.getX();
@@ -134,7 +132,7 @@ public class CollisionHandler{
             } else  {
                 player.setY(platform.getY() + platform.getHeight()); // player hit the platform from bottom
 
-                SoundController.getInstance().playRandomBump();
+                SoundController.getInstance().playSound("bump", 0.6);
 
             }
             player.setVelocityY(0);
@@ -151,14 +149,35 @@ public class CollisionHandler{
 
     }
 
+    private void checkEndCollision(Player player) {
+        End end = gameState.getEnd();
+        //check if we are at the level where there is the end
+        if (end == null) {return;}
+
+        //check if player collides with the end element
+        if (checkCollision(player, end)) {
+            gameState.setCollisionEnd(true);
+            //check if the player has all keys
+            if (gameState.getCollectedKeys() == gameState.getAllKeys() && gameState.isActionButtonPressed()) {
+                System.exit(0);
+            } else if (gameState.isActionButtonPressed()) {
+                SoundController.getInstance().playSound("denied", 1);
+            } else {
+                resolveCollisionPlatform(player, end);
+            }
+        }
+
+    }
+
 
     private void bounceBack(Player player) {
         //if the player is jumping bounce back
         if (!player.isOnGround()) {
             player.setVelocityX(-Constants.BOUNCE_COEFFICIENT * player.getVelocityX());
 
+            //play sound
             if (player.getVelocityX() != 0) {
-                SoundController.getInstance().playRandomBump();
+                SoundController.getInstance().playSound("bump", 0.6);
             }
         } else {
             player.setVelocityY(0);
@@ -181,7 +200,7 @@ public class CollisionHandler{
 
     private void playSoundFall(Player player) {
         if (player.isJumping() || !wasOnGround) {
-            SoundController.getInstance().playSound("fall");
+            SoundController.getInstance().playSound("fall", 1);
         }
     }
 

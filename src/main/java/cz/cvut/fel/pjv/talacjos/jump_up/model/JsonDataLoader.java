@@ -159,7 +159,7 @@ public class JsonDataLoader {
         int x = endObj.get("x").getAsInt();
         int y = endObj.get("y").getAsInt();
 
-        return new End(x, y);
+        return new End(x, Constants.GAME_HEIGHT - y);
     }
 
 
