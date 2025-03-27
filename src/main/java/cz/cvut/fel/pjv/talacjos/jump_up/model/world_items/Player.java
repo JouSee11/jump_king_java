@@ -10,6 +10,7 @@ public class Player extends Entity {
     private boolean isOnGround = true;
     private boolean isJumping = false;
     private boolean isSquatting = false;
+    private boolean isBounced = false;
     private int jumpDirection = 0;
 
     //phycics stats - not a constant because it can be changed by powerups
@@ -23,6 +24,7 @@ public class Player extends Entity {
     private SpriteAnimation jumpAnimation;
     private SpriteAnimation fallAnimation;
     private SpriteAnimation squatAnimation;
+    private SpriteAnimation bounceAnimation;
 
 //    private SpriteAnimation currentAnimation;
     private boolean facingRight = true;
@@ -111,7 +113,9 @@ public class Player extends Entity {
         return isSquatting;
     }
 
-
+    public void setBounced(boolean bounced) {
+        isBounced = bounced;
+    }
 
     //animation controls
     private void loadAnimations() {
@@ -120,12 +124,14 @@ public class Player extends Entity {
         Image[] jumpFrames = loadFrames("/player/jump/jump", 1);
         Image[] fallFrames = loadFrames("/player/fall/fall", 1);
         Image[] squatFrames = loadFrames("/player/squat/squat", 1);
+        Image[] bounceFrames = loadFrames("/player/bounce/bounce", 1);
 
         idleAnimation = new SpriteAnimation(idleFrames, 1, true);
         runAnimation = new SpriteAnimation(runFrames, 0.4, true);
         jumpAnimation = new SpriteAnimation(jumpFrames, 0.3, true);
         fallAnimation = new SpriteAnimation(fallFrames, 0.3, true);
         squatAnimation = new SpriteAnimation(squatFrames, 0.3, true);
+        bounceAnimation = new SpriteAnimation(bounceFrames, 1, true);
 
         currentAnimation = idleAnimation;
     }
@@ -138,7 +144,9 @@ public class Player extends Entity {
     @Override
     public void updateAnimation(double deltaTime) {
         // Update animation based on player state
-        if (!isOnGround()) {
+        if (isBounced) {
+            currentAnimation = bounceAnimation;
+        } else if (!isOnGround()) {
             if (velocityY < 0) {
                 currentAnimation = jumpAnimation;
             } else {
@@ -148,8 +156,7 @@ public class Player extends Entity {
             currentAnimation = runAnimation;
         } else if (isSquatting) {
             currentAnimation = squatAnimation;
-        }
-        else {
+        } else {
             currentAnimation = idleAnimation;
         }
 

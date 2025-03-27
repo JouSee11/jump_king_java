@@ -26,7 +26,8 @@ public class GameController {
 
         //init sounds
         SoundController.getInstance().playSound("startingMsg", 1);
-
+        SoundController.getInstance().playMusic("main_sound.wav");
+        SoundController.getInstance().setMusicVolume(0.3);
 
         setupGameLoop();
     }

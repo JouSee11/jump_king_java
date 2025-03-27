@@ -105,7 +105,7 @@ public class GameView {
     }
 
     private void renderPlatform(GraphicsContext gc) {
-        double cornerRadius = 7;
+        double cornerRadius = 4;
 
         for (Platform platform : gameState.getPlatformList()) {
             Image platformImage = platform.getImage();
@@ -138,9 +138,10 @@ public class GameView {
 
             //add border
             gc.setStroke(platform.getBorderColor());
-            gc.setLineWidth(6);
+            gc.setLineWidth(3);
             gc.strokeRoundRect(platform.getX(), platform.getY(), platform.getWidth(),
                     platform.getHeight(), cornerRadius*2, cornerRadius*2);
+
         }
     }
 
@@ -283,7 +284,7 @@ public class GameView {
 
 //        Color[] colors = {Color.RED, Color.ALICEBLUE, Color.BLUE, Color.GRAY, Color.GREEN};
 //        Color randomColor = colors[(int)(Math.random() * colors.length)];
-        gc.setFill(Color.BLUE);
+        gc.setFill(Color.RED);
 
         // Draw over the entire canvas
         gc.fillRect(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);

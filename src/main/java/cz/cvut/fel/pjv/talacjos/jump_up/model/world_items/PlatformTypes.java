@@ -6,7 +6,8 @@ public enum PlatformTypes {
     DIRT("dirt", Color.DARKGREEN),
     STONE("stone", Color.GRAY),
     CLOUD("cloud", Color.LIGHTBLUE),
-    WOOD("wood", Color.BROWN);
+    WOOD("wood", Color.BROWN),
+    ICE("ice", Color.LIGHTBLUE);
 
     private final String type;
     private final Color color;

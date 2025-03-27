@@ -35,6 +35,7 @@ public class CollisionHandler{
             player.setY(Constants.GAME_HEIGHT - player.getHeight());
             player.setVelocityY(0);
             player.setOnGround(true);
+            player.setBounced(false);
 
             playSoundFall(player);
             player.setJumping(false);
@@ -125,6 +126,7 @@ public class CollisionHandler{
             if (overlapTop < overlapBottom) {
                 player.setY(platform.getY() - player.getHeight()); // player hit the platform from top (landed on the platform)
                 player.setOnGround(true);
+                player.setBounced(false);
 
                 playSoundFall(player);
 
@@ -174,6 +176,7 @@ public class CollisionHandler{
         //if the player is jumping bounce back
         if (!player.isOnGround()) {
             player.setVelocityX(-Constants.BOUNCE_COEFFICIENT * player.getVelocityX());
+            player.setBounced(true);
 
             //play sound
             if (player.getVelocityX() != 0) {

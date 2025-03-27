@@ -49,7 +49,6 @@ public class GameState {
         loadKeysData();
 
         //set levels data
-        setCollectedKeys(4);
         setCurLevel(7);
         setMaxLevel(7);
     }
@@ -274,6 +273,7 @@ public class GameState {
         startPowerUpTimerThread();
 
         SoundController.getInstance().playSound("powerUpCollected", 1);
+        SoundController.getInstance().playMusic("fast_music.wav");
     }
 
     private void deactivatePowerUp() {
@@ -281,6 +281,8 @@ public class GameState {
         powerUpTimeRemaining = 0;
         player.powerUpDeactivate();
         stopPowerUpTimerThread();
+
+        SoundController.getInstance().playMusic("main_sound.wav");
     }
 
     private void startPowerUpTimerThread() {
