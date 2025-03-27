@@ -116,7 +116,7 @@
     {
       "id": 7,
       "platforms": [
-        {"x": 100, "y": 800, "width": 120, "height": 50, "type": "stone"},
+        {"x": 100, "y": 800, "width": 120, "height": 100, "type": "stone"},
         {"x": 300, "y": 700, "width": 70, "height": 50, "type": "dirt"},
         {"x": 450, "y": 600, "width": 70, "height": 50, "type": "stone"},
         {"x": 600, "y": 700, "width": 200, "height": 50, "type": "stone"},
@@ -133,7 +133,11 @@
       "keys": [],
       "powerUp": [
         {"x": 900, "y": 100, "id": 6}
-      ]
+      ],
+      "end": {
+        "x": 500,
+        "y": 800
+      }
     }
   ]
 }

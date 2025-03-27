@@ -1,5 +1,6 @@
 package cz.cvut.fel.pjv.talacjos.jump_up.model;
 
+import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.End;
 import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.Key;
 import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.Platform;
 import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.PowerUp;
@@ -12,6 +13,7 @@ public class Level {
     private List<Platform> platforms;
     private List<Key> keys;
     private List<PowerUp> powerUps;
+    private End end;
     //late add keys and powerups
 
     public int getId() {
@@ -44,6 +46,14 @@ public class Level {
 
     public void setPowerUps(List<PowerUp> powerUps) {
         this.powerUps = powerUps;
+    }
+
+    public void setEnd(End end) {
+        this.end = end;
+    }
+
+    public End getEnd() {
+        return end;
     }
 
     @Override

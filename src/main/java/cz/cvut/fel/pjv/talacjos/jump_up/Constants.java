@@ -26,6 +26,10 @@ public class Constants {
     public static final int COLLECTABLE_SIZE = 50;
     public static final int POWERUP_DURATION = 10;
 
+    //end stats
+    public static final int END_WIDTH = 90;
+    public static final int END_HEIGHT = 100;
+
     private Constants() {}
 
 }

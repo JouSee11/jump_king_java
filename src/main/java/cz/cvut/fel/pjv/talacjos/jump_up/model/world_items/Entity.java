@@ -15,8 +15,6 @@ abstract public class Entity extends Rectangle {
     protected Image[] loadFrames(String path, int frameCount) {
         Image[] frames = new Image[frameCount];
         for (int i = 0; i < frameCount; i++) {
-            System.out.println("here" + i);
-            System.out.println("/images/player/" + path + (i+1) + ".png");
             //load image and check if it was loaded
             String imageLink = getClass().getResource("/images" + path + (i+1) + ".png").toExternalForm();
 

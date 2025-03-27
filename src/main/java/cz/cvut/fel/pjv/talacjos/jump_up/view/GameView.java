@@ -4,10 +4,7 @@ import cz.cvut.fel.pjv.talacjos.jump_up.Constants;
 import cz.cvut.fel.pjv.talacjos.jump_up.controller.GameController;
 import cz.cvut.fel.pjv.talacjos.jump_up.controller.SceneController;
 import cz.cvut.fel.pjv.talacjos.jump_up.model.*;
-import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.Key;
-import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.Platform;
-import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.Player;
-import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.PowerUp;
+import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -98,6 +95,9 @@ public class GameView {
 
         //render powerups with animation
         renderPowerUp(gc);
+
+        //render end element
+        renderEnd(gc);
 
         //apply color filters - when some item was colected
         applyColorFilter(gc);
@@ -220,6 +220,15 @@ public class GameView {
 
         // Add to root
         root.getChildren().add(keyBox);
+    }
+
+    private void renderEnd(GraphicsContext gc) {
+        End end = gameState.getEnd();
+        if (end == null) {return;}
+
+        Image currentFrame = end.getCurrentAnimation().getCurrentFrame();
+        gc.drawImage(currentFrame, end.getX(), Constants.GAME_HEIGHT - end.getY(), end.getWidth(), end.getHeight());
+
     }
 
     private void updateKeyCountUI() {

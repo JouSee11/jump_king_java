@@ -46,9 +46,17 @@ public class JsonDataLoader {
                 JsonArray powerUpsArray = levelObj.getAsJsonArray("powerUp");
                 List<PowerUp> powerUps = getCollectableList(powerUpsArray, "powerUp");
 
+                //load the end if the map if it is end level
+                JsonObject endObj = levelObj.getAsJsonObject("end");
+                End endElement = null;
+                if (endObj != null) {
+                    endElement = getEndElement(endObj);
+                }
+
                 level.setPlatforms(platforms);
                 level.setKeys(keys);
                 level.setPowerUps(powerUps);
+                level.setEnd(endElement);
                 levels.put(level.getId(), level);
 
             }
@@ -80,42 +88,6 @@ public class JsonDataLoader {
         }
         return collectables;
     }
-
-//    private static List<Key> getKeyList(JsonArray keysArray) {
-//        List<Key> keys = new ArrayList<Key>();
-//
-//        //go through all keys for the level
-//        for (JsonElement keyElement : keysArray) {
-//            JsonObject keyObj = keyElement.getAsJsonObject();
-//
-//            int x = keyObj.get("x").getAsInt();
-//            int y = keyObj.get("y").getAsInt();
-//            int id = keyObj.get("id").getAsInt();
-//
-//
-//            Key key = new Key(x, y, id);
-//            keys.add(key);
-//        }
-//        return keys;
-//    }
-//
-//    private static List<PowerUp> getPowerUpList(JsonArray powerUpsArray) {
-//        List<PowerUp> powerUps = new ArrayList<PowerUp>();
-//
-//        //go through all keys for the level
-//        for (JsonElement powerUpElement : powerUpsArray) {
-//            JsonObject powerUpObj = powerUpElement.getAsJsonObject();
-//
-//            int x = powerUpObj.get("x").getAsInt();
-//            int y = powerUpObj.get("y").getAsInt();
-//            int id = powerUpObj.get("id").getAsInt();
-//
-//
-//            PowerUp powerup = new PowerUp(x, y, id);
-//            powerUps.add(powerup);
-//        }
-//        return powerUps;
-//    }
 
     private static List<Platform> getPlatformList(JsonArray platformsArray) {
         List<Platform> platforms = new ArrayList<Platform>();
@@ -182,4 +154,13 @@ public class JsonDataLoader {
         }
         return null;
     }
+
+    private static End getEndElement(JsonObject endObj) {
+        int x = endObj.get("x").getAsInt();
+        int y = endObj.get("y").getAsInt();
+
+        return new End(x, y);
+    }
+
+
 }

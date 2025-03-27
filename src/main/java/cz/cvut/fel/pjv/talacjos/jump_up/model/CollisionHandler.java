@@ -97,6 +97,9 @@ public class CollisionHandler{
         for (PowerUp powerUp : powerUpsToCollect) {
             gameState.powerUpCollected(powerUp);
         }
+
+        //handle end collision
+        //TODO handle collison with end and check if the number of keys is the maximum of keys
     }
 //
 
@@ -171,7 +174,7 @@ public class CollisionHandler{
             player.setY(Constants.GAME_HEIGHT - player.getHeight());
         }
 
-        System.out.println(player.getVelocityY());
+        System.out.println("Player 'y' velocity:" + player.getVelocityY());
 
         System.out.println("Next level " + direction);
     }

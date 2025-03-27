@@ -16,6 +16,7 @@ public class GameState {
     private List<Platform> curPlatformList;
     private List<Key> curKeyList;
     private List<PowerUp> curPowerupList;
+    private End end = null;
 
     private HashMap<Integer, Level> levelsDataMap;
 
@@ -28,6 +29,7 @@ public class GameState {
     private int collectedKeys;
     private int allKeys;
 
+    //powerup data
     private boolean powerUpActive = false;
     private int powerUpTimeRemaining = 0;
     private Thread powerUpTimerThread;
@@ -81,11 +83,18 @@ public class GameState {
         //update collectable animation
         updateCollectableAnimation(deltaTime, curKeyList);
         updateCollectableAnimation(deltaTime, curPowerupList);
+        updateEndAnimation(end, deltaTime);
     }
 
     private <T extends Entity> void updateCollectableAnimation(double deltaTime, List<T>  entities) {
         for (T entity : entities) {
             entity.updateAnimation(deltaTime);
+        }
+    }
+
+    private void updateEndAnimation(End end, double deltaTime) {
+        if (end != null) {
+            end.updateAnimation(deltaTime);
         }
     }
 
@@ -200,13 +209,18 @@ public class GameState {
         return curPowerupList;
     }
 
+    public End getEnd() {
+        return end;
+    }
+
     //level control
     public void setCurLevel(int curLevel) {
         this.curLevel = curLevel;
         curPlatformList = levelsDataMap.get(curLevel).getPlatforms(); //set the platforms for the current level
         curKeyList = levelsDataMap.get(curLevel).getKeys();
         curPowerupList = levelsDataMap.get(curLevel).getPowerUps();
-//        addPlatformsLevel(curLevel);
+        end = levelsDataMap.get(curLevel).getEnd();
+        //        addPlatformsLevel(curLevel);
     }
 
     public void keyCollected(Key key) {
