@@ -30,6 +30,9 @@ public class Constants {
     public static final int END_WIDTH = 90;
     public static final int END_HEIGHT = 100;
 
+    //sounds
+    public static final double DEFAULT_MUSIC_VOLUME = 0.3;
+
     private Constants() {}
 
 }

@@ -161,7 +161,7 @@ public class CollisionHandler{
             gameState.setCollisionEnd(true);
             //check if the player has all keys
             if (gameState.getCollectedKeys() == gameState.getAllKeys() && gameState.isActionButtonPressed()) {
-                System.exit(0);
+                gameState.endGame();
             } else if (gameState.isActionButtonPressed()) {
                 SoundController.getInstance().playSound("denied", 1);
             } else {

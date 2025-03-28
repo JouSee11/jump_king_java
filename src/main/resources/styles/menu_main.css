@@ -1,0 +1,37 @@
+.root{
+    -fx-background-color: #000000;
+}
+
+.menu_title{
+    -fx-font-family: "Jersey 10", sans-serif;
+    -fx-font-size: 200px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2b0505;
+    -fx-padding: 0 0 80px 0;
+}
+
+.menu_button {
+    -fx-font-family: "Jersey 10", sans-serif;
+    -fx-background-color: linear-gradient(to bottom, #5c4033, #3a261b); /* Dark brown gradient */
+    -fx-text-fill: white;
+    -fx-font-size: 30px;
+    -fx-padding: 10px 20px;
+    -fx-border-color: #8b5a2b;
+    -fx-border-width: 4px;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    -fx-effect: dropshadow(three-pass-box, black, 5, 0, 2, 2); /* Pixelated shadow */
+
+}
+
+.menu_button:hover {
+    -fx-background-color: linear-gradient(to bottom, #6d4c41, #50362e);
+    -fx-border-color: #a06a3c;
+    -fx-cursor: hand;
+
+}
+
+.menu_button:pressed {
+    -fx-background-color: linear-gradient(to bottom, #3a261b, #2a1a14);
+    -fx-translate-y: 2px; /* Simulate button press effect */
+}

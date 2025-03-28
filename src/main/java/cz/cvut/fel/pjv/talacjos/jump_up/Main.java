@@ -18,7 +18,7 @@ public class Main extends Application {
         stage.setMinWidth(1200);
 
         SceneController sceneController = new SceneController(stage);
-        sceneController.showGameScene();
+        sceneController.showMenuScene();
         stage.show();
     }
 

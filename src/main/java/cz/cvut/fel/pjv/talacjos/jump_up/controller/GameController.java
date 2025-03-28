@@ -1,5 +1,6 @@
 package cz.cvut.fel.pjv.talacjos.jump_up.controller;
 
+import cz.cvut.fel.pjv.talacjos.jump_up.Constants;
 import cz.cvut.fel.pjv.talacjos.jump_up.model.GameState;
 import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.Player;
 import cz.cvut.fel.pjv.talacjos.jump_up.view.GameView;
@@ -24,12 +25,6 @@ public class GameController {
         // game view
         this.gameView = new GameView(sceneController, this, gameState);
 
-        //init sounds
-        SoundController.getInstance().playSound("startingMsg", 1);
-        SoundController.getInstance().playMusic("main_sound.wav");
-        SoundController.getInstance().setMusicVolume(0.3);
-
-        setupGameLoop();
     }
 
     //set up the game scene
@@ -156,7 +151,19 @@ public class GameController {
 
 
     public void startGame() {
+        //init sounds
+        SoundController.getInstance().playSound("startingMsg", 1);
+        SoundController.getInstance().playMusic("main_sound.wav");
+        SoundController.getInstance().setMusicVolume(Constants.DEFAULT_MUSIC_VOLUME);
+
+
+        setupGameLoop();
         gameLoop.start();
+    }
+
+    public void endGame() {
+        gameLoop.stop();
+        sceneController.showMenuScene();
     }
 
 }

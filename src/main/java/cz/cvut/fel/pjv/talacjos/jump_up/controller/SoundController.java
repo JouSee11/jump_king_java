@@ -141,4 +141,21 @@ public class SoundController {
             }
         }
     }
+
+    public void stopAllSounds() {
+        // Stop any currently playing sound effects
+        if (musicPlayer != null) {
+            musicPlayer.pause();
+        }
+
+        // Stop all sound effects that might be playing
+        for (AudioClip clip : soundEffects.values()) {
+            clip.stop();
+        }
+
+        // Clear last played sound to allow sounds to play again when game restarts
+        lastPlayedSound = null;
+    }
+
+
 }

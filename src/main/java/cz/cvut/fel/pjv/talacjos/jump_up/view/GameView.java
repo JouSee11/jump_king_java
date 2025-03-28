@@ -279,11 +279,9 @@ public class GameView {
         // Set blend mode to preserve contrast
         gc.setGlobalBlendMode(BlendMode.OVERLAY);
 
-        // Set a semi-transparent blue color
+        // Set a semi-transparent red color
         gc.setGlobalAlpha(0.4);
 
-//        Color[] colors = {Color.RED, Color.ALICEBLUE, Color.BLUE, Color.GRAY, Color.GREEN};
-//        Color randomColor = colors[(int)(Math.random() * colors.length)];
         gc.setFill(Color.RED);
 
         // Draw over the entire canvas

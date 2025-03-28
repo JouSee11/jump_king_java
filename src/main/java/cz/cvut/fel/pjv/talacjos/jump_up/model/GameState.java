@@ -49,6 +49,7 @@ public class GameState {
         loadKeysData();
 
         //set levels data
+        setCollectedKeys(allKeys);
         setCurLevel(7);
         setMaxLevel(7);
     }
@@ -333,5 +334,11 @@ public class GameState {
 
     public int getMaxLevel() {
         return maxLevel;
+    }
+
+    public void endGame() {
+        gameController.endGame();
+        // Stop or pause any active sounds
+        SoundController.getInstance().stopAllSounds();
     }
 }

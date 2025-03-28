@@ -1,12 +1,14 @@
 package cz.cvut.fel.pjv.talacjos.jump_up.controller;
 
 import cz.cvut.fel.pjv.talacjos.jump_up.view.GameView;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class SceneController{
-    private final GameController gameController;
+    private GameController gameController;
+    private MenuController menuController;
 
     public final Stage stage;
 
@@ -14,13 +16,23 @@ public class SceneController{
         this.stage = stage;
 
         //init the scenes
-        this.gameController = new GameController(this);
     }
 
     public void showGameScene() {
+        this.gameController = new GameController(this);
         stage.setScene(gameController.setGameScene());
         gameController.startGame();
     }
+
+    public void showMenuScene() {
+        this.menuController = new MenuController(this);
+        stage.setScene(menuController.setMenuScene());
+    }
+
+    public void exitGame() {
+        Platform.exit();
+    }
+
 
     public void addStyles(String name, Scene scene) {
         String stylesLink = getClass().getResource("/styles/" + name + ".css").toExternalForm();
@@ -30,6 +42,7 @@ public class SceneController{
             return;
         }
         Font.loadFont(getClass().getResourceAsStream("/font/Jacquard12.ttf"), 12);
+        Font.loadFont(getClass().getResourceAsStream("/font/Jersey10.ttf"), 12);
         scene.getStylesheets().add(stylesLink);
     }
 
