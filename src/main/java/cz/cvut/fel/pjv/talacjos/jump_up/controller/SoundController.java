@@ -60,6 +60,7 @@ public class SoundController {
         loadEffect("fall", "/sounds/SFX/fall.mp3");
 
         loadEffect("denied", "/sounds/SFX/denied.mp3");
+        loadEffect("victory", "/sounds/SFX/voices/victory.mp3");
     }
 
     private void loadEffect(String name, String path) {
@@ -155,6 +156,12 @@ public class SoundController {
 
         // Clear last played sound to allow sounds to play again when game restarts
         lastPlayedSound = null;
+    }
+
+    public void resumeAllSounds() {
+        if (musicPlayer != null) {
+            musicPlayer.play();
+        }
     }
 
 

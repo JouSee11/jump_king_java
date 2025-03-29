@@ -57,6 +57,8 @@ public class GameView {
         scene = new Scene(root, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
         //add styles to scene - later
         sceneController.addStyles("game_main", scene);
+        sceneController.addStyles("pause_menu", scene);
+        sceneController.addStyles("finish_dialog", scene);
 
         //show ui parts
         renderKeyCountUI(gameArea);
@@ -289,6 +291,22 @@ public class GameView {
 
         // Restore previous state
         gc.restore();
+    }
+
+    //pause
+    public void addPauseMenu(StackPane pauseMenuRoot) {
+        if (pauseMenuRoot != null) {
+            StackPane root = (StackPane) scene.getRoot();
+            root.getChildren().add(pauseMenuRoot);
+        }
+    }
+
+    //game finish
+    public void addFinishDialog(StackPane finishDialogRoot) {
+        if (finishDialogRoot != null) {
+            StackPane root = (StackPane) scene.getRoot();
+            root.getChildren().add(finishDialogRoot);
+        }
     }
 
 

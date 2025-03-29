@@ -1,0 +1,21 @@
+.pause_button {
+    -fx-font-family: "Jersey 10", sans-serif;
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+
+.pause_button:hover {
+    -fx-text-fill: #8f8c8c;
+    -fx-translate-y: 2px;
+}
+
+.pause_title{
+    -fx-font-family: "Jersey 10", sans-serif;
+    -fx-font-size: 150;
+    -fx-text-fill: #f81313;
+    -fx-padding: 0 0 80px 0;
+}
+

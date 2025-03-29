@@ -1,0 +1,42 @@
+.finish_overlay_background {
+    -fx-fill: rgba(0, 0, 0, 0.8);
+}
+
+.finish_dialog_box {
+    -fx-background-color: #173306;
+    -fx-background-radius: 20px;
+    -fx-padding: 30px;
+    -fx-effect: dropshadow(three-pass-box, black, 10, 0, 0, 0);
+    -fx-border-radius: 20px;
+    -fx-border-color: #397306;
+    -fx-border-width: 5px;
+}
+
+
+.finish_button {
+    -fx-font-family: "Jersey 10", sans-serif;
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-background-color: #252525;
+    -fx-border-width: 3px;
+    -fx-border-color: #5c5c5c;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+}
+
+.finish_button:hover {
+    -fx-text-fill: #8f8c8c;
+    -fx-translate-y: 2px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.21), 20, 0.5, 10, 10);
+}
+
+.victory_title{
+    -fx-font-family: "Jersey 10", sans-serif;
+    -fx-font-size: 150;
+    -fx-text-fill: #66c50c;
+    -fx-padding: 0 0 20px 0;
+    -fx-effect: dropshadow(three-pass-box, rgba(36, 188, 30, 0.42), 50, 0.5, 0, 0);
+}
+

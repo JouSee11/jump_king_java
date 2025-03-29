@@ -3,7 +3,9 @@ package cz.cvut.fel.pjv.talacjos.jump_up.controller;
 import cz.cvut.fel.pjv.talacjos.jump_up.Constants;
 import cz.cvut.fel.pjv.talacjos.jump_up.model.GameState;
 import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.Player;
+import cz.cvut.fel.pjv.talacjos.jump_up.view.FinishDialogView;
 import cz.cvut.fel.pjv.talacjos.jump_up.view.GameView;
+import cz.cvut.fel.pjv.talacjos.jump_up.view.PauseMenuView;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
@@ -13,10 +15,13 @@ public class GameController {
     private GameState gameState;
     private AnimationTimer gameLoop;
     private GameView gameView;
+    private PauseMenuView pauseMenuView;
 
     private boolean spacePressed = false;
     private boolean leftPressed = false;
     private boolean rightPressed = false;
+
+    private boolean isPaused = false;
 
     public GameController(SceneController sceneController) {
         this.sceneController = sceneController;
@@ -24,6 +29,10 @@ public class GameController {
         this.gameState = new GameState(this);
         // game view
         this.gameView = new GameView(sceneController, this, gameState);
+        //pause menu
+        this.pauseMenuView = new PauseMenuView(this);
+        gameView.addPauseMenu(pauseMenuView.getRoot());
+
 
     }
 
@@ -44,7 +53,10 @@ public class GameController {
                 }
 
                 // Calculate time since last update in seconds
-                double deltaTime = (currentNanoTime - lastUpdate) / 1_000_000_000.0;
+                double deltaTime = (currentNanoTime - lastUpdate) / 1_000_000_00.0;
+
+                deltaTime = Math.min(deltaTime, 0.017); // max 60 FPS
+
                 lastUpdate = currentNanoTime;
 
                 // Update game state and render
@@ -90,6 +102,10 @@ public class GameController {
                 break;
             case E:
                 gameState.setActionButtonPressed(true);
+                break;
+            case ESCAPE:
+                togglePause();
+                break;
             default:
                 break;
         }
@@ -163,7 +179,51 @@ public class GameController {
 
     public void endGame() {
         gameLoop.stop();
+        SoundController.getInstance().stopAllSounds();
         sceneController.showMenuScene();
     }
 
+    //pause game handle
+    public void togglePause() {
+
+        if (isPaused) {
+            resumeGame();
+        } else {
+            pauseGame();
+        }
+    }
+
+    public void pauseGame() {
+        SoundController.getInstance().stopAllSounds();
+        if (!isPaused) {
+            isPaused = true;
+            gameLoop.stop();
+            pauseMenuView.show();
+
+        }
+    }
+
+    public void resumeGame() {
+        SoundController.getInstance().resumeAllSounds();
+        if (isPaused) {
+            isPaused = false;
+            pauseMenuView.hide();
+            gameLoop.start();
+        }
+    }
+
+    public boolean isPaused() {
+        return isPaused;
+    }
+
+    //victory dialog when game ends
+    public void showFinish() {
+        gameLoop.stop();
+        SoundController.getInstance().stopAllSounds();
+        SoundController.getInstance().playSound("victory", 1);
+
+        FinishDialogView finishDialogView = new FinishDialogView(this);
+        gameView.addFinishDialog(finishDialogView.getRoot());
+        finishDialogView.show();
+    }
 }

@@ -49,6 +49,7 @@ public class GameState {
         loadKeysData();
 
         //set levels data
+//        setCollectedKeys(allKeys);
         setCollectedKeys(allKeys);
         setCurLevel(7);
         setMaxLevel(7);
@@ -293,8 +294,11 @@ public class GameState {
         powerUpTimerThread = new Thread(() -> {
            try {
                while(powerUpTimeRemaining > 0) {
+                   //stop the timer if the game is paused
                    Thread.sleep(1000); //wait 1 second for the timer
-                    powerUpTimeRemaining--;
+                   if (!gameController.isPaused()) {
+                       powerUpTimeRemaining--;
+                   }
                }
                javafx.application.Platform.runLater(this::deactivatePowerUp);
                System.out.println("Power up timer thread has been started");
@@ -336,9 +340,8 @@ public class GameState {
         return maxLevel;
     }
 
+    //winning the game
     public void endGame() {
-        gameController.endGame();
-        // Stop or pause any active sounds
-        SoundController.getInstance().stopAllSounds();
+        gameController.showFinish();
     }
 }
