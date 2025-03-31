@@ -53,7 +53,7 @@ public class GameController {
                 }
 
                 // Calculate time since last update in seconds
-                double deltaTime = (currentNanoTime - lastUpdate) / 1_000_000_00.0;
+                double deltaTime = (currentNanoTime - lastUpdate) / 1_000_000_000.0;
 
                 deltaTime = Math.min(deltaTime, 0.017); // max 60 FPS
 
