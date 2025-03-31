@@ -1,6 +1,7 @@
 package cz.cvut.fel.pjv.talacjos.jump_up.view;
 
 import cz.cvut.fel.pjv.talacjos.jump_up.Constants;
+import cz.cvut.fel.pjv.talacjos.jump_up.controller.MenuController;
 import cz.cvut.fel.pjv.talacjos.jump_up.controller.SceneController;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -14,14 +15,17 @@ import javafx.scene.layout.VBox;
 public class MenuView {
     private final Scene scene;
     private final SceneController sceneController;
+    private final MenuController menuController;
 
-    public MenuView(SceneController sceneController) {
+    public MenuView(SceneController sceneController, MenuController menuController) {
         this.sceneController = sceneController;
+        this.menuController = menuController;
 
         StackPane root = renderMenuView();
 
         scene = new Scene(root, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
         sceneController.addStyles("menu_main", scene);
+        sceneController.addStyles("menu_dialogs", scene);
     }
 
     public Scene getScene() {
@@ -58,7 +62,8 @@ public class MenuView {
         vBox.setAlignment(Pos.CENTER);
 
         //adding actions to the buttons
-        newGameBtn.setOnAction(e -> sceneController.showGameScene());
+//        newGameBtn.setOnAction(e -> sceneController.showGameScene());
+        newGameBtn.setOnAction(e -> menuController.showMenuSelection());
         loadGameBtn.setOnAction(e -> sceneController.showGameScene());
         exitBtn.setOnAction(e -> sceneController.exitGame());
 
@@ -66,5 +71,13 @@ public class MenuView {
         root.getChildren().addAll(backgroundView, vBox);
 
         return root;
+    }
+
+    public void addLevelSelectionDialog(StackPane levelSelectionRoot) {
+        if (levelSelectionRoot != null) {
+            StackPane root = (StackPane) scene.getRoot();
+            root.getChildren().add(levelSelectionRoot);
+        }
+
     }
 }

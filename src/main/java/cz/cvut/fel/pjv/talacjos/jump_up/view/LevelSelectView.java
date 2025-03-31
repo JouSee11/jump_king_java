@@ -1,0 +1,94 @@
+package cz.cvut.fel.pjv.talacjos.jump_up.view;
+
+        import cz.cvut.fel.pjv.talacjos.jump_up.Constants;
+        import cz.cvut.fel.pjv.talacjos.jump_up.controller.MenuController;
+        import javafx.collections.FXCollections;
+        import javafx.collections.ObservableList;
+        import javafx.geometry.Insets;
+        import javafx.geometry.Pos;
+        import javafx.scene.control.Button;
+        import javafx.scene.control.Label;
+        import javafx.scene.control.ListView;
+        import javafx.scene.layout.BorderPane;
+        import javafx.scene.layout.HBox;
+        import javafx.scene.layout.StackPane;
+        import javafx.scene.layout.VBox;
+        import javafx.scene.shape.Rectangle;
+
+        public class LevelSelectView extends OverlayView<MenuController> {
+            private String selectedLevel;
+
+            public LevelSelectView(MenuController menuController) {
+                super(menuController);
+            }
+
+            @Override
+            protected StackPane createView() {
+                StackPane overlay = new StackPane();
+
+                // Background overlay
+                Rectangle background = new Rectangle(Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
+                background.getStyleClass().add("dialog_overlay_background");
+
+                // Main dialog container with BorderPane for layout sections
+                BorderPane dialogBox = new BorderPane();
+                dialogBox.getStyleClass().add("dialog_box");
+                dialogBox.setPrefWidth(Constants.GAME_WIDTH / 2);
+                dialogBox.setPrefHeight(Constants.GAME_HEIGHT / 2);
+                dialogBox.setPadding(new Insets(20));
+
+                // Title at top
+                Label title = new Label("Select map:");
+                title.getStyleClass().add("dialog_title");
+                BorderPane.setAlignment(title, Pos.CENTER);
+                BorderPane.setMargin(title, new Insets(0, 0, 10, 0));
+                dialogBox.setTop(title);
+
+                // Scrollable level list in center
+                ObservableList<String> levels = FXCollections.observableArrayList(
+                    "Level 1 - Grasslands",
+                    "Level 2 - Forest",
+                    "Level 3 - Mountain",
+                    "Level 4 - Cave",
+                    "Level 5 - Final Challenge"
+                );
+
+                ListView<String> levelListView = new ListView<>(levels);
+                levelListView.getStyleClass().add("level-list");
+                levelListView.getSelectionModel().select(0);
+                dialogBox.setCenter(levelListView);
+
+
+                // Button bar at bottom
+                HBox buttonBar = new HBox(10);
+                buttonBar.setAlignment(Pos.CENTER);
+                buttonBar.setPadding(new Insets(10, 0, 0, 0));
+
+                Button okBtn = new Button("Ok");
+                okBtn.getStyleClass().add("dialog_button");
+                okBtn.setOnAction(e -> {
+                    selectedLevel = levelListView.getSelectionModel().getSelectedItem();
+                    if (selectedLevel != null) {
+                        int levelIndex = levelListView.getSelectionModel().getSelectedIndex() + 1;
+                        System.out.println(selectedLevel);
+                        // Here we would call a method in controller to start the selected level
+//                        controller.showGameScene();
+                        hide();
+                    }
+                });
+
+                Button cancelBtn = new Button("Cancel");
+                cancelBtn.getStyleClass().add("dialog_button");
+                cancelBtn.setOnAction(e -> hide());
+
+                buttonBar.getChildren().addAll(okBtn, cancelBtn);
+                dialogBox.setBottom(buttonBar);
+
+                overlay.getChildren().addAll(background, dialogBox);
+                return overlay;
+            }
+
+            public String getSelectedLevel() {
+                return selectedLevel;
+            }
+        }

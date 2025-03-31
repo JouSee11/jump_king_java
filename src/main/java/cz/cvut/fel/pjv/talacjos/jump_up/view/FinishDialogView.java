@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class FinishDialogView extends OverlayView {
+public class FinishDialogView extends OverlayView<GameController> {
 
     public FinishDialogView(GameController gameController) {
         super(gameController);
@@ -38,7 +38,7 @@ public class FinishDialogView extends OverlayView {
 
         Button menuBtn = new Button("Return to Menu");
         menuBtn.getStyleClass().add("finish_button");
-        menuBtn.setOnAction(e -> gameController.endGame());
+        menuBtn.setOnAction(e -> controller.endGame());
 
 //        Button exitBtn = new Button("Exit Game");
 //        exitBtn.getStyleClass().add("victory_button");

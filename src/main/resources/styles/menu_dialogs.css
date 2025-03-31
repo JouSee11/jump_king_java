@@ -1,0 +1,15 @@
+.dialog_overlay_background {
+    -fx-fill: rgba(0, 0, 0, 0.8);
+}
+
+.dialog_box {
+    -fx-pref-width: 500px;
+    -fx-pref-height: 400px;
+    -fx-padding: 20px;
+    /* other styling properties */
+}
+
+.level-list {
+    -fx-pref-width: 800px;
+    -fx-pref-height: 600px;
+}

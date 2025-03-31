@@ -3,12 +3,12 @@ package cz.cvut.fel.pjv.talacjos.jump_up.view;
 import cz.cvut.fel.pjv.talacjos.jump_up.controller.GameController;
 import javafx.scene.layout.StackPane;
 
-abstract public class OverlayView {
+abstract public class OverlayView<T> {
     protected final StackPane viewRoot;
-    protected final GameController gameController;
+    protected final T controller;
 
-    public OverlayView(GameController gameController) {
-        this.gameController = gameController;
+    public OverlayView(T controller) {
+        this.controller = controller;
         viewRoot = createView();
         viewRoot.setVisible(false);
     }

@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class PauseMenuView extends OverlayView {
+public class PauseMenuView extends OverlayView<GameController> {
 //    private final StackPane pauseRoot;
 //    private final GameController gameController;
 
@@ -37,15 +37,15 @@ public class PauseMenuView extends OverlayView {
 
         Button resumeBtn = new Button("Resume");
         resumeBtn.getStyleClass().add("pause_button");
-        resumeBtn.setOnAction(e -> gameController.resumeGame());
+        resumeBtn.setOnAction(e -> controller.resumeGame());
 
         Button exitSaveBtn = new Button("Save and exit");
         exitSaveBtn.getStyleClass().add("pause_button");
-        exitSaveBtn.setOnAction(e -> gameController.endGame());
+        exitSaveBtn.setOnAction(e -> controller.endGame());
 
         Button exitBtn = new Button("Exit");
         exitBtn.getStyleClass().add("pause_button");
-        exitBtn.setOnAction(e -> gameController.endGame());
+        exitBtn.setOnAction(e -> controller.endGame());
 
         menuBox.getChildren().addAll(title, resumeBtn, exitSaveBtn, exitBtn);
         overlay.getChildren().addAll(background, menuBox);
