@@ -119,7 +119,7 @@ public class Player extends Entity {
 
     //animation controls
     private void loadAnimations() {
-        Image[] idleFrames = loadFrames("/player/idle/idle", 2);
+        Image[] idleFrames = loadFrames("/player/idle/idle", 3);
         Image[] runFrames = loadFrames("/player/run/run", 3);
         Image[] jumpFrames = loadFrames("/player/jump/jump", 1);
         Image[] fallFrames = loadFrames("/player/fall/fall", 1);
@@ -127,7 +127,7 @@ public class Player extends Entity {
         Image[] bounceFrames = loadFrames("/player/bounce/bounce", 1);
 
         idleAnimation = new SpriteAnimation(idleFrames, 1, true);
-        runAnimation = new SpriteAnimation(runFrames, 0.4, true);
+        runAnimation = new SpriteAnimation(runFrames, 0.6, true);
         jumpAnimation = new SpriteAnimation(jumpFrames, 0.3, true);
         fallAnimation = new SpriteAnimation(fallFrames, 0.3, true);
         squatAnimation = new SpriteAnimation(squatFrames, 0.3, true);
