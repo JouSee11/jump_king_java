@@ -23,10 +23,10 @@ public class GameController {
 
     private boolean isPaused = false;
 
-    public GameController(SceneController sceneController) {
+    public GameController(SceneController sceneController, String mapName) {
         this.sceneController = sceneController;
         // game model
-        this.gameState = new GameState(this);
+        this.gameState = new GameState(this, mapName);
         // game view
         this.gameView = new GameView(sceneController, this, gameState);
         //pause menu

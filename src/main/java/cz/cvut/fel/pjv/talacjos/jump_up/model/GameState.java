@@ -11,6 +11,7 @@ import java.util.List;
 
 public class GameState {
     GameController gameController;
+    private String mapName;
     private final CollisionHandler collisionHandler = new CollisionHandler(this);
 
     private List<Platform> curPlatformList;
@@ -37,21 +38,21 @@ public class GameState {
     private int powerUpTimeRemaining = 0;
     private Thread powerUpTimerThread;
 
-    public GameState(GameController gameController) {
+    public GameState(GameController gameController, String mapName) {
         this.gameController = gameController;
         this.curPlatformList = new ArrayList<Platform>();
         this.curKeyList = new ArrayList<Key>();
         this.curPowerupList = new ArrayList<PowerUp>();
 
         //load data from json files
+        this.mapName = mapName;
         loadPlayerData();
         loadLevelsData();
         loadKeysData();
 
         //set levels data
 //        setCollectedKeys(allKeys);
-        setCollectedKeys(allKeys);
-        setCurLevel(7);
+        setCurLevel(1);
         setMaxLevel(7);
     }
 
@@ -177,7 +178,7 @@ public class GameState {
     }
 
     private void loadLevelsData() {
-        levelsDataMap = JsonDataLoader.loadLevelsJson("src/main/resources/maps/Map3/levels.json");
+        levelsDataMap = JsonDataLoader.loadLevelsJson("src/main/resources/maps/" + mapName + "/levels.json");
     }
 
     private void loadPlayerData() {
@@ -338,6 +339,14 @@ public class GameState {
 
     public int getMaxLevel() {
         return maxLevel;
+    }
+
+    public void setMapName(String mapName) {
+        this.mapName = mapName;
+    }
+
+    public String getMapName() {
+        return mapName;
     }
 
     //winning the game

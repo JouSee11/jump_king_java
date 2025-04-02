@@ -64,7 +64,7 @@ public class MenuView {
         //adding actions to the buttons
 //        newGameBtn.setOnAction(e -> sceneController.showGameScene());
         newGameBtn.setOnAction(e -> menuController.showMenuSelection());
-        loadGameBtn.setOnAction(e -> sceneController.showGameScene());
+        loadGameBtn.setOnAction(e -> System.out.println("Game loading"));
         exitBtn.setOnAction(e -> sceneController.exitGame());
 
         //adding items to the root

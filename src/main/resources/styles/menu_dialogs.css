@@ -1,15 +1,58 @@
 .dialog_overlay_background {
-    -fx-fill: rgba(0, 0, 0, 0.8);
+    -fx-fill: rgba(0, 0, 0, 0.66);
 }
 
 .dialog_box {
-    -fx-pref-width: 500px;
-    -fx-pref-height: 400px;
-    -fx-padding: 20px;
-    /* other styling properties */
+    -fx-background-color: #373737;
+    -fx-background-radius: 20px;
+    -fx-padding: 30px;
+    -fx-effect: dropshadow(three-pass-box, black, 10, 0, 0, 0);
+    -fx-border-radius: 20px;
+    -fx-border-color: #636363;
+    -fx-border-width: 5px;
+    -fx-max-height: 800px;
+    -fx-max-width: 900px;
 }
 
-.level-list {
-    -fx-pref-width: 800px;
-    -fx-pref-height: 600px;
+.level_list {
+    -fx-max-height: 600px;
+    -fx-font-size: 14px;
+    -fx-max-width: 800px;
+    -fx-background-color: #9f9f9f;
+    -fx-background-radius: 15px;
+}
+
+/* Style the ListView cells */
+.level_list .list-cell {
+    -fx-font-family: "Jersey 10", sans-serif;
+    -fx-font-size: 30px;
+    -fx-text-fill: #808080;
+    -fx-background-color: transparent;
+    -fx-padding: 8px;
+    -fx-background-radius: 10px;
+}
+
+.level_list .list-cell:filled:selected {
+    -fx-background-color: #dfdfdf;
+    -fx-text-fill: #252525;
+}
+
+.dialog_title {
+    -fx-font-family: "Jersey 10", sans-serif;
+    -fx-font-size: 40px;
+    -fx-text-fill: #cfcfcf;
+    -fx-padding: 0 0 20px 0;
+}
+
+.dialog_button {
+    -fx-font-family: "Jersey 10", sans-serif;
+    -fx-font-size: 20px;
+    -fx-background-color: #252525;
+    -fx-border-width: 3px;
+    -fx-border-color: #5c5c5c;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-padding: 8px 20px;
 }

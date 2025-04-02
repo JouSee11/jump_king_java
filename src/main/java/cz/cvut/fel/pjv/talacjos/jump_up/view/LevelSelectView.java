@@ -15,7 +15,9 @@ package cz.cvut.fel.pjv.talacjos.jump_up.view;
         import javafx.scene.layout.VBox;
         import javafx.scene.shape.Rectangle;
 
-        public class LevelSelectView extends OverlayView<MenuController> {
+        import java.util.List;
+
+public class LevelSelectView extends OverlayView<MenuController> {
             private String selectedLevel;
 
             public LevelSelectView(MenuController menuController) {
@@ -33,8 +35,8 @@ package cz.cvut.fel.pjv.talacjos.jump_up.view;
                 // Main dialog container with BorderPane for layout sections
                 BorderPane dialogBox = new BorderPane();
                 dialogBox.getStyleClass().add("dialog_box");
-                dialogBox.setPrefWidth(Constants.GAME_WIDTH / 2);
-                dialogBox.setPrefHeight(Constants.GAME_HEIGHT / 2);
+                dialogBox.setPrefWidth(500);
+                dialogBox.setPrefHeight(400);
                 dialogBox.setPadding(new Insets(20));
 
                 // Title at top
@@ -44,17 +46,10 @@ package cz.cvut.fel.pjv.talacjos.jump_up.view;
                 BorderPane.setMargin(title, new Insets(0, 0, 10, 0));
                 dialogBox.setTop(title);
 
-                // Scrollable level list in center
-                ObservableList<String> levels = FXCollections.observableArrayList(
-                    "Level 1 - Grasslands",
-                    "Level 2 - Forest",
-                    "Level 3 - Mountain",
-                    "Level 4 - Cave",
-                    "Level 5 - Final Challenge"
-                );
+                ObservableList<String> levels = controller.getAllLevelsFromFolder();
 
                 ListView<String> levelListView = new ListView<>(levels);
-                levelListView.getStyleClass().add("level-list");
+                levelListView.getStyleClass().add("level_list");
                 levelListView.getSelectionModel().select(0);
                 dialogBox.setCenter(levelListView);
 
@@ -69,10 +64,9 @@ package cz.cvut.fel.pjv.talacjos.jump_up.view;
                 okBtn.setOnAction(e -> {
                     selectedLevel = levelListView.getSelectionModel().getSelectedItem();
                     if (selectedLevel != null) {
-                        int levelIndex = levelListView.getSelectionModel().getSelectedIndex() + 1;
                         System.out.println(selectedLevel);
                         // Here we would call a method in controller to start the selected level
-//                        controller.showGameScene();
+                        controller.startGameLevel(selectedLevel);
                         hide();
                     }
                 });
@@ -91,4 +85,6 @@ package cz.cvut.fel.pjv.talacjos.jump_up.view;
             public String getSelectedLevel() {
                 return selectedLevel;
             }
+
+
         }

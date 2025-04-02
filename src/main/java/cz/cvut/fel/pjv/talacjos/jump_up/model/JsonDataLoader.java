@@ -115,8 +115,6 @@ public class JsonDataLoader {
         return platforms;
     }
 
-
-
     public static Player loadPlayerJson(String filePath) {
         Gson gson = new Gson();
         Player player = null;

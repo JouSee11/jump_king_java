@@ -4,6 +4,7 @@ module cz.cvut.fel.pjv.talacjos.jump_up {
     requires java.desktop;
     requires javafx.media;
     requires com.google.gson;
+    requires java.sql;
 
 
     opens cz.cvut.fel.pjv.talacjos.jump_up to javafx.fxml;

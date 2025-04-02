@@ -18,8 +18,8 @@ public class SceneController{
         //init the scenes
     }
 
-    public void showGameScene() {
-        this.gameController = new GameController(this);
+    public void showGameScene(String levelName) {
+        this.gameController = new GameController(this, levelName);
         stage.setScene(gameController.setGameScene());
         gameController.startGame();
     }
