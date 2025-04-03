@@ -124,5 +124,13 @@
         "y": 800
       }
     }
-  ]
+  ],
+  "keysStats": {
+    "allCount": 7,
+    "collected": 0
+  },
+  "playerStart": {
+    "x": 100,
+    "y": 750
+  }
 }

@@ -120,7 +120,8 @@ public class JsonDataLoader {
         Player player = null;
 
         try (FileReader reader = new FileReader(filePath)){
-            JsonObject playerObject = gson.fromJson(reader, JsonObject.class);
+            JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
+            JsonObject playerObject = jsonObject.getAsJsonObject("playerStart");
 
             double x = playerObject.get("x").getAsDouble();
             double y = playerObject.get("y").getAsDouble();
@@ -140,11 +141,11 @@ public class JsonDataLoader {
         int[] keysStats = new int[2];
 
         try (FileReader reader = new FileReader(filePath)) {
-            JsonObject jsonObject = gson.fromJson(reader, JsonObject.class).getAsJsonObject("keys");
-//            JsonObject keysStatsObject = jsonObject.getAsJsonObject("keys");
+            JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
+            JsonObject keysStatsObject = jsonObject.getAsJsonObject("keysStats");
 
-            keysStats[0] = jsonObject.get("allCount").getAsInt();
-            keysStats[1] = jsonObject.get("collected").getAsInt();
+            keysStats[0] = keysStatsObject.get("allCount").getAsInt();
+            keysStats[1] = keysStatsObject.get("collected").getAsInt();
 
             return keysStats;
         } catch (IOException e) {

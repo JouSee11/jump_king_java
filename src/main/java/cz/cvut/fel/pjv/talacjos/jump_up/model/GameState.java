@@ -46,9 +46,9 @@ public class GameState {
 
         //load data from json files
         this.mapName = mapName;
-        loadPlayerData();
+//        loadPlayerData();
         loadLevelsData();
-        loadKeysData();
+//        loadKeysData();
 
         //set levels data
 //        setCollectedKeys(allKeys);
@@ -178,18 +178,27 @@ public class GameState {
     }
 
     private void loadLevelsData() {
-        levelsDataMap = JsonDataLoader.loadLevelsJson("src/main/resources/maps/" + mapName + "/levels.json");
-    }
-
-    private void loadPlayerData() {
-        player = JsonDataLoader.loadPlayerJson("src/main/resources/maps/Map3/player.json");
-    }
-
-    private void loadKeysData() {
-        int[] keyStatResp = JsonDataLoader.loadKeysStatsJson("src/main/resources/maps/Map3/collectables.json");
+        String filePath = "src/main/resources/maps/" + mapName + "/map_data.json";
+        //platform and level data
+        levelsDataMap = JsonDataLoader.loadLevelsJson(filePath);
+        //player start data
+        player = JsonDataLoader.loadPlayerJson(filePath);
+        //keys data stats
+        int[] keyStatResp = JsonDataLoader.loadKeysStatsJson(filePath);
         allKeys = keyStatResp[0];
         collectedKeys = keyStatResp[1];
+
     }
+
+//    private void loadPlayerData() {
+//        player = JsonDataLoader.loadPlayerJson("src/main/resources/maps/Map3/player.json");
+//    }
+//
+//    private void loadKeysData() {
+//        int[] keyStatResp = JsonDataLoader.loadKeysStatsJson("src/main/resources/maps/Map3/collectables.json");
+//        allKeys = keyStatResp[0];
+//        collectedKeys = keyStatResp[1];
+//    }
 
     public int[] getKeyStats() {
         return new int[]{allKeys, collectedKeys};

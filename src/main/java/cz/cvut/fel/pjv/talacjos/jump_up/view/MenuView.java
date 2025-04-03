@@ -36,7 +36,7 @@ public class MenuView {
         StackPane root = new StackPane();
 
         //background images
-        Image backgroundImage = new Image(getClass().getResource("/images/main_menu/menu_background.jpeg").toExternalForm());
+        Image backgroundImage = new Image(getClass().getResource("/images/main_menu/menu_background.png").toExternalForm());
         ImageView backgroundView = new ImageView(backgroundImage);
         backgroundView.setFitWidth(Constants.GAME_WIDTH);
         backgroundView.setFitHeight(Constants.GAME_HEIGHT);
