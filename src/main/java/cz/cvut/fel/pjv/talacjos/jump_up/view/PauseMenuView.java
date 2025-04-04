@@ -41,7 +41,7 @@ public class PauseMenuView extends OverlayView<GameController> {
 
         Button exitSaveBtn = new Button("Save and exit");
         exitSaveBtn.getStyleClass().add("pause_button");
-        exitSaveBtn.setOnAction(e -> controller.endGame());
+        exitSaveBtn.setOnAction(e -> controller.saveAndEndGame());
 
         Button exitBtn = new Button("Exit");
         exitBtn.getStyleClass().add("pause_button");

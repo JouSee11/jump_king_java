@@ -212,6 +212,11 @@ public class GameController {
         }
     }
 
+    public void saveAndEndGame() {
+        System.out.println(gameState.getMapName());
+
+    }
+
     public boolean isPaused() {
         return isPaused;
     }

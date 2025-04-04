@@ -2,33 +2,37 @@
     -fx-background-color: #000000;
 }
 
-.menu_title{
-    -fx-font-family: "Jersey 10", sans-serif;
-    -fx-font-size: 200px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #2b0505;
-    -fx-padding: 0 0 80px 0;
+/*.menu_title{*/
+/*    -fx-font-family: "Jersey 10", sans-serif;*/
+/*    -fx-font-size: 200px;*/
+/*    -fx-font-weight: bold;*/
+/*    -fx-text-fill: #2b0505;*/
+/*    -fx-padding: 0 0 80px 0;*/
+/*}*/
+
+.menu_vbox{
+    -fx-padding: 200px 0;
+    -fx-translate-y: 200px;
 }
 
 .menu_button {
     -fx-font-family: "Jersey 10", sans-serif;
-    -fx-background-color: linear-gradient(to bottom, #5c4033, #3a261b); /* Dark brown gradient */
+    -fx-background-color: linear-gradient(to bottom, #575757, #2e2e2e); /* Dark brown gradient */
     -fx-text-fill: white;
     -fx-font-size: 30px;
     -fx-padding: 10px 20px;
-    -fx-border-color: #8b5a2b;
-    -fx-border-width: 4px;
-    -fx-border-radius: 0;
-    -fx-background-radius: 0;
-    -fx-effect: dropshadow(three-pass-box, black, 5, 0, 2, 2); /* Pixelated shadow */
+    -fx-border-color: #1e1e1e;
+    -fx-border-width: 3px;
+    -fx-border-radius: 12px;
+    -fx-background-radius: 15px;
 
 }
 
 .menu_button:hover {
-    -fx-background-color: linear-gradient(to bottom, #6d4c41, #50362e);
-    -fx-border-color: #a06a3c;
+    -fx-background-color: linear-gradient(to bottom, #7a6232, #6a5f29);
+    -fx-border-color: #352e06;
     -fx-cursor: hand;
-
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.68), 15, 0, 2, 2); /* Pixelated shadow */
 }
 
 .menu_button:pressed {

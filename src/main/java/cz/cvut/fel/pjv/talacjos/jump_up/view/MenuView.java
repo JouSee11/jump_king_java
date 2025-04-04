@@ -43,6 +43,7 @@ public class MenuView {
 
         //menu items
         VBox vBox = new VBox(20);
+        vBox.getStyleClass().add("menu_vbox");
 
         Label title = new Label("Jump Up");
         title.getStyleClass().add("menu_title");
@@ -58,7 +59,7 @@ public class MenuView {
         exitBtn.getStyleClass().add("menu_button");
 
         //adding items to the vbox
-        vBox.getChildren().addAll(title, newGameBtn, loadGameBtn, exitBtn);
+        vBox.getChildren().addAll(newGameBtn, loadGameBtn, exitBtn);
         vBox.setAlignment(Pos.CENTER);
 
         //adding actions to the buttons
