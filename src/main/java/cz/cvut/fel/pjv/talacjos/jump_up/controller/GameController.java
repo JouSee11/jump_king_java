@@ -3,9 +3,10 @@ package cz.cvut.fel.pjv.talacjos.jump_up.controller;
 import cz.cvut.fel.pjv.talacjos.jump_up.Constants;
 import cz.cvut.fel.pjv.talacjos.jump_up.model.GameState;
 import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.Player;
-import cz.cvut.fel.pjv.talacjos.jump_up.view.FinishDialogView;
-import cz.cvut.fel.pjv.talacjos.jump_up.view.GameView;
-import cz.cvut.fel.pjv.talacjos.jump_up.view.PauseMenuView;
+import cz.cvut.fel.pjv.talacjos.jump_up.view.game.FinishDialogView;
+import cz.cvut.fel.pjv.talacjos.jump_up.view.game.GameView;
+import cz.cvut.fel.pjv.talacjos.jump_up.view.game.PauseMenuView;
+import cz.cvut.fel.pjv.talacjos.jump_up.view.game.SaveDialogView;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
@@ -16,6 +17,9 @@ public class GameController {
     private AnimationTimer gameLoop;
     private GameView gameView;
     private PauseMenuView pauseMenuView;
+
+    private SaveDialogView saveDialogView = null;
+    private boolean isSaveDialogOpened = false;
 
     private boolean spacePressed = false;
     private boolean leftPressed = false;
@@ -104,7 +108,13 @@ public class GameController {
                 gameState.setActionButtonPressed(true);
                 break;
             case ESCAPE:
-                togglePause();
+                System.out.println(saveDialogView);
+                if (saveDialogView != null) {
+                    saveDialogView.hide();
+                    saveDialogView = null;
+                } else {
+                    togglePause();
+                }
                 break;
             default:
                 break;
@@ -230,5 +240,11 @@ public class GameController {
         FinishDialogView finishDialogView = new FinishDialogView(this);
         gameView.addFinishDialog(finishDialogView.getRoot());
         finishDialogView.show();
+    }
+
+    public void showSaveDialog() {
+        saveDialogView = new SaveDialogView(this);
+        gameView.addSaveDialog(saveDialogView.getRoot());
+        saveDialogView.show();
     }
 }

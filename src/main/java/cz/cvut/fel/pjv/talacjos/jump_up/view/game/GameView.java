@@ -1,4 +1,4 @@
-package cz.cvut.fel.pjv.talacjos.jump_up.view;
+package cz.cvut.fel.pjv.talacjos.jump_up.view.game;
 
 import cz.cvut.fel.pjv.talacjos.jump_up.Constants;
 import cz.cvut.fel.pjv.talacjos.jump_up.controller.GameController;
@@ -59,6 +59,7 @@ public class GameView {
         sceneController.addStyles("game_main", scene);
         sceneController.addStyles("pause_menu", scene);
         sceneController.addStyles("finish_dialog", scene);
+        sceneController.addStyles("save_dialog", scene);
 
         //show ui parts
         renderKeyCountUI(gameArea);
@@ -306,6 +307,13 @@ public class GameView {
         if (finishDialogRoot != null) {
             StackPane root = (StackPane) scene.getRoot();
             root.getChildren().add(finishDialogRoot);
+        }
+    }
+
+    public void addSaveDialog(StackPane saveDialogRoot) {
+        if (saveDialogRoot != null) {
+            StackPane root = (StackPane) scene.getRoot();
+            root.getChildren().add(saveDialogRoot);
         }
     }
 

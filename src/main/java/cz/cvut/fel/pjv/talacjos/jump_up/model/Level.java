@@ -14,7 +14,6 @@ public class Level {
     private List<Key> keys;
     private List<PowerUp> powerUps;
     private End end;
-    //late add keys and powerups
 
     public int getId() {
         return id;

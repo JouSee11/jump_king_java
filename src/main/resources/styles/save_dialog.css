@@ -1,8 +1,8 @@
-.dialog_overlay_background {
-    -fx-fill: rgba(0, 0, 0, 0.66);
+.background {
+    -fx-background-color: rgba(0, 0, 0, 0.2);
 }
 
-.dialog_box {
+.save_dialog_box {
     -fx-background-color: #373737;
     -fx-background-radius: 20px;
     -fx-padding: 30px;
@@ -10,41 +10,18 @@
     -fx-border-radius: 20px;
     -fx-border-color: #636363;
     -fx-border-width: 5px;
-    -fx-max-height: 800px;
-    -fx-max-width: 900px;
+    -fx-max-height: 400px;
+    -fx-max-width: 700px;
 }
 
-.level_list {
-    -fx-max-height: 600px;
-    -fx-font-size: 14px;
-    -fx-max-width: 800px;
-    -fx-background-color: #9f9f9f;
-    -fx-background-radius: 15px;
-}
-
-/* Style the ListView cells */
-.level_list .list-cell {
-    -fx-font-family: "Jersey 10", sans-serif;
-    -fx-font-size: 30px;
-    -fx-text-fill: #808080;
-    -fx-background-color: transparent;
-    -fx-padding: 8px;
-    -fx-background-radius: 10px;
-}
-
-.level_list .list-cell:filled:selected {
-    -fx-background-color: #dfdfdf;
-    -fx-text-fill: #252525;
-}
-
-.dialog_title {
+.save_title {
     -fx-font-family: "Jersey 10", sans-serif;
     -fx-font-size: 40px;
     -fx-text-fill: #cfcfcf;
     -fx-padding: 0 0 20px 0;
 }
 
-.dialog_button {
+.save_button {
     -fx-font-family: "Jersey 10", sans-serif;
     -fx-font-size: 20px;
     -fx-background-color: #252525;
@@ -57,8 +34,25 @@
     -fx-padding: 8px 20px;
 }
 
-.dialog_button:hover {
+.save_button:hover {
     -fx-text-fill: #8f8c8c;
     -fx-translate-y: 2px;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.21), 20, 0.5, 10, 10);
+}
+
+.save_text_field{
+    -fx-max-width: 500px;
+    -fx-min-height: 75px;
+    -fx-font-family: "Jersey 10", sans-serif;
+    -fx-font-size: 23px;
+    -fx-border-radius: 20px;
+    -fx-border-color: #494949;
+    -fx-border-width: 4px;
+    -fx-background-color: #272727;
+    -fx-background-radius: 20px;
+    -fx-text-fill: white;
+}
+
+.save_text_field:hover{
+    -fx-border-color: #636363;
 }

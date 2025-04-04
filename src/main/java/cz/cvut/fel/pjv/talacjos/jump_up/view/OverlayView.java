@@ -1,6 +1,5 @@
 package cz.cvut.fel.pjv.talacjos.jump_up.view;
 
-import cz.cvut.fel.pjv.talacjos.jump_up.controller.GameController;
 import javafx.scene.layout.StackPane;
 
 abstract public class OverlayView<T> {

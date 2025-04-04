@@ -1,7 +1,8 @@
-package cz.cvut.fel.pjv.talacjos.jump_up.view;
+package cz.cvut.fel.pjv.talacjos.jump_up.view.game;
 
 import cz.cvut.fel.pjv.talacjos.jump_up.Constants;
 import cz.cvut.fel.pjv.talacjos.jump_up.controller.GameController;
+import cz.cvut.fel.pjv.talacjos.jump_up.view.OverlayView;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -41,7 +42,7 @@ public class PauseMenuView extends OverlayView<GameController> {
 
         Button exitSaveBtn = new Button("Save and exit");
         exitSaveBtn.getStyleClass().add("pause_button");
-        exitSaveBtn.setOnAction(e -> controller.saveAndEndGame());
+        exitSaveBtn.setOnAction(e -> controller.showSaveDialog());
 
         Button exitBtn = new Button("Exit");
         exitBtn.getStyleClass().add("pause_button");

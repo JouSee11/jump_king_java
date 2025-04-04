@@ -1,6 +1,5 @@
 package cz.cvut.fel.pjv.talacjos.jump_up.controller;
 
-import cz.cvut.fel.pjv.talacjos.jump_up.view.GameView;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.text.Font;

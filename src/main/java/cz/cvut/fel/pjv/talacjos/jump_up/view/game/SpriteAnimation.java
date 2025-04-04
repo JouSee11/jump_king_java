@@ -1,4 +1,4 @@
-package cz.cvut.fel.pjv.talacjos.jump_up.view;
+package cz.cvut.fel.pjv.talacjos.jump_up.view.game;
 
 import javafx.scene.image.Image;
 

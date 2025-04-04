@@ -30,7 +30,7 @@ public class GameState {
     private int curLevel;
     private int maxLevel;
 
-    private int collectedKeys;
+    private List<Integer> collectedKeys;
     private int allKeys;
 
     //powerup data
@@ -47,11 +47,11 @@ public class GameState {
         //load data from json files
         this.mapName = mapName;
 //        loadPlayerData();
-        loadLevelsData();
 //        loadKeysData();
 
         //set levels data
 //        setCollectedKeys(allKeys);
+        loadLevelsData();
         setCurLevel(1);
         setMaxLevel(7);
     }
@@ -184,32 +184,22 @@ public class GameState {
         //player start data
         player = JsonDataLoader.loadPlayerJson(filePath);
         //keys data stats
-        int[] keyStatResp = JsonDataLoader.loadKeysStatsJson(filePath);
-        allKeys = keyStatResp[0];
-        collectedKeys = keyStatResp[1];
-
+        List<Integer> keyStats = JsonDataLoader.loadKeysStatsJson(filePath);
+        allKeys = keyStats.get(0);
+        collectedKeys = keyStats.subList(1, keyStats.size());
+        removeCollectedKeysInit(collectedKeys);
     }
-
-//    private void loadPlayerData() {
-//        player = JsonDataLoader.loadPlayerJson("src/main/resources/maps/Map3/player.json");
-//    }
-//
-//    private void loadKeysData() {
-//        int[] keyStatResp = JsonDataLoader.loadKeysStatsJson("src/main/resources/maps/Map3/collectables.json");
-//        allKeys = keyStatResp[0];
-//        collectedKeys = keyStatResp[1];
-//    }
 
     public int[] getKeyStats() {
-        return new int[]{allKeys, collectedKeys};
+        return new int[]{allKeys, collectedKeys.size()};
     }
 
-    public void setCollectedKeys(int collectedKeys) {
+    public void setCollectedKeys(List<Integer> collectedKeys) {
         this.collectedKeys = collectedKeys;
     }
 
     public int getCollectedKeys() {
-        return collectedKeys;
+        return collectedKeys.size();
     }
 
     public int getAllKeys() {
@@ -256,19 +246,29 @@ public class GameState {
         curPowerupList = levelsDataMap.get(curLevel).getPowerUps();
         end = levelsDataMap.get(curLevel).getEnd();
         //        addPlatformsLevel(curLevel);
+
     }
 
     public void keyCollected(Key key) {
-        collectedKeys++;
+        collectedKeys.add(key.getKeyId());
         curKeyList.remove(key);
         levelsDataMap.get(curLevel).getKeys().remove(key);
 
         SoundController.getInstance().playSound("collectSuccess", 1);
-        if (collectedKeys == allKeys) {
+        if (collectedKeys.size() == allKeys) {
             SoundController.getInstance().playSound("collectedAllKeys", 1);
         } else {
             SoundController.getInstance().playRandomKeyCollect();
         }
+    }
+
+    private void removeCollectedKeysInit(List<Integer> keysIds) {
+        //get key by key id
+        for (Level level : levelsDataMap.values()) {
+            List<Key> levelKeys = level.getKeys();
+            levelKeys.removeIf(key -> keysIds.contains(key.getKeyId()));
+        }
+
     }
 
     public void powerUpCollected(PowerUp powerUp) {

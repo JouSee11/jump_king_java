@@ -1,6 +1,6 @@
 package cz.cvut.fel.pjv.talacjos.jump_up.model.world_items;
 
-import cz.cvut.fel.pjv.talacjos.jump_up.view.SpriteAnimation;
+import cz.cvut.fel.pjv.talacjos.jump_up.view.game.SpriteAnimation;
 import javafx.scene.image.Image;
 
 public class Player extends Entity {

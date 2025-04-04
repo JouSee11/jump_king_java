@@ -1,8 +1,8 @@
-package cz.cvut.fel.pjv.talacjos.jump_up.view;
+package cz.cvut.fel.pjv.talacjos.jump_up.view.main_menu;
 
         import cz.cvut.fel.pjv.talacjos.jump_up.Constants;
         import cz.cvut.fel.pjv.talacjos.jump_up.controller.MenuController;
-        import javafx.collections.FXCollections;
+        import cz.cvut.fel.pjv.talacjos.jump_up.view.OverlayView;
         import javafx.collections.ObservableList;
         import javafx.geometry.Insets;
         import javafx.geometry.Pos;
@@ -12,10 +12,7 @@ package cz.cvut.fel.pjv.talacjos.jump_up.view;
         import javafx.scene.layout.BorderPane;
         import javafx.scene.layout.HBox;
         import javafx.scene.layout.StackPane;
-        import javafx.scene.layout.VBox;
         import javafx.scene.shape.Rectangle;
-
-        import java.util.List;
 
 public class LevelSelectView extends OverlayView<MenuController> {
             private String selectedLevel;
@@ -35,9 +32,6 @@ public class LevelSelectView extends OverlayView<MenuController> {
                 // Main dialog container with BorderPane for layout sections
                 BorderPane dialogBox = new BorderPane();
                 dialogBox.getStyleClass().add("dialog_box");
-                dialogBox.setPrefWidth(500);
-                dialogBox.setPrefHeight(400);
-                dialogBox.setPadding(new Insets(20));
 
                 // Title at top
                 Label title = new Label("Select map:");

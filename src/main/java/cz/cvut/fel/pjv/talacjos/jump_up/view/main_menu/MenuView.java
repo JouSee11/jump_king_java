@@ -1,4 +1,4 @@
-package cz.cvut.fel.pjv.talacjos.jump_up.view;
+package cz.cvut.fel.pjv.talacjos.jump_up.view.main_menu;
 
 import cz.cvut.fel.pjv.talacjos.jump_up.Constants;
 import cz.cvut.fel.pjv.talacjos.jump_up.controller.MenuController;

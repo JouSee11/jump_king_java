@@ -1,19 +1,15 @@
 package cz.cvut.fel.pjv.talacjos.jump_up.controller;
 
-import cz.cvut.fel.pjv.talacjos.jump_up.view.FinishDialogView;
-import cz.cvut.fel.pjv.talacjos.jump_up.view.LevelSelectView;
-import cz.cvut.fel.pjv.talacjos.jump_up.view.MenuView;
+import cz.cvut.fel.pjv.talacjos.jump_up.view.main_menu.LevelSelectView;
+import cz.cvut.fel.pjv.talacjos.jump_up.view.main_menu.MenuView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MenuController {
     private SceneController sceneController;

@@ -135,17 +135,21 @@ public class JsonDataLoader {
         return player;
     }
 
-    public static int[] loadKeysStatsJson(String filePath) {
+    public static List<Integer> loadKeysStatsJson(String filePath) {
         Gson gson = new Gson();
 
-        int[] keysStats = new int[2];
+        List<Integer> keysStats = new ArrayList<Integer>();
 
         try (FileReader reader = new FileReader(filePath)) {
             JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
             JsonObject keysStatsObject = jsonObject.getAsJsonObject("keysStats");
 
-            keysStats[0] = keysStatsObject.get("allCount").getAsInt();
-            keysStats[1] = keysStatsObject.get("collected").getAsInt();
+            //get all the collected keys indexes
+            JsonArray collectedArray = keysStatsObject.getAsJsonArray("collected");
+            for (JsonElement element : collectedArray) {
+                keysStats.add(element.getAsInt());
+            }
+            keysStats.addFirst(keysStatsObject.get("allCount").getAsInt());
 
             return keysStats;
         } catch (IOException e) {
