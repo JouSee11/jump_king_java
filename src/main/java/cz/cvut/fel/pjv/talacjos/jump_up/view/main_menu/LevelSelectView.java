@@ -31,7 +31,7 @@ public class LevelSelectView extends OverlayView<MenuController> {
 
                 // Main dialog container with BorderPane for layout sections
                 BorderPane dialogBox = new BorderPane();
-                dialogBox.getStyleClass().add("dialog_box");
+                dialogBox.getStyleClass().add("dialog-box");
 
                 // Title at top
                 Label title = new Label("Select map:");
@@ -42,8 +42,9 @@ public class LevelSelectView extends OverlayView<MenuController> {
 
                 ObservableList<String> levels = controller.getAllLevelsFromFolder();
 
+
                 ListView<String> levelListView = new ListView<>(levels);
-                levelListView.getStyleClass().add("level_list");
+                levelListView.getStyleClass().add("list_view");
                 levelListView.getSelectionModel().select(0);
                 dialogBox.setCenter(levelListView);
 
@@ -54,7 +55,7 @@ public class LevelSelectView extends OverlayView<MenuController> {
                 buttonBar.setPadding(new Insets(10, 0, 0, 0));
 
                 Button okBtn = new Button("Ok");
-                okBtn.getStyleClass().add("dialog_button");
+                okBtn.getStyleClass().add("dialog-button");
                 okBtn.setOnAction(e -> {
                     selectedLevel = levelListView.getSelectionModel().getSelectedItem();
                     if (selectedLevel != null) {
@@ -66,7 +67,7 @@ public class LevelSelectView extends OverlayView<MenuController> {
                 });
 
                 Button cancelBtn = new Button("Cancel");
-                cancelBtn.getStyleClass().add("dialog_button");
+                cancelBtn.getStyleClass().add("dialog-button");
                 cancelBtn.setOnAction(e -> hide());
 
                 buttonBar.getChildren().addAll(okBtn, cancelBtn);
@@ -76,9 +77,7 @@ public class LevelSelectView extends OverlayView<MenuController> {
                 return overlay;
             }
 
-            public String getSelectedLevel() {
-                return selectedLevel;
-            }
+
 
 
         }

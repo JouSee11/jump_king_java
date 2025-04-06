@@ -1,0 +1,58 @@
+/* styles for the cels of the game saves */
+.save-name-label {
+    -fx-font-family: "Jersey 10", sans-serif;
+    -fx-font-size: 25px;
+    -fx-font-weight: bold;
+}
+
+.list_view .list-cell {
+    -fx-padding: 10px;
+}
+
+.map-label{
+    -fx-font-family: "Jersey 10", sans-serif;
+    -fx-font-size: 20px;
+
+}
+
+.date-label{
+    -fx-font-family: "Jersey 10", sans-serif;
+    -fx-font-size: 15px;
+}
+
+.save-name-label, .map-label, .date-label {
+    -fx-text-fill: #586a6a;
+}
+
+.list-cell:selected .save-name-label,
+.list-cell:selected .map-label,
+.list-cell:selected .date-label {
+    -fx-text-fill: black;
+}
+
+.save-cell-layout{
+    -fx-text-fill: #151515;
+}
+
+.load-list-view{
+    -fx-background-color: #6a9fae;
+}
+
+.load-list-view .list-cell:filled:selected {
+    -fx-background-color: #98becd;
+    -fx-text-fill: #151515;
+}
+
+.load-list-view .list-cell {
+    -fx-text-fill: #9e9e9e;
+}
+
+.load-dialog-box{
+    -fx-background-color: #0f4c6e;
+    -fx-border-color: #065d68;
+}
+
+.load-dialog-button{
+    -fx-background-color: #082f43;
+    -fx-border-color: #155f8c;
+}

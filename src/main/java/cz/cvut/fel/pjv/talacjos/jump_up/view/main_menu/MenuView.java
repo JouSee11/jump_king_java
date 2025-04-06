@@ -26,6 +26,7 @@ public class MenuView {
         scene = new Scene(root, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
         sceneController.addStyles("menu_main", scene);
         sceneController.addStyles("menu_dialogs", scene);
+        sceneController.addStyles("load_saves_dialog", scene);
     }
 
     public Scene getScene() {
@@ -64,8 +65,8 @@ public class MenuView {
 
         //adding actions to the buttons
 //        newGameBtn.setOnAction(e -> sceneController.showGameScene());
-        newGameBtn.setOnAction(e -> menuController.showMenuSelection());
-        loadGameBtn.setOnAction(e -> System.out.println("Game loading"));
+        newGameBtn.setOnAction(e -> menuController.showLevelSelection());
+        loadGameBtn.setOnAction(e -> menuController.showLoadSelection());
         exitBtn.setOnAction(e -> sceneController.exitGame());
 
         //adding items to the root
@@ -79,6 +80,14 @@ public class MenuView {
             StackPane root = (StackPane) scene.getRoot();
             root.getChildren().add(levelSelectionRoot);
         }
-
     }
+
+    public void addLoadSelectionDialog(StackPane loadSelectionRoot) {
+        if (loadSelectionRoot != null) {
+            StackPane root = (StackPane) scene.getRoot();
+            root.getChildren().add(loadSelectionRoot);
+        }
+    }
+
+
 }

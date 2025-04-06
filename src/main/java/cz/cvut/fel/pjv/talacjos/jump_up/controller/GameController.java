@@ -1,6 +1,11 @@
 package cz.cvut.fel.pjv.talacjos.jump_up.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import cz.cvut.fel.pjv.talacjos.jump_up.Constants;
+import cz.cvut.fel.pjv.talacjos.jump_up.model.FileSaveRead;
 import cz.cvut.fel.pjv.talacjos.jump_up.model.GameState;
 import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.Player;
 import cz.cvut.fel.pjv.talacjos.jump_up.view.game.FinishDialogView;
@@ -10,6 +15,8 @@ import cz.cvut.fel.pjv.talacjos.jump_up.view.game.SaveDialogView;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
+
+import java.util.List;
 
 public class GameController {
     private final SceneController sceneController;
@@ -222,8 +229,28 @@ public class GameController {
         }
     }
 
-    public void saveAndEndGame() {
-        System.out.println(gameState.getMapName());
+    public void saveGame(String fileName) {
+        String mapName = gameState.getMapName();
+
+        JsonObject saveData = new JsonObject();
+        saveData.addProperty("mapName", mapName);
+        saveData.addProperty("level", gameState.getCurLevel());
+        saveData.addProperty("playerX", gameState.getPlayer().getX());
+        saveData.addProperty("playerY", gameState.getPlayer().getY());
+
+        //create new json array and add all the collected keys to the save
+        JsonArray collectedKeys = new JsonArray();
+        for(Integer keyId : gameState.getCollectedKeysList()) {
+            collectedKeys.add(keyId);
+        }
+        saveData.add("collectedKeys", collectedKeys);
+
+        //convert to json string with pretty printing
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String jsonString = gson.toJson(saveData);
+
+        //call the function to save the data to the file
+        FileSaveRead.saveGameToFile(fileName, jsonString, mapName);
 
     }
 

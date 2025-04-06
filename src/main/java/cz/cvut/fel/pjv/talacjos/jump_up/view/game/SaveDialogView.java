@@ -3,16 +3,13 @@ package cz.cvut.fel.pjv.talacjos.jump_up.view.game;
 import cz.cvut.fel.pjv.talacjos.jump_up.Constants;
 import cz.cvut.fel.pjv.talacjos.jump_up.controller.GameController;
 import cz.cvut.fel.pjv.talacjos.jump_up.view.OverlayView;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class SaveDialogView extends OverlayView<GameController> {
@@ -47,7 +44,7 @@ public class SaveDialogView extends OverlayView<GameController> {
         saveBtn.setOnAction(e -> {
             String saveName = saveNameField.getText().trim();
             if (!saveName.isEmpty()) {
-                controller.saveAndEndGame();
+                controller.saveGame(saveName);
                 hide();
                 controller.endGame();
             }

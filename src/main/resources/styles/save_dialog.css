@@ -1,12 +1,12 @@
 .background {
-    -fx-background-color: rgba(0, 0, 0, 0.2);
+    -fx-background-color: red;
 }
 
 .save_dialog_box {
     -fx-background-color: #373737;
     -fx-background-radius: 20px;
     -fx-padding: 30px;
-    -fx-effect: dropshadow(three-pass-box, black, 10, 0, 0, 0);
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.37), 10, 0, 0, 0);
     -fx-border-radius: 20px;
     -fx-border-color: #636363;
     -fx-border-width: 5px;

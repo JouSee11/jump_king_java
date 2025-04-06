@@ -202,6 +202,10 @@ public class GameState {
         return collectedKeys.size();
     }
 
+    public List<Integer> getCollectedKeysList() {
+        return collectedKeys;
+    }
+
     public int getAllKeys() {
         return allKeys;
     }
