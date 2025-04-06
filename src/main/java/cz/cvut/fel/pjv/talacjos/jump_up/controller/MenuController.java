@@ -76,7 +76,11 @@ public class MenuController {
     }
 
     public void startGameLevel(String levelName) {
-        sceneController.showGameScene(levelName);
+        sceneController.showGameScene(levelName, false);
+    }
+
+    public void startGameLevelLoaded(String saveName) {
+        sceneController.showGameScene(saveName, true);
     }
 
 }

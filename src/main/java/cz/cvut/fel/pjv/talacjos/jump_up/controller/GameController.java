@@ -27,6 +27,7 @@ public class GameController {
 
     private SaveDialogView saveDialogView = null;
     private boolean isSaveDialogOpened = false;
+    private boolean isLoadedFromSave = false;
 
     private boolean spacePressed = false;
     private boolean leftPressed = false;
@@ -34,15 +35,17 @@ public class GameController {
 
     private boolean isPaused = false;
 
-    public GameController(SceneController sceneController, String mapName) {
+    public GameController(SceneController sceneController, String fileName, Boolean loadedFromSave) {
         this.sceneController = sceneController;
         // game model
-        this.gameState = new GameState(this, mapName);
+        this.gameState = new GameState(this, fileName, loadedFromSave);
         // game view
         this.gameView = new GameView(sceneController, this, gameState);
         //pause menu
         this.pauseMenuView = new PauseMenuView(this);
         gameView.addPauseMenu(pauseMenuView.getRoot());
+
+        isLoadedFromSave = loadedFromSave;
 
 
     }
@@ -185,7 +188,10 @@ public class GameController {
 
     public void startGame() {
         //init sounds
-        SoundController.getInstance().playSound("startingMsg", 1);
+
+        if (!isLoadedFromSave) { // dont play the starting sound when the game is loaded from save
+            SoundController.getInstance().playSound("startingMsg", 1);
+        }
         SoundController.getInstance().playMusic("main_sound.wav");
         SoundController.getInstance().setMusicVolume(Constants.DEFAULT_MUSIC_VOLUME);
 

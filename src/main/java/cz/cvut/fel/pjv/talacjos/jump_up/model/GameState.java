@@ -38,21 +38,19 @@ public class GameState {
     private int powerUpTimeRemaining = 0;
     private Thread powerUpTimerThread;
 
-    public GameState(GameController gameController, String mapName) {
+    public GameState(GameController gameController, String mapName, Boolean isLoadedFromSave) {
         this.gameController = gameController;
         this.curPlatformList = new ArrayList<Platform>();
         this.curKeyList = new ArrayList<Key>();
         this.curPowerupList = new ArrayList<PowerUp>();
 
-        //load data from json files
-        this.mapName = mapName;
-//        loadPlayerData();
-//        loadKeysData();
-
         //set levels data
-//        setCollectedKeys(allKeys);
-        loadLevelsData();
-        setCurLevel(1);
+        if (!isLoadedFromSave) {
+            loadLevelsData(mapName);
+            setCurLevel(1);
+        } else {
+            loadSavedData(mapName);
+        }
         setMaxLevel(7);
     }
 
@@ -177,7 +175,7 @@ public class GameState {
         return -Constants.JUMP_POWER * velocityRatio * player.getJumpPowerMultiplier();
     }
 
-    private void loadLevelsData() {
+    private void loadLevelsData(String mapName) {
         String filePath = "src/main/resources/maps/" + mapName + "/map_data.json";
         //platform and level data
         levelsDataMap = JsonDataLoader.loadLevelsJson(filePath);
@@ -188,6 +186,31 @@ public class GameState {
         allKeys = keyStats.get(0);
         collectedKeys = keyStats.subList(1, keyStats.size());
         removeCollectedKeysInit(collectedKeys);
+
+        this.mapName = mapName;
+    }
+
+    private void loadSavedData(String mapName) {
+        String filePath = "src/main/resources/saves/" + mapName;
+
+        //get the map name and load all the thing for it
+        String loadedMapName = JsonDataLoader.loadMapNameFromSave(filePath);
+        System.out.println("Loaded map: " + loadedMapName);
+        loadLevelsData(loadedMapName);
+
+        // load the players position saved
+        HashMap<String, Double> playerPositionLoaded = JsonDataLoader.loadPlayerPositionFromSave(filePath);
+        System.out.println("Loaded level: " + playerPositionLoaded.get("curLevel").intValue());
+        setCurLevel(3);
+        setCurLevel(playerPositionLoaded.get("curLevel").intValue());
+        player.setX(playerPositionLoaded.get("playerX"));
+        player.setY(playerPositionLoaded.get("playerY"));
+
+        //load the player collected keys
+        collectedKeys = JsonDataLoader.loadCollectedKeysFromSave(filePath);
+        removeCollectedKeysInit(collectedKeys);
+
+
     }
 
     public int[] getKeyStats() {

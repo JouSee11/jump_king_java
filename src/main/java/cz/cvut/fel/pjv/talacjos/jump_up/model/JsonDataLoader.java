@@ -15,6 +15,7 @@ import java.util.List;
 
 public class JsonDataLoader {
 
+    //loading data form the map file
     public static HashMap<Integer,Level> loadLevelsJson(String filePath) {
         Gson gson = new Gson();
         HashMap<Integer, Level> levels = new HashMap<Integer, Level>();
@@ -165,5 +166,62 @@ public class JsonDataLoader {
         return new End(x, Constants.GAME_HEIGHT - y);
     }
 
+
+    //loading data form save file
+    public static String loadMapNameFromSave(String filePath) {
+        Gson gson = new Gson();
+
+        try (FileReader reader = new FileReader(filePath)){
+            JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
+            return jsonObject.getAsJsonPrimitive("mapName").getAsString();
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return "";
+    }
+
+    public static HashMap<String, Double> loadPlayerPositionFromSave(String filePath) {
+        Gson gson = new Gson();
+        HashMap<String, Double> playerPosition = new HashMap<String, Double>();
+
+        try (FileReader reader = new FileReader(filePath)){
+            JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
+
+            Double curLevel = jsonObject.getAsJsonPrimitive("level").getAsDouble();
+            Double playerX = jsonObject.getAsJsonPrimitive("playerX").getAsDouble();
+            Double playerY = jsonObject.getAsJsonPrimitive("playerY").getAsDouble();
+
+            playerPosition.put("playerX", playerX);
+            playerPosition.put("playerY", playerY);
+            playerPosition.put("curLevel", curLevel);
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return playerPosition;
+    }
+
+    public static List<Integer> loadCollectedKeysFromSave(String filePath) {
+        Gson gson = new Gson();
+
+        List<Integer> collectedKeys = new ArrayList<Integer>();
+
+        try (FileReader reader = new FileReader(filePath)) {
+            JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
+            JsonArray collectArray = jsonObject.getAsJsonArray("collectedKeys");
+
+            for (JsonElement element : collectArray) {
+                collectedKeys.add(element.getAsInt());
+            }
+
+            return collectedKeys;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }

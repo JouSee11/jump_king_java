@@ -17,11 +17,12 @@ public class SceneController{
         //init the scenes
     }
 
-    public void showGameScene(String levelName) {
-        this.gameController = new GameController(this, levelName);
+    public void showGameScene(String levelName, Boolean isLoaded) {
+        this.gameController = new GameController(this, levelName, isLoaded);
         stage.setScene(gameController.setGameScene());
         gameController.startGame();
     }
+
 
     public void showMenuScene() {
         this.menuController = new MenuController(this);

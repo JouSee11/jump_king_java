@@ -82,8 +82,8 @@ public class LoadSelectView extends OverlayView<MenuController> {
             selectedSave = savesListView.getSelectionModel().getSelectedItem();
             if (selectedSave != null) {
                 System.out.println(selectedSave);
-                // Here we would call a method in controller to start the selected level
-//                controller.loadGameScene(selectedSave);
+                // get the name of the map
+                controller.startGameLevelLoaded(selectedSave);
                 hide();
             }
         });
