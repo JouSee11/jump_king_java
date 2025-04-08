@@ -16,6 +16,10 @@ public class MenuController {
     private SceneController sceneController;
     private MenuView menuView;
 
+    //dialogs
+    private LevelSelectView levelSelectView;
+    private LoadSelectView loadSelectView;
+
     public MenuController(SceneController sceneController) {
         this.sceneController = sceneController;
         this.menuView = new MenuView(sceneController, this);
@@ -27,15 +31,39 @@ public class MenuController {
     }
 
     public void showLevelSelection() {
-        LevelSelectView levelSelectView = new LevelSelectView(this);
-        menuView.addLevelSelectionDialog(levelSelectView.getRoot());
-        levelSelectView.show();
+        // if dialog exists, show it
+        if (levelSelectView != null) {
+            levelSelectView.show();
+        } else {
+            // create dialog if it doenst work
+            levelSelectView = new LevelSelectView(this);
+            menuView.addLevelSelectionDialog(levelSelectView.getRoot());
+            levelSelectView.show();
+        }
     }
     public void showLoadSelection() {
-        LoadSelectView loadSelectView = new LoadSelectView(this);
-        menuView.addLoadSelectionDialog(loadSelectView.getRoot());
-        loadSelectView.show();
+        if (loadSelectView != null) {
+            loadSelectView.show();
+        } else {
+            loadSelectView = new LoadSelectView(this);
+            menuView.addLoadSelectionDialog(loadSelectView.getRoot());
+            loadSelectView.show();
+        }
     }
+
+    public void closeLevelSelection() {
+        if (levelSelectView != null) {
+            levelSelectView.hide();
+        }
+    }
+
+    public void closeLoadSelection() {
+        if (loadSelectView != null) {
+            loadSelectView.hide();
+        }
+    }
+
+
 
     public ObservableList<String> getAllLevelsFromFolder() {
         ObservableList<String> levelFolderNames = FXCollections.observableArrayList();

@@ -178,4 +178,7 @@ public class LoadSelectView extends OverlayView<MenuController> {
         };
     }
 
+
+    @Override
+    protected void onHide() {controller.closeLoadSelection();}
 }

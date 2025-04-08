@@ -276,8 +276,18 @@ public class GameController {
     }
 
     public void showSaveDialog() {
-        saveDialogView = new SaveDialogView(this);
-        gameView.addSaveDialog(saveDialogView.getRoot());
-        saveDialogView.show();
+        if (saveDialogView != null) {
+            saveDialogView.show();
+        } else {
+            saveDialogView = new SaveDialogView(this);
+            gameView.addSaveDialog(saveDialogView.getRoot());
+            saveDialogView.show();
+        }
+    }
+
+    public void closeSaveDialog() {
+        if (saveDialogView != null) {
+            saveDialogView.hide();
+        }
     }
 }

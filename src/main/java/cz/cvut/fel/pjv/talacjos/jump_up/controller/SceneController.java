@@ -21,6 +21,8 @@ public class SceneController{
         this.gameController = new GameController(this, levelName, isLoaded);
         stage.setScene(gameController.setGameScene());
         gameController.startGame();
+
+
     }
 
 

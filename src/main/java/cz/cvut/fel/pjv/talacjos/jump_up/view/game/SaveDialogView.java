@@ -61,5 +61,9 @@ public class SaveDialogView extends OverlayView<GameController> {
         return overlay;
     }
 
+    @Override
+    protected void onHide() {controller.closeSaveDialog();}
+
+
 
 }

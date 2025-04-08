@@ -17,6 +17,8 @@ abstract public class OverlayView<T> {
     public void show() {viewRoot.setVisible(true);};
     public void hide() {viewRoot.setVisible(false);};
 
+    protected void onHide() {}
+
     public StackPane getRoot() {
         return viewRoot;
     }
