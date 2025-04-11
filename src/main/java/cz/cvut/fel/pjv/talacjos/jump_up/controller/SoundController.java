@@ -1,8 +1,12 @@
 package cz.cvut.fel.pjv.talacjos.jump_up.controller;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -102,21 +106,96 @@ public class SoundController {
 
     public void playMusic(String musicFile) {
         if (musicPlayer != null) {
-            musicPlayer.stop();
+            MediaPlayer oldPlayer = musicPlayer;
+            fadeMusic(0, musicPlayer, oldPlayer::stop);
         }
 
         URL resource = getClass().getResource("/sounds/music/" + musicFile);
         if (resource != null) {
             Media music = new Media(resource.toExternalForm());
             musicPlayer = new MediaPlayer(music);
-            musicPlayer.setVolume(musicVolume);
             musicPlayer.setCycleCount(MediaPlayer.INDEFINITE);
 
+
             if (!muted) {
+                musicPlayer.setVolume(0);
                 musicPlayer.play();
+                fadeMusic(musicVolume, musicPlayer, null);
             }
         }
     }
+
+    private void fadeMusic(double targetVolume, MediaPlayer musicPlayer, Runnable onFinish) {
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.seconds(3),
+                        new KeyValue(musicPlayer.volumeProperty(), targetVolume)));
+
+        if (onFinish != null) {
+            timeline.setOnFinished(e -> onFinish.run());
+        }
+        timeline.play();
+    }
+
+
+
+
+//    private Thread fadeThread;
+//
+//    public void playMusic(String musicFile) {
+//        // Create the new music player
+//        URL resource = getClass().getResource("/sounds/music/" + musicFile);
+//        if (resource == null) return;
+//
+//        Media music = new Media(resource.toExternalForm());
+//        MediaPlayer newPlayer = new MediaPlayer(music);
+//        newPlayer.setVolume(0); // Start with zero volume
+//        newPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+//
+//        // Store old player reference and update current player
+//        final MediaPlayer oldPlayer = musicPlayer;
+//        musicPlayer = newPlayer;
+//
+//        // Start playing new music
+//        if (!muted) {
+//            newPlayer.play();
+//
+//            // Perform crossfade
+//            fadeThread = new Thread(() -> {
+//                try {
+//                    // Fade over 1 second with 10 steps
+//                    for (int i = 0; i <= 10; i++) {
+//                        final double ratio = i / 10.0;
+//
+//                        javafx.application.Platform.runLater(() -> {
+//                            if (oldPlayer != null) {
+//                                oldPlayer.setVolume(musicVolume * (1 - ratio));
+//                            }
+//                            newPlayer.setVolume(musicVolume * ratio);
+//                        });
+//
+//                        Thread.sleep(100); // 100ms per step
+//                    }
+//
+//                    // Stop old player when fade is complete
+//                    javafx.application.Platform.runLater(() -> {
+//                        if (oldPlayer != null) {
+//                            oldPlayer.stop();
+//                        }
+//                    });
+//                } catch (InterruptedException e) {
+//                    Thread.currentThread().interrupt();
+//                }
+//            });
+//
+//            fadeThread.setDaemon(true);
+//            fadeThread.start();
+//        } else {
+//            // If muted, just stop the old player
+//            if (oldPlayer != null) {
+//                oldPlayer.stop();
+//            }
+//        }
+//    }
 
     public void setEffectsVolume(double volume) {
         this.effectsVolume = volume;

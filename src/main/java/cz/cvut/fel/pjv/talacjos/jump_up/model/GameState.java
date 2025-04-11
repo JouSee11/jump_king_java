@@ -33,6 +33,8 @@ public class GameState {
     private List<Integer> collectedKeys;
     private int allKeys;
 
+    private List<Integer> collectedPowerUps;
+
     //powerup data
     private boolean powerUpActive = false;
     private int powerUpTimeRemaining = 0;
@@ -185,7 +187,8 @@ public class GameState {
         List<Integer> keyStats = JsonDataLoader.loadKeysStatsJson(filePath);
         allKeys = keyStats.get(0);
         collectedKeys = keyStats.subList(1, keyStats.size());
-        removeCollectedKeysInit(collectedKeys);
+        collectedPowerUps = new ArrayList<Integer>();
+        removeCollectablesInit(collectedKeys, collectedPowerUps);
 
         this.mapName = mapName;
     }
@@ -200,27 +203,40 @@ public class GameState {
         loadLevelsData(loadedMapName);
 
         // load the players position saved
-        HashMap<String, Double> playerPositionLoaded = JsonDataLoader.loadPlayerPositionFromSave(filePath);
-        System.out.println("Loaded level: " + playerPositionLoaded.get("curLevel").intValue());
+        HashMap<String, Double> playerDataLoaded = JsonDataLoader.loadPlayerDataFromSave(filePath);
+        System.out.println("Loaded level: " + playerDataLoaded.get("curLevel").intValue());
         setCurLevel(3);
-        setCurLevel(playerPositionLoaded.get("curLevel").intValue());
-        player.setX(playerPositionLoaded.get("playerX"));
-        player.setY(playerPositionLoaded.get("playerY"));
+        setCurLevel(playerDataLoaded.get("curLevel").intValue());
+        player.setX(playerDataLoaded.get("playerX"));
+        player.setY(playerDataLoaded.get("playerY"));
+        player.setVelocityX(playerDataLoaded.get("velocityX"));
+        player.setVelocityY(playerDataLoaded.get("velocityY"));
+
+        //setup the powerup when it was active
+        if (playerDataLoaded.get("isPowerUpActive") == 1.0) {
+            savePowerUpLoad(playerDataLoaded.get("powerUpTimeRemaining").intValue());
+        }
 
         //load the player collected keys
         collectedKeys = JsonDataLoader.loadCollectedKeysFromSave(filePath);
-        removeCollectedKeysInit(collectedKeys);
+        collectedPowerUps = JsonDataLoader.loadCollectedPowerUpsFromSave(filePath);
+        removeCollectablesInit(collectedKeys, collectedPowerUps);
 
 
+    }
+
+    private void savePowerUpLoad(int timeRemaining) {
+        setPowerUpActive(true);
+        powerUpTimeRemaining = timeRemaining;
+        startPowerUpTimerThread();
+        player.powerUpActivate();
+        playPowerUpMusic();
     }
 
     public int[] getKeyStats() {
         return new int[]{allKeys, collectedKeys.size()};
     }
 
-    public void setCollectedKeys(List<Integer> collectedKeys) {
-        this.collectedKeys = collectedKeys;
-    }
 
     public int getCollectedKeys() {
         return collectedKeys.size();
@@ -266,6 +282,8 @@ public class GameState {
         this.collisionEnd = collisionEnd;
     }
 
+    public List<Integer> getCollectedPowerUps() {return collectedPowerUps;}
+
     //level control
     public void setCurLevel(int curLevel) {
         this.curLevel = curLevel;
@@ -290,17 +308,21 @@ public class GameState {
         }
     }
 
-    private void removeCollectedKeysInit(List<Integer> keysIds) {
+    private void removeCollectablesInit(List<Integer> keysIds, List<Integer> powerUpsIds) {
         //get key by key id
         for (Level level : levelsDataMap.values()) {
             List<Key> levelKeys = level.getKeys();
+            List<PowerUp> levelPowerUps = level.getPowerUps();
             levelKeys.removeIf(key -> keysIds.contains(key.getKeyId()));
+            levelPowerUps.removeIf(powerUp -> powerUpsIds.contains(powerUp.getPowerUpId()));
         }
 
     }
 
     public void powerUpCollected(PowerUp powerUp) {
         //remove the powerup from the map
+        collectedPowerUps.add(powerUp.getPowerUpId());
+        System.out.println(collectedPowerUps);
         curPowerupList.remove(powerUp);
         levelsDataMap.get(curLevel).getPowerUps().remove(powerUp);
 
@@ -312,6 +334,10 @@ public class GameState {
         powerUpTimeRemaining = Constants.POWERUP_DURATION;
         startPowerUpTimerThread();
 
+        playPowerUpMusic();
+    }
+
+    public void playPowerUpMusic() {
         SoundController.getInstance().playSound("powerUpCollected", 1);
         SoundController.getInstance().playMusic("fast_music.wav");
     }

@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import cz.cvut.fel.pjv.talacjos.jump_up.Constants;
 import cz.cvut.fel.pjv.talacjos.jump_up.model.FileSaveRead;
 import cz.cvut.fel.pjv.talacjos.jump_up.model.GameState;
+import cz.cvut.fel.pjv.talacjos.jump_up.model.JsonDataLoader;
 import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.Player;
 import cz.cvut.fel.pjv.talacjos.jump_up.view.game.FinishDialogView;
 import cz.cvut.fel.pjv.talacjos.jump_up.view.game.GameView;
@@ -182,7 +183,9 @@ public class GameController {
         if (!isLoadedFromSave) { // dont play the starting sound when the game is loaded from save
             SoundController.getInstance().playSound("startingMsg", 1);
         }
-        SoundController.getInstance().playMusic("main_sound.wav");
+        if (!gameState.isPowerUpActive()) { // if powerup is active the fast music is playing
+            SoundController.getInstance().playMusic("main_sound.wav");
+        }
         SoundController.getInstance().setMusicVolume(Constants.DEFAULT_MUSIC_VOLUME);
 
 
@@ -233,14 +236,21 @@ public class GameController {
         saveData.addProperty("level", gameState.getCurLevel());
         saveData.addProperty("playerX", gameState.getPlayer().getX());
         saveData.addProperty("playerY", gameState.getPlayer().getY());
+        saveData.addProperty("playerVelocityX", gameState.getPlayer().getVelocityX());
+        saveData.addProperty("playerVelocityY", gameState.getPlayer().getVelocityY());
+        saveData.addProperty("powerUpActive", gameState.isPowerUpActive());
+        saveData.addProperty("powerUpTimeRemaining", gameState.getPowerUpTimeRemaining());
 
         //create new json array and add all the collected keys to the save
-        JsonArray collectedKeys = new JsonArray();
-        for(Integer keyId : gameState.getCollectedKeysList()) {
-            collectedKeys.add(keyId);
-        }
+        JsonArray collectedKeys = JsonDataLoader.createJsonArrayFromIntList(gameState.getCollectedKeysList());
         saveData.add("collectedKeys", collectedKeys);
 
+        //create list form collected powerups
+        JsonArray collectedPowerUps = JsonDataLoader.createJsonArrayFromIntList(gameState.getCollectedPowerUps());
+        saveData.add("collectedPowerUps", collectedPowerUps);
+
+
+        //create list of json array
         //convert to json string with pretty printing
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String jsonString = gson.toJson(saveData);

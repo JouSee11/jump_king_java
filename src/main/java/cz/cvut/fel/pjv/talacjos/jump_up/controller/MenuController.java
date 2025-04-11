@@ -24,6 +24,8 @@ public class MenuController {
         this.sceneController = sceneController;
         this.menuView = new MenuView(sceneController, this);
 
+        SoundController.getInstance().playMusic("menu_music.m4a");
+
     }
 
     public Scene setMenuScene() {

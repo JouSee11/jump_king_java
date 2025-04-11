@@ -182,9 +182,9 @@ public class JsonDataLoader {
         return "";
     }
 
-    public static HashMap<String, Double> loadPlayerPositionFromSave(String filePath) {
+    public static HashMap<String, Double> loadPlayerDataFromSave(String filePath) {
         Gson gson = new Gson();
-        HashMap<String, Double> playerPosition = new HashMap<String, Double>();
+        HashMap<String, Double> playerData = new HashMap<String, Double>();
 
         try (FileReader reader = new FileReader(filePath)){
             JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
@@ -192,16 +192,26 @@ public class JsonDataLoader {
             Double curLevel = jsonObject.getAsJsonPrimitive("level").getAsDouble();
             Double playerX = jsonObject.getAsJsonPrimitive("playerX").getAsDouble();
             Double playerY = jsonObject.getAsJsonPrimitive("playerY").getAsDouble();
+            Double playerVelocityX = jsonObject.getAsJsonPrimitive("playerVelocityX").getAsDouble();
+            Double playerVelocityY = jsonObject.getAsJsonPrimitive("playerVelocityY").getAsDouble();
+            boolean powerUpActive = jsonObject.getAsJsonPrimitive("powerUpActive").getAsBoolean();
+            Double powerUpTimeRemaining = jsonObject.getAsJsonPrimitive("powerUpTimeRemaining").getAsDouble();
 
-            playerPosition.put("playerX", playerX);
-            playerPosition.put("playerY", playerY);
-            playerPosition.put("curLevel", curLevel);
+            playerData.put("playerX", playerX);
+            playerData.put("playerY", playerY);
+            playerData.put("curLevel", curLevel);
+            playerData.put("velocityX", playerVelocityX);
+            playerData.put("velocityY", playerVelocityY);
+            playerData.put("isPowerUpActive", powerUpActive ? 1.0 : 0.0);
+            playerData.put("powerUpTimeRemaining", powerUpTimeRemaining);
+
+
 
         } catch (IOException e){
             e.printStackTrace();
         }
 
-        return playerPosition;
+        return playerData;
     }
 
     public static List<Integer> loadCollectedKeysFromSave(String filePath) {
@@ -222,6 +232,34 @@ public class JsonDataLoader {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static List<Integer> loadCollectedPowerUpsFromSave(String filePath) {
+        Gson gson = new Gson();
+
+        List<Integer> collectedKeys = new ArrayList<Integer>();
+
+        try (FileReader reader = new FileReader(filePath)) {
+            JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
+            JsonArray collectArray = jsonObject.getAsJsonArray("collectedPowerUps");
+
+            for (JsonElement element : collectArray) {
+                collectedKeys.add(element.getAsInt());
+            }
+
+            return collectedKeys;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static JsonArray createJsonArrayFromIntList(List<Integer> itemsList) {
+        JsonArray collectedList = new JsonArray();
+        for(Integer itemId : itemsList) {
+            collectedList.add(itemId);
+        }
+        return collectedList;
     }
 
 }
