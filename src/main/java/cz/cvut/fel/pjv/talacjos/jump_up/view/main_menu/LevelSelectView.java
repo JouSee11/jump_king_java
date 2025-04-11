@@ -81,5 +81,4 @@ public class LevelSelectView extends OverlayView<MenuController> {
             @Override
             protected void onHide() {controller.closeLevelSelection();}
 
-
         }

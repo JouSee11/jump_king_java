@@ -88,16 +88,10 @@ public class GameController {
 
             case LEFT:
                 leftPressed = true;
-//                if (player.isOnGround() && !spacePressed) {
-//                    gameState.movePlayerX(-1);
-//                }
                 break;
 
             case RIGHT:
                 rightPressed = true;
-//                if (player.isOnGround() && !spacePressed) {
-//                    gameState.movePlayerX(1);
-//                }
                 break;
 
             case SPACE:
@@ -138,16 +132,12 @@ public class GameController {
 
             case LEFT:
                 leftPressed = false;
-//                if (!rightPressed && player.isOnGround() && !spacePressed) {
-//                    player.setVelocityX(0);
-//                }
+
                 break;
 
             case RIGHT:
                 rightPressed = false;
-//                if (!leftPressed && player.isOnGround() && !spacePressed) {
-//                    player.setVelocityX(0);
-//                }
+
                 break;
             case SPACE:
                 spacePressed = false;

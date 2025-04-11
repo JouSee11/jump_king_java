@@ -190,6 +190,7 @@ public class GameState {
         this.mapName = mapName;
     }
 
+    // loading save file
     private void loadSavedData(String mapName) {
         String filePath = "src/main/resources/saves/" + mapName;
 
