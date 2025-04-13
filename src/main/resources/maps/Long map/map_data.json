@@ -133,6 +133,44 @@
         "x": 700,
         "y": 800
       }
+    },
+    {
+      "id": 8,
+      "platforms": [
+        {"x": 100, "y": 800, "width": 120, "height": 100, "type": "stone"},
+        {"x": 300, "y": 700, "width": 70, "height": 50, "type": "dirt"},
+        {"x": 450, "y": 600, "width": 70, "height": 50, "type": "stone"},
+        {"x": 600, "y": 700, "width": 200, "height": 50, "type": "ice"},
+        {"x": 900, "y": 650, "width": 70, "height": 50, "type": "dirt"},
+        {"x": 1050, "y": 550, "width": 70, "height": 50, "type": "stone"},
+        {"x": 900, "y": 450, "width": 70, "height": 50, "type": "ice"},
+        {"x": 750, "y": 350, "width": 70, "height": 50, "type": "dirt"},
+        {"x": 600, "y": 450, "width": 70, "height": 50, "type": "stone"}
+      ],
+      "keys": [],
+      "powerUp": []
+    },
+    {
+      "id": 9,
+      "platforms": [
+        {"x": 100, "y": 800, "width": 120, "height": 100, "type": "stone"},
+        {"x": 1050, "y": 550, "width": 70, "height": 50, "type": "stone"},
+        {"x": 900, "y": 450, "width": 70, "height": 50, "type": "ice"},
+        {"x": 750, "y": 350, "width": 70, "height": 50, "type": "dirt"},
+        {"x": 600, "y": 450, "width": 70, "height": 50, "type": "stone"}
+      ],
+      "keys": [],
+      "powerUp": []
+    },
+    {
+      "id": 10,
+      "platforms": [
+        {"x": 100, "y": 800, "width": 120, "height": 100, "type": "stone"},
+        {"x": 1050, "y": 550, "width": 70, "height": 50, "type": "stone"},
+        {"x": 900, "y": 450, "width": 70, "height": 50, "type": "ice"}
+      ],
+      "keys": [],
+      "powerUp": []
     }
   ],
   "keysStats": {
@@ -144,7 +182,7 @@
     "y": 150
   },
   "levelStats": {
-    "levelCount": 7,
+    "levelCount": 10,
     "startingLevel": 1
   }
 }

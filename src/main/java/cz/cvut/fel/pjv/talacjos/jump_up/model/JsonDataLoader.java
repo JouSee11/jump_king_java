@@ -166,6 +166,28 @@ public class JsonDataLoader {
         return new End(x, Constants.GAME_HEIGHT - y);
     }
 
+    public static int[] loadLevelStatsJson(String filePath) {
+        Gson gson = new Gson();
+
+        int[] levelStats = new int[2];
+
+        try (FileReader reader = new FileReader(filePath)) {
+            JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
+            JsonObject levelsStatsObject = jsonObject.getAsJsonObject("levelStats");
+
+            //get all the collected keys indexes
+            JsonElement levelCountElement = levelsStatsObject.getAsJsonPrimitive("levelCount");
+            JsonElement startingLevelElement = levelsStatsObject.getAsJsonPrimitive("startingLevel");
+            levelStats[0] = levelCountElement != null ? levelCountElement.getAsInt() : 1;;
+            levelStats[1] = startingLevelElement != null ? startingLevelElement.getAsInt() : 1;
+
+            return levelStats;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     //loading data form save file
     public static String loadMapNameFromSave(String filePath) {

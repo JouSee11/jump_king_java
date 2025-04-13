@@ -49,11 +49,9 @@ public class GameState {
         //set levels data
         if (!isLoadedFromSave) {
             loadLevelsData(mapName);
-            setCurLevel(1);
         } else {
             loadSavedData(mapName);
         }
-        setMaxLevel(7);
     }
 
     public void update(double deltaTime) {
@@ -188,6 +186,11 @@ public class GameState {
         allKeys = keyStats.get(0);
         collectedKeys = keyStats.subList(1, keyStats.size());
         collectedPowerUps = new ArrayList<Integer>();
+        //get levels data - set the starting level and maximum level
+        int[] levelsData = JsonDataLoader.loadLevelStatsJson(filePath);
+        setMaxLevel(levelsData[0]);
+        setCurLevel(levelsData[1]);
+
         removeCollectablesInit(collectedKeys, collectedPowerUps);
 
         this.mapName = mapName;
@@ -205,7 +208,6 @@ public class GameState {
         // load the players position saved
         HashMap<String, Double> playerDataLoaded = JsonDataLoader.loadPlayerDataFromSave(filePath);
         System.out.println("Loaded level: " + playerDataLoaded.get("curLevel").intValue());
-        setCurLevel(3);
         setCurLevel(playerDataLoaded.get("curLevel").intValue());
         player.setX(playerDataLoaded.get("playerX"));
         player.setY(playerDataLoaded.get("playerY"));

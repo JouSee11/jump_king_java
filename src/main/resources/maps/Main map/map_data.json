@@ -147,5 +147,9 @@
   "playerStart": {
     "x": 100,
     "y": 150
+  },
+  "levelStats": {
+    "levelCount": 7,
+    "startingLevel": 1
   }
 }

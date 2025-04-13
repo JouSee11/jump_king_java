@@ -43,6 +43,7 @@ public class CollisionHandler{
 
         // check if the player is colliding with the "celling" and is on the top level
         if (player.getY() < 0 && curLevel == maxLevel) {
+            System.out.println("collidin celing");
             player.setY(0);
             player.setVelocityY(0);
 

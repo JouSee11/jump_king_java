@@ -251,7 +251,7 @@ public class GameView {
 
 
     private void loadBackgroundImage() {
-        int curLevel = gameState.getCurLevel();
+        int curLevel = Math.min(gameState.getCurLevel(), 7);
         if (!backgroundCache.containsKey(curLevel)) {
             backgroundCache.put(curLevel, new Image(getClass().getResource("/images/background/background" + curLevel + ".png").toExternalForm()));
         }
