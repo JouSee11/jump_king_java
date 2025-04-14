@@ -12,8 +12,17 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * Represents the save dialog view displayed when the user wants to save the game.
+ * This view is an overlay that allows the user to input a save name and save the game.
+ */
 public class SaveDialogView extends OverlayView<GameController> {
 
+    /**
+     * Constructs a new SaveDialogView.
+     *
+     * @param gameController The game controller associated with this view.
+     */
     public SaveDialogView(GameController gameController) {
         super(gameController);
     }
@@ -61,6 +70,9 @@ public class SaveDialogView extends OverlayView<GameController> {
         return overlay;
     }
 
+    /**
+     * Handles the actions to perform when the save dialog is hidden.
+     */
     @Override
     protected void onHide() {controller.closeSaveDialog();}
 

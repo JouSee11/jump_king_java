@@ -21,6 +21,9 @@ import javafx.scene.paint.Color;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Represents the main game view, responsible for rendering the game state and UI elements.
+ */
 public class GameView {
     private final Scene scene;
     private final SceneController sceneController;
@@ -40,6 +43,13 @@ public class GameView {
     private ImageView keyIconView;
     private ImageView timerIconView;
 
+    /**
+     * Constructs a new GameView.
+     *
+     * @param sceneController The controller for managing scenes.
+     * @param gameController  The controller for handling game logic.
+     * @param gameState       The current state of the game.
+     */
     public GameView(SceneController sceneController, GameController gameController, GameState gameState) {
         this.sceneController = sceneController;
         this.gameState = gameState;
@@ -71,7 +81,9 @@ public class GameView {
 
     }
 
-    //render the game updates every game loop !!!
+    /**
+     * Renders the game state and updates the UI elements.
+     */
     public void render() {
 
         //render game state - later
@@ -107,6 +119,11 @@ public class GameView {
 
     }
 
+    /**
+     * Renders the platforms in the game.
+     *
+     * @param gc The graphics context used for rendering.
+     */
     private void renderPlatform(GraphicsContext gc) {
         double cornerRadius = 4;
 
@@ -148,6 +165,11 @@ public class GameView {
         }
     }
 
+    /**
+     * Renders the keys in the game.
+     *
+     * @param gc The graphics context used for rendering.
+     */
     private void renderKey(GraphicsContext gc) {
         for (Key key : gameState.getKeyList()) {
             Image curFrame = key.getCurrentAnimation().getCurrentFrame();
@@ -155,6 +177,11 @@ public class GameView {
         }
     }
 
+    /**
+     * Renders the power-ups in the game.
+     *
+     * @param gc The graphics context used for rendering.
+     */
     private void renderPowerUp(GraphicsContext gc) {
         for (PowerUp powerup : gameState.getCurPowerupList()) {
             Image curFrame = powerup.getCurrentAnimation().getCurrentFrame();
@@ -162,6 +189,11 @@ public class GameView {
         }
     }
 
+    /**
+     * Renders the player in the game, including flipping the sprite based on direction.
+     *
+     * @param gc The graphics context used for rendering.
+     */
     private void renderPlayer(GraphicsContext gc) {
         Player player = gameState.getPlayer();
         Image currentFrame = player.getCurrentAnimation().getCurrentFrame();
@@ -179,6 +211,11 @@ public class GameView {
         }
     }
 
+    /**
+     * Renders the key count UI in the game.
+     *
+     * @param root The root container to which the UI is added.
+     */
     private void renderKeyCountUI(StackPane root) {
         keyCountLabel = new Label("0/3");
         keyCountLabel.getStyleClass().add("count_label");
@@ -202,6 +239,11 @@ public class GameView {
         root.getChildren().add(keyBox);
     }
 
+    /**
+     * Renders the power-up timer UI in the game.
+     *
+     * @param root The root container to which the UI is added.
+     */
     private void renderPowerUpTimerUi(StackPane root) {
         powerUpTimerLabel = new Label("");
         powerUpTimerLabel.getStyleClass().add("power-up-timer");
@@ -226,6 +268,11 @@ public class GameView {
         root.getChildren().add(keyBox);
     }
 
+    /**
+     * Renders the end element in the game.
+     *
+     * @param gc The graphics context used for rendering.
+     */
     private void renderEnd(GraphicsContext gc) {
         End end = gameState.getEnd();
         if (end == null) {return;}
@@ -244,12 +291,17 @@ public class GameView {
 
     }
 
+    /**
+     * Updates the key count UI based on the current game state.
+     */
     private void updateKeyCountUI() {
         int[] keyStats = gameState.getKeyStats();
         keyCountLabel.setText(keyStats[1] + "/" + keyStats[0]);
     }
 
-
+    /**
+     * Loads the background image for the current level.
+     */
     private void loadBackgroundImage() {
         int curLevel = Math.min(gameState.getCurLevel(), 7);
         if (!backgroundCache.containsKey(curLevel)) {
@@ -258,6 +310,11 @@ public class GameView {
         backgroundImage = backgroundCache.get(curLevel);
     }
 
+    /**
+     * Updates the power-up timer UI based on the current game state.
+     *
+     * @param gc The graphics context used for rendering.
+     */
     private void updatePowerUpTimer(GraphicsContext gc) {
         if (gameState.isPowerUpActive()) {
             int timeRemaining = gameState.getPowerUpTimeRemaining();
@@ -271,6 +328,11 @@ public class GameView {
         }
     }
 
+    /**
+     * Applies a color filter to the game view when a power-up is active.
+     *
+     * @param gc The graphics context used for rendering.
+     */
     private void applyColorFilter(GraphicsContext gc) {
         if (!gameState.isPowerUpActive()) {
             return;
@@ -294,7 +356,11 @@ public class GameView {
         gc.restore();
     }
 
-    //pause
+    /**
+     * Adds a pause menu overlay to the game view.
+     *
+     * @param pauseMenuRoot The root container of the pause menu.
+     */
     public void addPauseMenu(StackPane pauseMenuRoot) {
         if (pauseMenuRoot != null) {
             StackPane root = (StackPane) scene.getRoot();
@@ -302,7 +368,11 @@ public class GameView {
         }
     }
 
-    //game finish
+    /**
+     * Adds a finish dialog overlay to the game view.
+     *
+     * @param finishDialogRoot The root container of the finish dialog.
+     */
     public void addFinishDialog(StackPane finishDialogRoot) {
         if (finishDialogRoot != null) {
             StackPane root = (StackPane) scene.getRoot();
@@ -310,6 +380,11 @@ public class GameView {
         }
     }
 
+    /**
+     * Adds a save dialog overlay to the game view.
+     *
+     * @param saveDialogRoot The root container of the save dialog.
+     */
     public void addSaveDialog(StackPane saveDialogRoot) {
         if (saveDialogRoot != null) {
             StackPane root = (StackPane) scene.getRoot();

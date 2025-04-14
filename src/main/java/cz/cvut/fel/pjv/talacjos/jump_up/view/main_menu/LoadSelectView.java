@@ -19,9 +19,18 @@ import javafx.util.Callback;
 
 import java.util.Arrays;
 
+/**
+ * Represents the load selection view in the main menu.
+ * This view allows the user to select a saved game to load and continue playing.
+ */
 public class LoadSelectView extends OverlayView<MenuController> {
     private String selectedSave;
 
+    /**
+     * Constructs a new LoadSelectView.
+     *
+     * @param menuController The menu controller associated with this view.
+     */
     public LoadSelectView(MenuController menuController) {
         super(menuController);
     }
@@ -101,6 +110,11 @@ public class LoadSelectView extends OverlayView<MenuController> {
     }
 
     //customize the single save line
+    /**
+     * Creates a custom cell factory for the ListView to display save details.
+     *
+     * @return A Callback to create custom ListCell instances.
+     */
     private Callback<ListView<String>, ListCell<String>> createCellFactory() {
         return new Callback<ListView<String>, ListCell<String>>() {
             @Override
@@ -178,7 +192,9 @@ public class LoadSelectView extends OverlayView<MenuController> {
         };
     }
 
-
+    /**
+     * Handles the actions to perform when the load selection view is hidden.
+     */
     @Override
     protected void onHide() {controller.closeLoadSelection();}
 }

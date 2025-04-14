@@ -17,8 +17,10 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 
-import java.util.List;
-
+/**
+ * The GameController class is responsible for managing the game logic, handling user input,
+ * and coordinating interactions between the game model, view, and other components.
+ */
 public class GameController {
     private final SceneController sceneController;
     private GameState gameState;
@@ -36,6 +38,14 @@ public class GameController {
 
     private boolean isPaused = false;
 
+
+    /**
+     * Constructs a GameController instance.
+     *
+     * @param sceneController The SceneController instance for managing scenes.
+     * @param fileName The name of the file to load game data from.
+     * @param loadedFromSave Indicates whether the game is loaded from a save file.
+     */
     public GameController(SceneController sceneController, String fileName, Boolean loadedFromSave) {
         this.sceneController = sceneController;
         // game model
@@ -51,11 +61,18 @@ public class GameController {
 
     }
 
-    //set up the game scene
+    /**
+     * Sets up the game scene.
+     *
+     * @return The Scene object representing the game scene.
+     */
     public Scene setGameScene() {
         return gameView.getScene();
     }
 
+    /**
+     * Initializes the game loop, which updates the game state and renders the view.
+     */
     private void setupGameLoop() {
         gameLoop = new AnimationTimer() {
             private long lastUpdate = 0;
@@ -81,7 +98,11 @@ public class GameController {
         };
     }
 
-
+    /**
+     * Handles key press events and updates the game state accordingly.
+     *
+     * @param event The KeyEvent representing the key press.
+     */
     public void handleKeyPress(KeyEvent event) {
         Player player = gameState.getPlayer();
 
@@ -126,6 +147,11 @@ public class GameController {
         }
     }
 
+    /**
+     * Handles key release events and updates the game state accordingly.
+     *
+     * @param event The KeyEvent representing the key release.
+     */
     public void handleKeyRelease(KeyEvent event) {
         Player player = gameState.getPlayer();
 
@@ -160,23 +186,30 @@ public class GameController {
         }
     }
 
+
     public boolean isLeftPressed() {
         return leftPressed;
     }
+
 
     public boolean isRightPressed() {
         return rightPressed;
     }
 
+
     public boolean isSpacePressed() {
         return spacePressed;
     }
+
 
     public void setSpacePressed(boolean spacePressed) {
         this.spacePressed = spacePressed;
     }
 
 
+    /**
+     * Starts the game by initializing the game loop and playing sounds.
+     */
     public void startGame() {
         //init sounds
 
@@ -193,13 +226,18 @@ public class GameController {
         gameLoop.start();
     }
 
+    /**
+     * Ends the game by stopping the game loop and returning to the menu scene.
+     */
     public void endGame() {
         gameLoop.stop();
         SoundController.getInstance().stopAllSounds();
         sceneController.showMenuScene();
     }
 
-    //pause game handle
+    /**
+     * Toggles the pause state of the game.
+     */
     public void togglePause() {
 
         if (isPaused) {
@@ -209,6 +247,10 @@ public class GameController {
         }
     }
 
+
+    /**
+     * Pauses the game by stopping the game loop and showing the pause menu.
+     */
     public void pauseGame() {
         SoundController.getInstance().stopAllSounds();
         if (!isPaused) {
@@ -219,6 +261,9 @@ public class GameController {
         }
     }
 
+    /**
+     * Resumes the game by restarting the game loop and hiding the pause menu.
+     */
     public void resumeGame() {
         SoundController.getInstance().resumeAllSounds();
         if (isPaused) {
@@ -228,6 +273,11 @@ public class GameController {
         }
     }
 
+    /**
+     * Saves the current game state to a file.
+     *
+     * @param fileName The name of the file to save the game state to.
+     */
     public void saveGame(String fileName) {
         String mapName = gameState.getMapName();
 
@@ -260,11 +310,14 @@ public class GameController {
 
     }
 
+
     public boolean isPaused() {
         return isPaused;
     }
 
-    //victory dialog when game ends
+    /**
+     * Displays the victory dialog when the game ends.
+     */
     public void showFinish() {
         gameLoop.stop();
         SoundController.getInstance().stopAllSounds();
@@ -275,6 +328,9 @@ public class GameController {
         finishDialogView.show();
     }
 
+    /**
+     * Displays the save dialog for saving the game.
+     */
     public void showSaveDialog() {
         if (saveDialogView != null) {
             saveDialogView.show();
@@ -285,6 +341,9 @@ public class GameController {
         }
     }
 
+    /**
+     * Closes the save dialog if it is open.
+     */
     public void closeSaveDialog() {
         if (saveDialogView != null) {
             saveDialogView.hide();

@@ -15,11 +15,21 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 
+/**
+ * Represents the main menu view of the game.
+ * This view displays the main menu with options to start a new game, load a saved game, or exit the application.
+ */
 public class MenuView {
     private final Scene scene;
     private final SceneController sceneController;
     private final MenuController menuController;
 
+    /**
+     * Constructs a new MenuView.
+     *
+     * @param sceneController The controller responsible for managing scenes.
+     * @param menuController  The controller responsible for handling menu actions.
+     */
     public MenuView(SceneController sceneController, MenuController menuController) {
         this.sceneController = sceneController;
         this.menuController = menuController;
@@ -36,6 +46,11 @@ public class MenuView {
         return scene;
     }
 
+    /**
+     * Renders the main menu view.
+     *
+     * @return A StackPane containing the main menu layout.
+     */
     private StackPane renderMenuView() {
         StackPane root = new StackPane();
 
@@ -54,10 +69,6 @@ public class MenuView {
         Label title = new Label("Jump Up");
         title.getStyleClass().add("menu_title");
 
-        //menu buttons
-//        Button newGameBtn = new Button("New game");
-//        newGameBtn.getStyleClass().addAll("menu-button", "menu-play");
-
         ImageView startGameBtn = createMenuButton("/images/main_menu/button_start.png");
         ImageView loadGameBtn = createMenuButton("/images/main_menu/button_load.png");
         ImageView exitBtn = createMenuButton("/images/main_menu/button_exit.png");
@@ -65,19 +76,13 @@ public class MenuView {
         startGameBtn.getStyleClass().add("menu-button");
         loadGameBtn.getStyleClass().add("menu-button");
         exitBtn.getStyleClass().add("menu-button");
-//
-//        Button loadGameBtn = new Button("Load game");
-//        loadGameBtn.getStyleClass().addAll("menu-button", "menu-load");
-//
-//        Button exitBtn = new Button("Exit");
-//        exitBtn.getStyleClass().addAll("menu-button", "menu-exit");
+
 
         //adding items to the vbox
         vBox.getChildren().addAll(startGameBtn ,loadGameBtn, exitBtn);
         vBox.setAlignment(Pos.CENTER);
 
         //adding actions to the buttons
-//        newGameBtn.setOnAction(e -> sceneController.showGameScene());
         startGameBtn.setOnMouseClicked(e -> menuController.showLevelSelection());
         loadGameBtn.setOnMouseClicked(e -> menuController.showLoadSelection());
         exitBtn.setOnMouseClicked(e -> sceneController.exitGame());
@@ -88,6 +93,11 @@ public class MenuView {
         return root;
     }
 
+    /**
+     * Adds the level selection dialog to the main menu view.
+     *
+     * @param levelSelectionRoot The root of the level selection dialog.
+     */
     public void addLevelSelectionDialog(StackPane levelSelectionRoot) {
         if (levelSelectionRoot != null) {
             StackPane root = (StackPane) scene.getRoot();
@@ -95,6 +105,11 @@ public class MenuView {
         }
     }
 
+    /**
+     * Adds the load selection dialog to the main menu view.
+     *
+     * @param loadSelectionRoot The root of the load selection dialog.
+     */
     public void addLoadSelectionDialog(StackPane loadSelectionRoot) {
         if (loadSelectionRoot != null) {
             StackPane root = (StackPane) scene.getRoot();
@@ -102,6 +117,11 @@ public class MenuView {
         }
     }
 
+    /**
+     * Creates and returns the background video for the main menu.
+     *
+     * @return A MediaView containing the background video.
+     */
     private MediaView getBackgroundVideo() {
         String videoPath = getClass().getResource("/video/background_animation.mp4").toExternalForm();
         Media media = new Media(videoPath);
@@ -126,6 +146,12 @@ public class MenuView {
         return mediaView;
     }
 
+    /**
+     * Creates a menu button with the specified image file path.
+     *
+     * @param filePath The file path of the button image.
+     * @return An ImageView representing the menu button.
+     */
     private ImageView createMenuButton(String filePath) {
         try {
             Image img = new Image((getClass().getResource(filePath).toExternalForm()));

@@ -9,6 +9,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * The GameState class represents the current state of the game, including player data,
+ * level data, collected items, and power-up states. It handles game updates, level transitions,
+ * and interactions between the player and game objects.
+ */
 public class GameState {
     GameController gameController;
     private String mapName;
@@ -40,6 +45,13 @@ public class GameState {
     private int powerUpTimeRemaining = 0;
     private Thread powerUpTimerThread;
 
+    /**
+     * Constructs a GameState object with the specified game controller, map name, and save state.
+     *
+     * @param gameController   The game controller managing the game.
+     * @param mapName          The name of the map to load.
+     * @param isLoadedFromSave Indicates whether the game is loaded from a save file.
+     */
     public GameState(GameController gameController, String mapName, Boolean isLoadedFromSave) {
         this.gameController = gameController;
         this.curPlatformList = new ArrayList<Platform>();
@@ -54,6 +66,11 @@ public class GameState {
         }
     }
 
+    /**
+     * Updates the game state, including player movement, collisions, animations, and physics.
+     *
+     * @param deltaTime The time elapsed since the last update, in seconds.
+     */
     public void update(double deltaTime) {
 
         // Apply velocity to position (X and Y separately)
@@ -90,18 +107,36 @@ public class GameState {
         updateEndAnimation(end, deltaTime);
     }
 
+    /**
+     * Updates the animations for a list of collectable entities.
+     *
+     * @param deltaTime The time elapsed since the last update, in seconds.
+     * @param entities  The list of entities to update.
+     * @param <T>       The type of the entities, extending Entity.
+     */
     private <T extends Entity> void updateCollectableAnimation(double deltaTime, List<T>  entities) {
         for (T entity : entities) {
             entity.updateAnimation(deltaTime);
         }
     }
 
+    /**
+     * Updates the animation for the end object, if it exists.
+     *
+     * @param end       The end object to update.
+     * @param deltaTime The time elapsed since the last update, in seconds.
+     */
     private void updateEndAnimation(End end, double deltaTime) {
         if (end != null) {
             end.updateAnimation(deltaTime);
         }
     }
 
+    /**
+     * Updates the jump hold time and executes the jump if the maximum wait time is reached.
+     *
+     * @param deltaTime The time elapsed since the last update, in seconds.
+     */
     private void spacerUpdate(double deltaTime){
         if (gameController.isSpacePressed() && player.isOnGround()) {
             jumpHoldTime += deltaTime;
@@ -125,6 +160,9 @@ public class GameState {
         }
     }
 
+    /**
+     * Updates the player's horizontal velocity based on user input and ground state.
+     */
     private void playerRunUpdate() {
         if (player.isOnGround()) {
             if (gameController.isSpacePressed()) {
@@ -146,13 +184,20 @@ public class GameState {
     }
 
 
-    //jumping
+    /**
+     * Prepares the player for a jump by setting the horizontal velocity to zero
+     * and enabling the squatting state.
+     */
     public void prepareJump() {
         player.setVelocityX(0);
         player.setSquatting(true);
     }
 
-
+    /**
+     * Executes the player's jump by calculating the jump velocity based on the
+     * jump hold time, setting the vertical and horizontal velocities, and updating
+     * the player's state to reflect the jump.
+     */
     public void playerJumpExecute() {
         double jumpVelocity = calculateJumpVelocity(jumpHoldTime);
 
@@ -169,12 +214,27 @@ public class GameState {
 
     }
 
+    /**
+     * Calculates the vertical jump velocity based on the jump hold time.
+     * The velocity is determined using a ratio that considers the minimum jump
+     * coefficient and the player's jump power multiplier.
+     *
+     * @param jumpHoldTime The time the jump button has been held down.
+     * @return The calculated vertical jump velocity.
+     */
     private double calculateJumpVelocity(double jumpHoldTime) {
         double ratio = Math.min(jumpHoldTime / Constants.MAX_JUMP_WAIT, 1.0);
         double velocityRatio = Constants.MIN_JUMP_COEFFICIENT + (1 - Constants.MIN_JUMP_COEFFICIENT) * ratio; //usual formula for calculating jump ratio
         return -Constants.JUMP_POWER * velocityRatio * player.getJumpPowerMultiplier();
     }
 
+    /**
+     * Loads level data from a JSON file for the specified map name.
+     * This method initializes the levels, player data, key statistics, and other game-related data.
+     * It also removes any collectables (keys and power-ups) that have already been collected.
+     *
+     * @param mapName The name of the map to load data for.
+     */
     private void loadLevelsData(String mapName) {
         String filePath = "src/main/resources/maps/" + mapName + "/map_data.json";
         //platform and level data
@@ -196,7 +256,12 @@ public class GameState {
         this.mapName = mapName;
     }
 
-    // loading save file
+    /**
+     * Loads saved game data from a JSON file for the specified map name.
+     * This method restores the player's position, collected items, and power-up states.
+     *
+     * @param mapName The name of the map to load saved data for.
+     */
     private void loadSavedData(String mapName) {
         String filePath = "src/main/resources/saves/" + mapName;
 
@@ -227,6 +292,11 @@ public class GameState {
 
     }
 
+    /**
+     * Restores the power-up state and starts the timer for the remaining duration.
+     *
+     * @param timeRemaining The remaining time for the power-up, in seconds.
+     */
     private void savePowerUpLoad(int timeRemaining) {
         setPowerUpActive(true);
         powerUpTimeRemaining = timeRemaining;
@@ -286,7 +356,12 @@ public class GameState {
 
     public List<Integer> getCollectedPowerUps() {return collectedPowerUps;}
 
-    //level control
+    /**
+     * Sets the current level and updates the game state with the platforms, keys, power-ups,
+     * and end object associated with the specified level.
+     *
+     * @param curLevel The level number to set as the current level.
+     */
     public void setCurLevel(int curLevel) {
         this.curLevel = curLevel;
         curPlatformList = levelsDataMap.get(curLevel).getPlatforms(); //set the platforms for the current level
@@ -297,6 +372,12 @@ public class GameState {
 
     }
 
+    /**
+     * Handles the collection of a key by the player. The key is removed from the current level,
+     * added to the list of collected keys, and appropriate sounds are played.
+     *
+     * @param key The key object that has been collected.
+     */
     public void keyCollected(Key key) {
         collectedKeys.add(key.getKeyId());
         curKeyList.remove(key);
@@ -310,6 +391,12 @@ public class GameState {
         }
     }
 
+    /**
+     * Removes already collected keys and power-ups from the levels during initialization.
+     *
+     * @param keysIds    A list of IDs of keys that have already been collected.
+     * @param powerUpsIds A list of IDs of power-ups that have already been collected.
+     */
     private void removeCollectablesInit(List<Integer> keysIds, List<Integer> powerUpsIds) {
         //get key by key id
         for (Level level : levelsDataMap.values()) {
@@ -321,6 +408,12 @@ public class GameState {
 
     }
 
+    /**
+     * Handles the collection of a power-up by the player. The power-up is removed from the map,
+     * added to the list of collected power-ups, and activates the power-up state for the player.
+     *
+     * @param powerUp The power-up object that has been collected.
+     */
     public void powerUpCollected(PowerUp powerUp) {
         //remove the powerup from the map
         collectedPowerUps.add(powerUp.getPowerUpId());
@@ -339,11 +432,17 @@ public class GameState {
         playPowerUpMusic();
     }
 
+    /**
+     * Plays the music associated with collecting a power-up.
+     */
     public void playPowerUpMusic() {
         SoundController.getInstance().playSound("powerUpCollected", 1);
         SoundController.getInstance().playMusic("fast_music.wav");
     }
 
+    /**
+     * Deactivates the currently active power-up, stops the timer, and restores the default game state.
+     */
     private void deactivatePowerUp() {
         powerUpActive = false;
         powerUpTimeRemaining = 0;
@@ -353,6 +452,10 @@ public class GameState {
         SoundController.getInstance().playMusic("main_sound.wav");
     }
 
+    /**
+     * Starts a timer thread to manage the duration of the active power-up.
+     * The timer decreases the remaining time every second and deactivates the power-up when time runs out.
+     */
     private void startPowerUpTimerThread() {
         //stop the thread if it is already running
         stopPowerUpTimerThread();
@@ -376,6 +479,9 @@ public class GameState {
 
     }
 
+    /**
+     * Stops the power-up timer thread if it is currently running.
+     */
     private void stopPowerUpTimerThread() {
         if (powerUpTimerThread != null && powerUpTimerThread.isAlive()) {
             powerUpTimerThread.interrupt();
@@ -414,7 +520,9 @@ public class GameState {
         return mapName;
     }
 
-    //winning the game
+    /**
+     * Ends the game and displays the finish screen.
+     */
     public void endGame() {
         gameController.showFinish();
     }

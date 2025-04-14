@@ -10,11 +10,21 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * Represents the finish dialog view displayed when the game ends.
+ * This view is an overlay that shows a victory message and provides options to return to the menu.
+ */
 public class FinishDialogView extends OverlayView<GameController> {
 
+    /**
+     * Constructs a new FinishDialogView.
+     *
+     * @param gameController The game controller associated with this view.
+     */
     public FinishDialogView(GameController gameController) {
         super(gameController);
     }
+
 
     @Override
     protected StackPane createView() {

@@ -9,16 +9,28 @@ import javafx.scene.shape.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The CollisionHandler class is responsible for managing and resolving collisions
+ * between the player, platforms, keys, power-ups, and other game elements.
+ */
 public class CollisionHandler{
     private GameState gameState;
 
     private boolean wasOnGround  = false;
 
+    /**
+     * Constructs a CollisionHandler with the specified game state.
+     *
+     * @param gameState The current game state.
+     */
     public CollisionHandler(GameState gameState) {
         this.gameState = gameState;
     }
 
-    // First check and handle vertical movement, then horizontal
+    /**
+     * Handles all collisions in the game, including player movement, platform interactions,
+     * key collection, power-up collection, and end-level checks.
+     */
     public void handleCollisions() {
         //get the data from the game state that are relevant for collisions handling
         Player player = gameState.getPlayer();
@@ -103,7 +115,13 @@ public class CollisionHandler{
     }
 //
 
-//
+    /**
+     * Checks if the player is colliding with a map object.
+     *
+     * @param player    The player object.
+     * @param mapObject The map object to check for collision.
+     * @return True if the player is colliding with the map object, false otherwise.
+     */
     private boolean checkCollision(Player player, Rectangle mapObject) {
             Bounds platformBounds = mapObject.getBoundsInParent();
             Bounds playerBounds = player.getBoundsInParent();
@@ -111,6 +129,12 @@ public class CollisionHandler{
             return playerBounds.intersects(platformBounds);
     }
 
+    /**
+     * Resolves a collision between the player and a platform.
+     *
+     * @param player   The player object.
+     * @param platform The platform object.
+     */
     private void resolveCollisionPlatform(Player player, Rectangle platform) {
         //Calculate horizontal overlap
         double overlapLeft = player.getX() + player.getWidth() - platform.getX();
@@ -152,6 +176,12 @@ public class CollisionHandler{
 
     }
 
+
+    /**
+     * Checks if the player has collided with the end-level object and handles the collision.
+     *
+     * @param player The player object.
+     */
     private void checkEndCollision(Player player) {
         End end = gameState.getEnd();
         //check if we are at the level where there is the end
@@ -172,7 +202,11 @@ public class CollisionHandler{
 
     }
 
-
+    /**
+     * Bounces the player back when colliding with an object.
+     *
+     * @param player The player object.
+     */
     private void bounceBack(Player player) {
         //if the player is jumping bounce back
         if (!player.isOnGround()) {
@@ -188,6 +222,13 @@ public class CollisionHandler{
         }
     }
 
+    /**
+     * Changes the player's level and adjusts their position based on the direction of movement.
+     *
+     * @param player   The player object.
+     * @param level    The new level to set.
+     * @param direction The direction of movement ("up" or "down").
+     */
     private void changeLevel(Player player, int level, String direction) {
         gameState.setCurLevel(level);
 
@@ -202,6 +243,11 @@ public class CollisionHandler{
         System.out.println("Next level " + direction);
     }
 
+    /**
+     * Plays the sound effect for falling if the player was jumping or not previously on the ground.
+     *
+     * @param player The player object.
+     */
     private void playSoundFall(Player player) {
         if (player.isJumping() || !wasOnGround) {
             SoundController.getInstance().playSound("fall", 1);

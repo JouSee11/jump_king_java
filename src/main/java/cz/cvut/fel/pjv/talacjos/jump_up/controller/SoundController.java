@@ -12,6 +12,11 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The SoundController class is responsible for managing sound effects and background music
+ * in the application. It provides methods to play, stop, and adjust the volume of sounds.
+ * This class follows the Singleton design pattern to ensure a single instance is used.
+ */
 public class SoundController {
     private static SoundController instance;
 
@@ -23,11 +28,20 @@ public class SoundController {
 
     private String lastPlayedSound;
 
+    /**
+     * Private constructor to prevent instantiation from outside the class.
+     * Initializes the sound effects map and loads the sounds.
+     */
     private SoundController() {
         soundEffects = new HashMap<>();
         loadSounds();
     }
 
+    /**
+     * Returns the singleton instance of the SoundController.
+     *
+     * @return The SoundController instance.
+     */
     public static SoundController getInstance() {
         if (instance == null) {
             instance = new SoundController();
@@ -35,6 +49,10 @@ public class SoundController {
         return instance;
     }
 
+    /**
+     * Loads sound effects into the soundEffects map.
+     * Each sound effect is associated with a unique name.
+     */
     private void loadSounds() {
         // Load sound effects
         loadEffect("keyCollect1", "/sounds/SFX/voices/keyCollect/keyCollect1.mp3");
@@ -67,6 +85,12 @@ public class SoundController {
         loadEffect("victory", "/sounds/SFX/voices/victory.mp3");
     }
 
+    /**
+     * Loads a single sound effect and adds it to the soundEffects map.
+     *
+     * @param name The unique name of the sound effect.
+     * @param path The file path to the sound effect.
+     */
     private void loadEffect(String name, String path) {
         URL resource = getClass().getResource(path);
         if (resource != null) {
@@ -78,12 +102,19 @@ public class SoundController {
         }
     }
 
+    /**
+     * Plays a random key collection sound effect.
+     */
     public void playRandomKeyCollect() {
         int randomIndex = (int) (Math.random() * 5) + 1;
         String soundName = "keyCollect"  + randomIndex;
         playSound(soundName,1);
     }
 
+
+    /**
+     * Plays a random jump sound effect.
+     */
     public void playRandomJump() {
         playSound("jump", 1);
         int randomIndex = (int) (Math.random() * 5) + 1;
@@ -91,6 +122,12 @@ public class SoundController {
         playSound(jumpEffectName,0.2);
     }
 
+    /**
+     * Plays a sound effect by its name.
+     *
+     * @param name   The name of the sound effect to play.
+     * @param volume The volume at which to play the sound effect.
+     */
     public void playSound(String name, double volume) {
         if (muted || name.equalsIgnoreCase(lastPlayedSound)) return;
 
@@ -102,8 +139,11 @@ public class SoundController {
         }
     }
 
-
-
+    /**
+     * Plays background music from the specified file.
+     *
+     * @param musicFile The name of the music file to play.
+     */
     public void playMusic(String musicFile) {
         if (musicPlayer != null) {
             MediaPlayer oldPlayer = musicPlayer;
@@ -125,6 +165,13 @@ public class SoundController {
         }
     }
 
+    /**
+     * Fades the volume of the music player to a target volume over a duration.
+     *
+     * @param targetVolume The target volume to fade to.
+     * @param musicPlayer  The MediaPlayer instance to fade.
+     * @param onFinish     A Runnable to execute when the fade is complete.
+     */
     private void fadeMusic(double targetVolume, MediaPlayer musicPlayer, Runnable onFinish) {
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.seconds(3),
@@ -137,70 +184,11 @@ public class SoundController {
     }
 
 
-
-
-//    private Thread fadeThread;
-//
-//    public void playMusic(String musicFile) {
-//        // Create the new music player
-//        URL resource = getClass().getResource("/sounds/music/" + musicFile);
-//        if (resource == null) return;
-//
-//        Media music = new Media(resource.toExternalForm());
-//        MediaPlayer newPlayer = new MediaPlayer(music);
-//        newPlayer.setVolume(0); // Start with zero volume
-//        newPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-//
-//        // Store old player reference and update current player
-//        final MediaPlayer oldPlayer = musicPlayer;
-//        musicPlayer = newPlayer;
-//
-//        // Start playing new music
-//        if (!muted) {
-//            newPlayer.play();
-//
-//            // Perform crossfade
-//            fadeThread = new Thread(() -> {
-//                try {
-//                    // Fade over 1 second with 10 steps
-//                    for (int i = 0; i <= 10; i++) {
-//                        final double ratio = i / 10.0;
-//
-//                        javafx.application.Platform.runLater(() -> {
-//                            if (oldPlayer != null) {
-//                                oldPlayer.setVolume(musicVolume * (1 - ratio));
-//                            }
-//                            newPlayer.setVolume(musicVolume * ratio);
-//                        });
-//
-//                        Thread.sleep(100); // 100ms per step
-//                    }
-//
-//                    // Stop old player when fade is complete
-//                    javafx.application.Platform.runLater(() -> {
-//                        if (oldPlayer != null) {
-//                            oldPlayer.stop();
-//                        }
-//                    });
-//                } catch (InterruptedException e) {
-//                    Thread.currentThread().interrupt();
-//                }
-//            });
-//
-//            fadeThread.setDaemon(true);
-//            fadeThread.start();
-//        } else {
-//            // If muted, just stop the old player
-//            if (oldPlayer != null) {
-//                oldPlayer.stop();
-//            }
-//        }
-//    }
-
     public void setEffectsVolume(double volume) {
         this.effectsVolume = volume;
         soundEffects.values().forEach(clip -> clip.setVolume(volume));
     }
+
 
     public void setMusicVolume(double volume) {
         this.musicVolume = volume;
@@ -209,6 +197,10 @@ public class SoundController {
         }
     }
 
+    /**
+     * Toggles the mute state for all sounds.
+     * If muted, all sounds are paused; otherwise, they are resumed.
+     */
     public void toggleMute() {
         muted = !muted;
         if (muted) {
@@ -222,6 +214,9 @@ public class SoundController {
         }
     }
 
+    /**
+     * Stops all currently playing sounds, including sound effects and background music.
+     */
     public void stopAllSounds() {
         // Stop any currently playing sound effects
         if (musicPlayer != null) {
@@ -237,6 +232,9 @@ public class SoundController {
         lastPlayedSound = null;
     }
 
+    /**
+     * Resumes all sounds that were previously paused.
+     */
     public void resumeAllSounds() {
         if (musicPlayer != null) {
             musicPlayer.play();

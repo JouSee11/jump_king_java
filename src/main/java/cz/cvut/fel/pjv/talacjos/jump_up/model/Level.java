@@ -7,7 +7,9 @@ import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.PowerUp;
 
 import java.util.List;
 
-//one level = one screen
+/**
+ * Represents a single level in the game. Each level corresponds to one screen.
+ */
 public class Level {
     private int id;
     private List<Platform> platforms;
@@ -55,6 +57,11 @@ public class Level {
         return end;
     }
 
+    /**
+     * Returns a string representation of the level, including its ID and the types of platforms.
+     *
+     * @return A string representation of the level.
+     */
     @Override
     public String toString() {
         System.out.println("Level id: " + id);

@@ -6,8 +6,20 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * The FileSaveRead class provides functionality for saving game data to a file.
+ */
 public class FileSaveRead {
 
+    /**
+     * Saves the game data to a file in JSON format.
+     * The file is saved in the 'src/main/resources/saves' directory with a name
+     * that includes the provided file name, the current date and time, and the map name.
+     *
+     * @param fileName The base name of the file to save.
+     * @param jsonData The game data in JSON format to be written to the file.
+     * @param mapName  The name of the map associated with the save file.
+     */
     public static void saveGameToFile(String fileName, String jsonData, String mapName) {
 
         try{

@@ -3,6 +3,10 @@ package cz.cvut.fel.pjv.talacjos.jump_up.model.world_items;
 import cz.cvut.fel.pjv.talacjos.jump_up.view.game.SpriteAnimation;
 import javafx.scene.image.Image;
 
+/**
+ * The Player class represents the player character in the game.
+ * It extends the Entity class and includes properties for movement, physics, and animations.
+ */
 public class Player extends Entity {
     //player stats
     private double velocityX = 0;
@@ -26,9 +30,17 @@ public class Player extends Entity {
     private SpriteAnimation squatAnimation;
     private SpriteAnimation bounceAnimation;
 
-//    private SpriteAnimation currentAnimation;
     private boolean facingRight = true;
 
+
+    /**
+     * Constructs a Player object with the specified position and size.
+     *
+     * @param x      The x-coordinate of the player's position.
+     * @param y      The y-coordinate of the player's position.
+     * @param width  The width of the player.
+     * @param height The height of the player.
+     */
     public Player(double x, double y, double width, double height) {
         super(x, y, width, height);
         loadAnimations();
@@ -72,11 +84,17 @@ public class Player extends Entity {
         this.jumpPowerMultiplier = jumpPowerMultiplier;
     }
 
+    /**
+     * Activates a power-up, increasing the player's jump power and movement speed.
+     */
     public void powerUpActivate() {
         this.jumpPowerMultiplier = 1.7;
         this.moveSpeedMultiplier = 2.0;
     }
 
+    /**
+     * Deactivates a power-up, resetting the player's jump power and movement speed to default values.
+     */
     public void powerUpDeactivate() {
         this.jumpPowerMultiplier = 1.0;
         this.moveSpeedMultiplier = 1.0;
@@ -94,7 +112,11 @@ public class Player extends Entity {
         return jumpDirection;
     }
 
-    // if player is in the air because of jump
+    /**
+     * Sets whether the player is jumping.
+     *
+     * @param jumping True if the player is jumping, false otherwise.
+     */
     public void setJumping(boolean jumping) {
         if (isJumping && !jumping) {
             setVelocityX(0);
@@ -118,6 +140,9 @@ public class Player extends Entity {
     }
 
     //animation controls
+    /**
+     * Loads the animations for the player, including idle, run, jump, fall, squat, and bounce animations.
+     */
     private void loadAnimations() {
         Image[] idleFrames = loadFrames("/player/idle/idle", 3);
         Image[] runFrames = loadFrames("/player/run/run", 3);
@@ -141,6 +166,11 @@ public class Player extends Entity {
         return getClass().getResource("/images/player/playerDefault.png").toExternalForm();
     }
 
+    /**
+     * Updates the player's animation based on its current state and elapsed time.
+     *
+     * @param deltaTime The time elapsed since the last update, in seconds.
+     */
     @Override
     public void updateAnimation(double deltaTime) {
         // Update animation based on player state

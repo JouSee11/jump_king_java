@@ -13,9 +13,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Utility class for loading game data from JSON files.
+ * This class provides methods to load levels, player data, and other game-related information.
+ */
 public class JsonDataLoader {
 
-    //loading data form the map file
+    /**
+     * Loads level data from a JSON file.
+     *
+     * @param filePath The path to the JSON file containing level data.
+     * @return A HashMap where the key is the level ID and the value is the corresponding Level object.
+     */
     public static HashMap<Integer,Level> loadLevelsJson(String filePath) {
         Gson gson = new Gson();
         HashMap<Integer, Level> levels = new HashMap<Integer, Level>();
@@ -67,6 +76,14 @@ public class JsonDataLoader {
         return levels;
     }
 
+    /**
+     * Helper method to load a list of collectable items (keys or power-ups) from a JSON array.
+     *
+     * @param collectableArray The JSON array containing collectable data.
+     * @param type The type of collectable ("key" or "powerUp").
+     * @param <T> The type of the collectable (Key or PowerUp).
+     * @return A list of collectable items.
+     */
     private static <T extends Entity> List<T> getCollectableList(JsonArray collectableArray, String type) {
         List<T> collectables = new ArrayList<T>();
 
@@ -90,6 +107,12 @@ public class JsonDataLoader {
         return collectables;
     }
 
+    /**
+     * Helper method to load a list of platforms from a JSON array.
+     *
+     * @param platformsArray The JSON array containing platform data.
+     * @return A list of Platform objects.
+     */
     private static List<Platform> getPlatformList(JsonArray platformsArray) {
         List<Platform> platforms = new ArrayList<Platform>();
 
@@ -116,6 +139,12 @@ public class JsonDataLoader {
         return platforms;
     }
 
+    /**
+     * Loads player starting data from a JSON file.
+     *
+     * @param filePath The path to the JSON file containing player data.
+     * @return A Player object initialized with the starting position and dimensions.
+     */
     public static Player loadPlayerJson(String filePath) {
         Gson gson = new Gson();
         Player player = null;
@@ -136,6 +165,12 @@ public class JsonDataLoader {
         return player;
     }
 
+    /**
+     * Loads key statistics from a JSON file.
+     *
+     * @param filePath The path to the JSON file containing key statistics.
+     * @return A list of integers where the first element is the total count of keys, and the rest are collected key IDs.
+     */
     public static List<Integer> loadKeysStatsJson(String filePath) {
         Gson gson = new Gson();
 
@@ -159,6 +194,12 @@ public class JsonDataLoader {
         return null;
     }
 
+    /**
+     * Helper method to create an End object from a JSON object.
+     *
+     * @param endObj The JSON object containing end data.
+     * @return An End object initialized with the provided data.
+     */
     private static End getEndElement(JsonObject endObj) {
         int x = endObj.get("x").getAsInt();
         int y = endObj.get("y").getAsInt();
@@ -166,6 +207,14 @@ public class JsonDataLoader {
         return new End(x, Constants.GAME_HEIGHT - y);
     }
 
+    /**
+     * Loads level statistics from a JSON file.
+     *
+     * @param filePath The path to the JSON file containing level statistics.
+     * @return An array of integers where:
+     *         - The first element represents the total number of levels.
+     *         - The second element represents the starting level.
+     */
     public static int[] loadLevelStatsJson(String filePath) {
         Gson gson = new Gson();
 
@@ -189,7 +238,12 @@ public class JsonDataLoader {
     }
 
 
-    //loading data form save file
+    /**
+     * Loads the name of the map from a save file.
+     *
+     * @param filePath The path to the JSON save file containing the map name.
+     * @return A string representing the name of the map. Returns an empty string if an error occurs.
+     */
     public static String loadMapNameFromSave(String filePath) {
         Gson gson = new Gson();
 
@@ -204,6 +258,13 @@ public class JsonDataLoader {
         return "";
     }
 
+    /**
+     * Loads player data from a save file.
+     *
+     * @param filePath The path to the JSON save file containing player data.
+     * @return A HashMap where the keys are strings representing player attributes (e.g., "playerX", "playerY"),
+     *         and the values are doubles representing the corresponding attribute values.
+     */
     public static HashMap<String, Double> loadPlayerDataFromSave(String filePath) {
         Gson gson = new Gson();
         HashMap<String, Double> playerData = new HashMap<String, Double>();
@@ -236,6 +297,13 @@ public class JsonDataLoader {
         return playerData;
     }
 
+
+    /**
+     * Loads the list of collected keys from a save file.
+     *
+     * @param filePath The path to the JSON save file containing collected keys data.
+     * @return A list of integers representing the IDs of collected keys. Returns null if an error occurs.
+     */
     public static List<Integer> loadCollectedKeysFromSave(String filePath) {
         Gson gson = new Gson();
 
@@ -256,6 +324,12 @@ public class JsonDataLoader {
         return null;
     }
 
+    /**
+     * Loads the list of collected power-ups from a save file.
+     *
+     * @param filePath The path to the JSON save file containing collected power-ups data.
+     * @return A list of integers representing the IDs of collected power-ups. Returns null if an error occurs.
+     */
     public static List<Integer> loadCollectedPowerUpsFromSave(String filePath) {
         Gson gson = new Gson();
 
@@ -276,6 +350,12 @@ public class JsonDataLoader {
         return null;
     }
 
+    /**
+     * Creates a JSON array from a list of integers.
+     *
+     * @param itemsList A list of integers to be converted into a JSON array.
+     * @return A JsonArray containing the integers from the provided list.
+     */
     public static JsonArray createJsonArrayFromIntList(List<Integer> itemsList) {
         JsonArray collectedList = new JsonArray();
         for(Integer itemId : itemsList) {

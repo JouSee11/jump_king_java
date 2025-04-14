@@ -11,15 +11,20 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * Represents the pause menu view displayed when the game is paused.
+ * This view is an overlay that provides options to resume, save and exit, or exit the game.
+ */
 public class PauseMenuView extends OverlayView<GameController> {
-//    private final StackPane pauseRoot;
-//    private final GameController gameController;
 
+    /**
+     * Constructs a new PauseMenuView.
+     *
+     * @param gameController The game controller associated with this view.
+     */
     public PauseMenuView(GameController gameController) {
         super(gameController);
-//        this.gameController = gameController;
-//        pauseRoot = createPauseMenu();
-//        pauseRoot.setVisible(false);
+
     }
 
     @Override
