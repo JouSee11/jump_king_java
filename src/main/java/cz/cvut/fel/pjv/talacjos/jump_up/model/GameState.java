@@ -1,6 +1,7 @@
 package cz.cvut.fel.pjv.talacjos.jump_up.model;
 
 import cz.cvut.fel.pjv.talacjos.jump_up.Constants;
+import cz.cvut.fel.pjv.talacjos.jump_up.GameLogger;
 import cz.cvut.fel.pjv.talacjos.jump_up.controller.GameController;
 import cz.cvut.fel.pjv.talacjos.jump_up.controller.SoundController;
 import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.*;
@@ -236,7 +237,9 @@ public class GameState {
      * @param mapName The name of the map to load data for.
      */
     private void loadLevelsData(String mapName) {
-        String filePath = "src/main/resources/maps/" + mapName + "/map_data.json";
+        GameLogger.getInstance().info("Game started");
+
+        String filePath = "maps/" + mapName + "/map_data.json";
         //platform and level data
         levelsDataMap = JsonDataLoader.loadLevelsJson(filePath);
         //player start data
@@ -248,8 +251,12 @@ public class GameState {
         collectedPowerUps = new ArrayList<Integer>();
         //get levels data - set the starting level and maximum level
         int[] levelsData = JsonDataLoader.loadLevelStatsJson(filePath);
-        setMaxLevel(levelsData[0]);
-        setCurLevel(levelsData[1]);
+        try {
+            setMaxLevel(levelsData[0]);
+            setCurLevel(levelsData[1]);
+        } catch (NullPointerException e) {
+            GameLogger.getInstance().warning("Game level failed to load: " + e.getMessage());
+        }
 
         removeCollectablesInit(collectedKeys, collectedPowerUps);
 
@@ -263,16 +270,15 @@ public class GameState {
      * @param mapName The name of the map to load saved data for.
      */
     private void loadSavedData(String mapName) {
-        String filePath = "src/main/resources/saves/" + mapName;
+        String filePath = "saves/" + mapName;
 
         //get the map name and load all the thing for it
         String loadedMapName = JsonDataLoader.loadMapNameFromSave(filePath);
-        System.out.println("Loaded map: " + loadedMapName);
+        GameLogger.getInstance().info("Loaded game: " + loadedMapName );
         loadLevelsData(loadedMapName);
 
         // load the players position saved
         HashMap<String, Double> playerDataLoaded = JsonDataLoader.loadPlayerDataFromSave(filePath);
-        System.out.println("Loaded level: " + playerDataLoaded.get("curLevel").intValue());
         setCurLevel(playerDataLoaded.get("curLevel").intValue());
         player.setX(playerDataLoaded.get("playerX"));
         player.setY(playerDataLoaded.get("playerY"));
@@ -379,6 +385,8 @@ public class GameState {
      * @param key The key object that has been collected.
      */
     public void keyCollected(Key key) {
+        GameLogger.getInstance().info("Key collected");
+
         collectedKeys.add(key.getKeyId());
         curKeyList.remove(key);
         levelsDataMap.get(curLevel).getKeys().remove(key);
@@ -386,6 +394,7 @@ public class GameState {
         SoundController.getInstance().playSound("collectSuccess", 1);
         if (collectedKeys.size() == allKeys) {
             SoundController.getInstance().playSound("collectedAllKeys", 1);
+            GameLogger.getInstance().info("All keys collected");
         } else {
             SoundController.getInstance().playRandomKeyCollect();
         }
@@ -417,7 +426,7 @@ public class GameState {
     public void powerUpCollected(PowerUp powerUp) {
         //remove the powerup from the map
         collectedPowerUps.add(powerUp.getPowerUpId());
-        System.out.println(collectedPowerUps);
+        GameLogger.getInstance().info("Power up collected");
         curPowerupList.remove(powerUp);
         levelsDataMap.get(curLevel).getPowerUps().remove(powerUp);
 
@@ -450,6 +459,8 @@ public class GameState {
         stopPowerUpTimerThread();
 
         SoundController.getInstance().playMusic("main_sound.wav");
+
+        GameLogger.getInstance().info("Powerup ended");
     }
 
     /**
@@ -470,7 +481,6 @@ public class GameState {
                    }
                }
                javafx.application.Platform.runLater(this::deactivatePowerUp);
-               System.out.println("Power up timer thread has been started");
            } catch (InterruptedException e) {
            }
         });

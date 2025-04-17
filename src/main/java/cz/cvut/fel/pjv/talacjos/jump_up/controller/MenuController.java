@@ -1,5 +1,6 @@
 package cz.cvut.fel.pjv.talacjos.jump_up.controller;
 
+import cz.cvut.fel.pjv.talacjos.jump_up.GameLogger;
 import cz.cvut.fel.pjv.talacjos.jump_up.view.main_menu.LevelSelectView;
 import cz.cvut.fel.pjv.talacjos.jump_up.view.main_menu.LoadSelectView;
 import cz.cvut.fel.pjv.talacjos.jump_up.view.main_menu.MenuView;
@@ -102,7 +103,7 @@ public class MenuController {
 
         try {
             // Specify the path to your levels directory
-            Path levelsPath = Paths.get("src/main/resources/maps");
+            Path levelsPath = Paths.get("maps");
 
             // List all directories in the levels folder
             Files.list(levelsPath)
@@ -110,7 +111,7 @@ public class MenuController {
                     .forEach(path -> levelFolderNames.add((path.getFileName().toString())));
 
         } catch (IOException e) {
-            System.err.println("Error reading level directories: " + e.getMessage());
+            GameLogger.getInstance().severe("Error reading maps directories: " + e.getMessage());
         }
 
         return levelFolderNames;
@@ -126,7 +127,7 @@ public class MenuController {
 
         try {
             // Specify the path to your levels directory
-            Path levelsPath = Paths.get("src/main/resources/saves");
+            Path levelsPath = Paths.get("saves");
 
             // List all directories in the levels folder
             Files.list(levelsPath)
@@ -134,7 +135,7 @@ public class MenuController {
                     .forEach(path -> savesNames.add((path.getFileName().toString())));
 
         } catch (IOException e) {
-            System.err.println("Error reading level directories: " + e.getMessage());
+            GameLogger.getInstance().severe("Error reading saves directories: " + e.getMessage());
         }
 
         return savesNames;

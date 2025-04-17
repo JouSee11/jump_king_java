@@ -1,5 +1,6 @@
 package cz.cvut.fel.pjv.talacjos.jump_up.model.world_items;
 
+import cz.cvut.fel.pjv.talacjos.jump_up.GameLogger;
 import cz.cvut.fel.pjv.talacjos.jump_up.view.game.SpriteAnimation;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
@@ -42,7 +43,7 @@ abstract public class Entity extends Rectangle {
             String imageLink = getClass().getResource("/images" + path + (i+1) + ".png").toExternalForm();
 
             if (imageLink == null) {
-                System.out.println("Image not found: " + path + i + ".png");
+                GameLogger.getInstance().warning("Animated Entity image not found: " + path + i + ".png");
                 frames[i] = new Image(getDefaultImage());
             } else {
                 frames[i] = new Image(imageLink);;

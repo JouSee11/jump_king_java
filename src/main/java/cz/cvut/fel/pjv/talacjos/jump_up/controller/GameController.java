@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import cz.cvut.fel.pjv.talacjos.jump_up.Constants;
+import cz.cvut.fel.pjv.talacjos.jump_up.GameLogger;
 import cz.cvut.fel.pjv.talacjos.jump_up.model.FileSaveRead;
 import cz.cvut.fel.pjv.talacjos.jump_up.model.GameState;
 import cz.cvut.fel.pjv.talacjos.jump_up.model.JsonDataLoader;
@@ -134,7 +135,6 @@ public class GameController {
                 gameState.setActionButtonPressed(true);
                 break;
             case ESCAPE:
-                System.out.println(saveDialogView);
                 if (saveDialogView != null) {
                     saveDialogView.hide();
                     saveDialogView = null;
@@ -230,10 +230,17 @@ public class GameController {
      * Ends the game by stopping the game loop and returning to the menu scene.
      */
     public void endGame() {
+        GameLogger.getInstance().info("Game ended");
+
         gameLoop.stop();
         SoundController.getInstance().stopAllSounds();
         sceneController.showMenuScene();
     }
+
+//    public void endGameLoadingError(){
+//        SoundController.getInstance().stopAllSounds();
+//        sceneController.showMenuScene();
+//    }
 
     /**
      * Toggles the pause state of the game.

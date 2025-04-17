@@ -90,7 +90,6 @@ public class LoadSelectView extends OverlayView<MenuController> {
         loadButton.setOnAction(e -> {
             selectedSave = savesListView.getSelectionModel().getSelectedItem();
             if (selectedSave != null) {
-                System.out.println(selectedSave);
                 // get the name of the map
                 controller.startGameLevelLoaded(selectedSave);
                 hide();
@@ -148,7 +147,6 @@ public class LoadSelectView extends OverlayView<MenuController> {
                                     dateBuilder.append(dateParts[i]);
                                 }
                                 String date = dateBuilder.toString();
-                                System.out.println(date);
 
                                 // last part is the name of the map
                                 String mapName = parts[parts.length - 1];

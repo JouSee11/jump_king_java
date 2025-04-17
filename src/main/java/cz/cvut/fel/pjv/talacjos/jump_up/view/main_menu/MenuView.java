@@ -1,6 +1,7 @@
 package cz.cvut.fel.pjv.talacjos.jump_up.view.main_menu;
 
 import cz.cvut.fel.pjv.talacjos.jump_up.Constants;
+import cz.cvut.fel.pjv.talacjos.jump_up.GameLogger;
 import cz.cvut.fel.pjv.talacjos.jump_up.controller.MenuController;
 import cz.cvut.fel.pjv.talacjos.jump_up.controller.SceneController;
 import javafx.geometry.Pos;
@@ -88,7 +89,7 @@ public class MenuView {
         exitBtn.setOnMouseClicked(e -> sceneController.exitGame());
 
         //adding items to the root
-        root.getChildren().addAll(backgroundVideo, vBox);
+        root.getChildren().addAll(backgroundView, backgroundVideo, vBox);
 
         return root;
     }
@@ -123,27 +124,33 @@ public class MenuView {
      * @return A MediaView containing the background video.
      */
     private MediaView getBackgroundVideo() {
-        String videoPath = getClass().getResource("/video/background_animation.mp4").toExternalForm();
-        Media media = new Media(videoPath);
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        MediaView mediaView = new MediaView(mediaPlayer);
+        try {
+            String videoPath = getClass().getResource("/video/background_animation.mp4").toExternalForm();
+            Media media = new Media(videoPath);
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+            MediaView mediaView = new MediaView(mediaPlayer);
 
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        mediaPlayer.setMute(true);
+            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+            mediaPlayer.setMute(true);
 
-        mediaPlayer.setOnError(() -> {
-            System.err.println("Chyba přehrávání videa: " + mediaPlayer.getError());
-        });
+            mediaPlayer.setOnError(() -> {
+                GameLogger.getInstance().warning("Error playing video: " + mediaPlayer.getError());
+            });
 
-        mediaPlayer.setOnReady(() -> {
-            System.out.println("Video připraveno k přehrávání");
-            mediaPlayer.play();
-        });
+            mediaPlayer.setOnReady(() -> {
+                mediaPlayer.play();
+            });
 
-        mediaView.setFitWidth(Constants.GAME_WIDTH);
-        mediaView.setFitHeight(Constants.GAME_HEIGHT);
+            mediaView.setFitWidth(Constants.GAME_WIDTH);
+            mediaView.setFitHeight(Constants.GAME_HEIGHT);
 
-        return mediaView;
+            return mediaView;
+        } catch (Exception e) {
+            GameLogger.getInstance().warning("Failed to load video: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     /**
@@ -162,7 +169,7 @@ public class MenuView {
 
             return imgView;
         } catch (Exception e) {
-            System.err.println("Image doesnt exist: " + filePath);
+            GameLogger.getInstance().warning("Menu button image doesnt exist: " + filePath);
             e.printStackTrace();
             return new ImageView();
         }

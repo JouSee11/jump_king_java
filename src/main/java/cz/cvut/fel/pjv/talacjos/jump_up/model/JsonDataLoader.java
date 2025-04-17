@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import cz.cvut.fel.pjv.talacjos.jump_up.Constants;
+import cz.cvut.fel.pjv.talacjos.jump_up.GameLogger;
 import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.*;
 
 import java.io.FileReader;
@@ -71,7 +72,7 @@ public class JsonDataLoader {
 
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            GameLogger.getInstance().warning("Game level failed to load: " + e.getMessage());
         }
         return levels;
     }
@@ -159,7 +160,7 @@ public class JsonDataLoader {
             player = new Player(x, Constants.GAME_HEIGHT - y, Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
 
         } catch (IOException e){
-            e.printStackTrace();
+            GameLogger.getInstance().warning("Game level failed to load: " + e.getMessage());
         }
 
         return player;
@@ -189,7 +190,7 @@ public class JsonDataLoader {
 
             return keysStats;
         } catch (IOException e) {
-            e.printStackTrace();
+            GameLogger.getInstance().warning("Game level failed to load: " + e.getMessage());
         }
         return null;
     }
@@ -231,8 +232,8 @@ public class JsonDataLoader {
             levelStats[1] = startingLevelElement != null ? startingLevelElement.getAsInt() : 1;
 
             return levelStats;
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException | NullPointerException e) {
+            GameLogger.getInstance().warning("Game level failed to load: " + e.getMessage());
         }
         return null;
     }
@@ -252,7 +253,7 @@ public class JsonDataLoader {
             return jsonObject.getAsJsonPrimitive("mapName").getAsString();
 
         } catch (IOException e){
-            e.printStackTrace();
+            GameLogger.getInstance().warning("Game level failed to load: " + e.getMessage());
         }
 
         return "";
@@ -291,7 +292,7 @@ public class JsonDataLoader {
 
 
         } catch (IOException e){
-            e.printStackTrace();
+            GameLogger.getInstance().warning("Game level failed to load: " + e.getMessage());
         }
 
         return playerData;
@@ -319,7 +320,7 @@ public class JsonDataLoader {
 
             return collectedKeys;
         } catch (IOException e) {
-            e.printStackTrace();
+            GameLogger.getInstance().warning("Game level failed to load: " + e.getMessage());
         }
         return null;
     }
@@ -345,7 +346,7 @@ public class JsonDataLoader {
 
             return collectedKeys;
         } catch (IOException e) {
-            e.printStackTrace();
+            GameLogger.getInstance().warning("Game level failed to load: " + e.getMessage());
         }
         return null;
     }

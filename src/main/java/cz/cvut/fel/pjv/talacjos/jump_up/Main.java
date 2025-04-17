@@ -39,6 +39,9 @@ public class Main extends Application {
      * @param args Command-line arguments passed to the application.
      */
     public static void main(String[] args) {
+        //create logger
+        GameLogger.getInstance().initialize(args);
+        //launch the game
         launch();
     }
 }

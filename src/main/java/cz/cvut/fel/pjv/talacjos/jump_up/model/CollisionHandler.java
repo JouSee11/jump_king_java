@@ -1,6 +1,7 @@
 package cz.cvut.fel.pjv.talacjos.jump_up.model;
 
 import cz.cvut.fel.pjv.talacjos.jump_up.Constants;
+import cz.cvut.fel.pjv.talacjos.jump_up.GameLogger;
 import cz.cvut.fel.pjv.talacjos.jump_up.controller.SoundController;
 import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.*;
 import javafx.geometry.Bounds;
@@ -55,7 +56,6 @@ public class CollisionHandler{
 
         // check if the player is colliding with the "celling" and is on the top level
         if (player.getY() < 0 && curLevel == maxLevel) {
-            System.out.println("collidin celing");
             player.setY(0);
             player.setVelocityY(0);
 
@@ -238,9 +238,7 @@ public class CollisionHandler{
             player.setY(Constants.GAME_HEIGHT - player.getHeight());
         }
 
-        System.out.println("Player 'y' velocity:" + player.getVelocityY());
-
-        System.out.println("Next level " + direction);
+        GameLogger.getInstance().fine("Level change");
     }
 
     /**

@@ -1,5 +1,7 @@
 package cz.cvut.fel.pjv.talacjos.jump_up.model;
 
+import cz.cvut.fel.pjv.talacjos.jump_up.GameLogger;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -23,7 +25,7 @@ public class FileSaveRead {
     public static void saveGameToFile(String fileName, String jsonData, String mapName) {
 
         try{
-            File savesDir = new File("src/main/resources/saves");
+            File savesDir = new File("saves");
             if (!savesDir.exists()) {
                 savesDir.mkdir();
             }
@@ -38,8 +40,7 @@ public class FileSaveRead {
             }
 
         } catch (IOException e) {
-            System.err.println(e);
-            e.printStackTrace();
+            GameLogger.getInstance().severe("Failed to save the game: " + e.getMessage());
         }
 
 

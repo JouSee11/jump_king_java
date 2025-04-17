@@ -1,5 +1,6 @@
 package cz.cvut.fel.pjv.talacjos.jump_up.controller;
 
+import cz.cvut.fel.pjv.talacjos.jump_up.GameLogger;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -98,7 +99,7 @@ public class SoundController {
             clip.setVolume(effectsVolume);
             soundEffects.put(name, clip);
         } else {
-            System.err.println("Sound file not found: " + path);
+            GameLogger.getInstance().warning("Sound file not found: " + path);
         }
     }
 

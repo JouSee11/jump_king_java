@@ -68,7 +68,6 @@ public class LevelSelectView extends OverlayView<MenuController> {
         okBtn.setOnAction(e -> {
             selectedLevel = levelListView.getSelectionModel().getSelectedItem();
             if (selectedLevel != null) {
-                System.out.println(selectedLevel);
                 // Here we would call a method in controller to start the selected level
                 controller.startGameLevel(selectedLevel);
                 hide();

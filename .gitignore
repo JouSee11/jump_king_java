@@ -1,2 +1,4 @@
-src/main/resources/saves/*
-!src/main/resources/saves/
+saves/*
+!saves/
+
+logs

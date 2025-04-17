@@ -1,5 +1,6 @@
 package cz.cvut.fel.pjv.talacjos.jump_up.controller;
 
+import cz.cvut.fel.pjv.talacjos.jump_up.GameLogger;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.text.Font;
@@ -52,6 +53,7 @@ public class SceneController{
      * Exits the game by terminating the application.
      */
     public void exitGame() {
+        GameLogger.getInstance().fine("Exiting game application");
         Platform.exit();
     }
 
@@ -65,7 +67,7 @@ public class SceneController{
         String stylesLink = getClass().getResource("/styles/" + name + ".css").toExternalForm();
 
         if (stylesLink == null) {
-            System.err.println("WARNING: " + "styles file - " + name + ".css not found");
+            GameLogger.getInstance().severe("WARNING: " + "styles file - " + name + ".css not found");
             return;
         }
         Font.loadFont(getClass().getResourceAsStream("/font/Jacquard12.ttf"), 12);
