@@ -60,10 +60,15 @@ public class GameState {
         this.curPowerupList = new ArrayList<PowerUp>();
 
         //set levels data
-        if (!isLoadedFromSave) {
-            loadLevelsData(mapName);
-        } else {
-            loadSavedData(mapName);
+        try {
+            if (!isLoadedFromSave) {
+                if (!loadLevelsData(mapName)) {gameController.endGame(); return;};
+            } else {
+                if(!loadSavedData(mapName)) {gameController.endGame(); return;};
+            }
+
+        } catch (Exception e) {
+            gameController.endGameError();
         }
     }
 
@@ -237,31 +242,36 @@ public class GameState {
      *
      * @param mapName The name of the map to load data for.
      */
-    private void loadLevelsData(String mapName) {
+    private boolean loadLevelsData(String mapName) {
         GameLogger.getInstance().info("Game started");
 
-        String filePath = "maps/" + mapName + "/map_data.json";
-        //platform and level data
-        levelsDataMap = JsonDataLoader.loadLevelsJson(filePath);
-        //player start data
-        player = JsonDataLoader.loadPlayerJson(filePath);
-        //keys data stats
-        List<Integer> keyStats = JsonDataLoader.loadKeysStatsJson(filePath);
-        allKeys = keyStats.get(0);
-        collectedKeys = keyStats.subList(1, keyStats.size());
-        collectedPowerUps = new ArrayList<Integer>();
-        //get levels data - set the starting level and maximum level
-        int[] levelsData = JsonDataLoader.loadLevelStatsJson(filePath);
+        //try if the save file is correctly created
         try {
+            String filePath = "maps/" + mapName + "/map_data.json";
+            //platform and level data
+            levelsDataMap = JsonDataLoader.loadLevelsJson(filePath);
+            //player start data
+            player = JsonDataLoader.loadPlayerJson(filePath);
+            //keys data stats
+            List<Integer> keyStats = JsonDataLoader.loadKeysStatsJson(filePath);
+            allKeys = keyStats.get(0);
+            collectedKeys = keyStats.subList(1, keyStats.size());
+            collectedPowerUps = new ArrayList<Integer>();
+            //get levels data - set the starting level and maximum level
+            int[] levelsData = JsonDataLoader.loadLevelStatsJson(filePath);
             setMaxLevel(levelsData[0]);
             setCurLevel(levelsData[1]);
+
+            removeCollectablesInit(collectedKeys, collectedPowerUps);
+            this.mapName = mapName;
+
+            return true;
         } catch (NullPointerException e) {
-            GameLogger.getInstance().warning("Game level failed to load: " + e.getMessage());
+            gameController.endGameError();
+            return false;
         }
 
-        removeCollectablesInit(collectedKeys, collectedPowerUps);
 
-        this.mapName = mapName;
     }
 
     /**
@@ -270,31 +280,36 @@ public class GameState {
      *
      * @param mapName The name of the map to load saved data for.
      */
-    private void loadSavedData(String mapName) {
+    private boolean loadSavedData(String mapName) {
         String filePath = "saves/" + mapName;
 
-        //get the map name and load all the thing for it
-        String loadedMapName = JsonDataLoader.loadMapNameFromSave(filePath);
-        GameLogger.getInstance().info("Loaded game: " + loadedMapName );
-        loadLevelsData(loadedMapName);
+        try{
+            //get the map name and load all the thing for it
+            String loadedMapName = JsonDataLoader.loadMapNameFromSave(filePath);
+            GameLogger.getInstance().info("Loaded game: " + loadedMapName );
+            loadLevelsData(loadedMapName);
 
-        // load the players position saved
-        HashMap<String, Double> playerDataLoaded = JsonDataLoader.loadPlayerDataFromSave(filePath);
-        setCurLevel(playerDataLoaded.get("curLevel").intValue());
-        player.setX(playerDataLoaded.get("playerX"));
-        player.setY(playerDataLoaded.get("playerY"));
-        player.setVelocityX(playerDataLoaded.get("velocityX"));
-        player.setVelocityY(playerDataLoaded.get("velocityY"));
+            // load the players position saved
+            HashMap<String, Double> playerDataLoaded = JsonDataLoader.loadPlayerDataFromSave(filePath);
+            setCurLevel(playerDataLoaded.get("curLevel").intValue());
+            player.setX(playerDataLoaded.get("playerX"));
+            player.setY(playerDataLoaded.get("playerY"));
+            player.setVelocityX(playerDataLoaded.get("velocityX"));
+            player.setVelocityY(playerDataLoaded.get("velocityY"));
 
-        //setup the powerup when it was active
-        if (playerDataLoaded.get("isPowerUpActive") == 1.0) {
-            savePowerUpLoad(playerDataLoaded.get("powerUpTimeRemaining").intValue());
+            //setup the powerup when it was active
+            if (playerDataLoaded.get("isPowerUpActive") == 1.0) {
+                savePowerUpLoad(playerDataLoaded.get("powerUpTimeRemaining").intValue());
+            }
+
+            //load the player collected keys
+            collectedKeys = JsonDataLoader.loadCollectedKeysFromSave(filePath);
+            collectedPowerUps = JsonDataLoader.loadCollectedPowerUpsFromSave(filePath);
+            removeCollectablesInit(collectedKeys, collectedPowerUps);
+            return true;
+        } catch (Exception e) {
+            return false;
         }
-
-        //load the player collected keys
-        collectedKeys = JsonDataLoader.loadCollectedKeysFromSave(filePath);
-        collectedPowerUps = JsonDataLoader.loadCollectedPowerUpsFromSave(filePath);
-        removeCollectablesInit(collectedKeys, collectedPowerUps);
 
 
     }

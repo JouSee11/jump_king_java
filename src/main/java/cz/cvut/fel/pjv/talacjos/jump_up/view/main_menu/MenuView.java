@@ -8,6 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -31,11 +32,11 @@ public class MenuView {
      * @param sceneController The controller responsible for managing scenes.
      * @param menuController  The controller responsible for handling menu actions.
      */
-    public MenuView(SceneController sceneController, MenuController menuController) {
+    public MenuView(SceneController sceneController, MenuController menuController, Boolean withError) {
         this.sceneController = sceneController;
         this.menuController = menuController;
 
-        StackPane root = renderMenuView();
+        StackPane root = renderMenuView(withError);
 
         scene = new Scene(root, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
         sceneController.addStyles("menu_main", scene);
@@ -52,7 +53,7 @@ public class MenuView {
      *
      * @return A StackPane containing the main menu layout.
      */
-    private StackPane renderMenuView() {
+    private StackPane renderMenuView(Boolean withError) {
         StackPane root = new StackPane();
 
         MediaView backgroundVideo = getBackgroundVideo();
@@ -78,7 +79,6 @@ public class MenuView {
         loadGameBtn.getStyleClass().add("menu-button");
         exitBtn.getStyleClass().add("menu-button");
 
-
         //adding items to the vbox
         vBox.getChildren().addAll(startGameBtn ,loadGameBtn, exitBtn);
         vBox.setAlignment(Pos.CENTER);
@@ -88,8 +88,20 @@ public class MenuView {
         loadGameBtn.setOnMouseClicked(e -> menuController.showLoadSelection());
         exitBtn.setOnMouseClicked(e -> sceneController.exitGame());
 
+        //adding error message if it should be rendered with error
+        Label errorLabel = new Label();
+        if (withError) {
+            errorLabel.setText("Error loading the selected level");
+        }
+        errorLabel.getStyleClass().add("menu_error");
+        errorLabel.setAlignment(Pos.BOTTOM_CENTER);
+
+        StackPane.setAlignment(errorLabel, Pos.BOTTOM_CENTER);
+        StackPane.setMargin(errorLabel, new javafx.geometry.Insets(0, 0, 20, 0));
+
+
         //adding items to the root
-        root.getChildren().addAll(backgroundView, backgroundVideo, vBox);
+        root.getChildren().addAll(backgroundView, backgroundVideo, vBox, errorLabel);
 
         return root;
     }

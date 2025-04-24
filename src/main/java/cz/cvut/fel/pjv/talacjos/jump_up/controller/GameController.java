@@ -37,7 +37,7 @@ public class GameController {
     private boolean leftPressed = false;
     private boolean rightPressed = false;
 
-    private boolean isPaused = false;
+    protected boolean isPaused = false;
 
 
     /**
@@ -74,7 +74,7 @@ public class GameController {
     /**
      * Initializes the game loop, which updates the game state and renders the view.
      */
-    private void setupGameLoop() {
+    protected void setupGameLoop() {
         gameLoop = new AnimationTimer() {
             private long lastUpdate = 0;
 
@@ -235,6 +235,17 @@ public class GameController {
         gameLoop.stop();
         SoundController.getInstance().stopAllSounds();
         sceneController.showMenuScene();
+    }
+
+    /**
+     * Ends the game by stopping the game loop and returning to the menu scene - called when there is some error in the game
+     */
+    public void endGameError() {
+        GameLogger.getInstance().warning("Loading game ended with error");
+
+        gameLoop.stop();
+        SoundController.getInstance().stopAllSounds();
+        sceneController.showMenuSceneWithError();
     }
 
 

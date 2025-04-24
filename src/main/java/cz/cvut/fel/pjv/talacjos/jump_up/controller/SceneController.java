@@ -34,9 +34,20 @@ public class SceneController{
      * @param isLoaded  Indicates whether the game is loaded from a save file.
      */
     public void showGameScene(String levelName, Boolean isLoaded) {
-        this.gameController = new GameController(this, levelName, isLoaded);
-        stage.setScene(gameController.setGameScene());
-        gameController.startGame();
+        try{
+
+            this.gameController = new GameController(this, levelName, isLoaded);
+            Scene gameScene = gameController.setGameScene();
+
+            if (gameScene != null) {
+                stage.setScene(gameScene);
+                gameController.startGame();
+            }
+
+        } catch (Exception e) {
+            showMenuSceneWithError();
+        }
+
 
 
     }
@@ -45,7 +56,12 @@ public class SceneController{
      * Displays the main menu scene.
      */
     public void showMenuScene() {
-        this.menuController = new MenuController(this);
+        this.menuController = new MenuController(this, false);
+        stage.setScene(menuController.setMenuScene());
+    }
+
+    public void showMenuSceneWithError() {
+        this.menuController = new MenuController(this, true);
         stage.setScene(menuController.setMenuScene());
     }
 

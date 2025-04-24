@@ -54,7 +54,7 @@ public class Platform extends Rectangle {
      *
      * @param type The type of the platform, used to determine the image path.
      */
-    private void loadImage(String type) {
+    protected void loadImage(String type) {
         //get random image for the specified type
         int randomImg = (int) (Math.random() * 3) + 1;
         String imageLink = getClass().getResource("/images/platform/" + type + "/" + type  + randomImg + ".png").toExternalForm();

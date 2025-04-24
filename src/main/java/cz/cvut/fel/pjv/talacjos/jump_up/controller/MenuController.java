@@ -30,9 +30,9 @@ public class MenuController {
      *
      * @param sceneController The SceneController instance for managing scenes.
      */
-    public MenuController(SceneController sceneController) {
+    public MenuController(SceneController sceneController, Boolean withError) {
         this.sceneController = sceneController;
-        this.menuView = new MenuView(sceneController, this);
+        this.menuView = new MenuView(sceneController, this, withError);
 
         SoundController.getInstance().playMusic("menu_music.m4a");
 

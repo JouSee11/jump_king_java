@@ -20,3 +20,9 @@
     -fx-opacity: 0.5; /* Simulate button press effect */
 }
 
+.menu_error{
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #a30e0e;
+    -fx-stack-pane-alignment: bottom-center;
+}
