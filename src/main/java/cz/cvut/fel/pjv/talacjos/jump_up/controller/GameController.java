@@ -237,10 +237,6 @@ public class GameController {
         sceneController.showMenuScene();
     }
 
-//    public void endGameLoadingError(){
-//        SoundController.getInstance().stopAllSounds();
-//        sceneController.showMenuScene();
-//    }
 
     /**
      * Toggles the pause state of the game.

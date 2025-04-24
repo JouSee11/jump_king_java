@@ -13,7 +13,7 @@
         {"x": 120, "y": 400, "id": 2}
       ],
       "powerUp": [
-        {"x": 200, "y": 600, "id": 1}
+        {"x": 200, "y": 300, "id": 1}
       ]
     },
     {
@@ -22,7 +22,7 @@
         {"x": 800, "y": 100, "width": 200, "height": 100, "type": "dirt"},
         {"x": 1100, "y": 350, "width": 100, "height": 80, "type": "dirt"},
         {"x": 700, "y": 350, "width": 100, "height": 80, "type": "dirt"},
-        {"x": 400, "y": 700, "width": 200, "height": 200, "type": "dirt"},
+        {"x": 300, "y": 700, "width": 200, "height": 200, "type": "dirt"},
         {"x": 0, "y": 800, "width": 200, "height": 300, "type": "dirt"}
       ],
       "keys": [
@@ -36,16 +36,20 @@
       "id": 3,
       "platforms": [
         {"x": 300, "y": 800, "width": 250, "height": 50, "type": "stone"},
+        {"x": 350, "y": 900,
+          "width": 40, "height": 100, "type": "stone"},
+        {"x": 50, "y": 850, "width": 250, "height": 50, "type": "stone"},
         {"x": 650, "y": 750, "width": 200, "height": 50, "type": "dirt"},
         {"x": 100, "y": 650, "width": 120, "height": 50, "type": "stone"},
+        {"x": 1000, "y": 500, "width": 200, "height": 50, "type": "stone"},
         {"x": 300, "y": 550, "width": 100, "height": 50, "type": "stone"},
-        {"x": 500, "y": 450, "width": 80, "height": 50, "type": "dirt"},
-        {"x": 700, "y": 350, "width": 120, "height": 50, "type": "stone"},
-        {"x": 400, "y": 250, "width": 150, "height": 50, "type": "stone"},
-        {"x": 200, "y": 150, "width": 100, "height": 50, "type": "dirt"}
+        {"x": 450, "y": 250, "width": 150, "height": 50, "type": "stone"},
+        {"x": 200, "y": 150, "width": 100, "height": 50, "type": "dirt"},
+        {"x": 100, "y": 100, "width": 100, "height": 50, "type": "dirt"}
+
       ],
       "keys": [
-        {"x": 230, "y": 100, "id": 4}
+        {"x": 150, "y": 120, "id": 4}
       ],
       "powerUp": [
         {"x": 200, "y": 600, "id": 3}
@@ -140,7 +144,7 @@
     "collected": []
   },
   "playerStart": {
-    "x": 100,
+    "x": 400,
     "y": 150
   },
   "levelStats": {

@@ -136,6 +136,7 @@ public class CollisionHandler{
      * @param platform The platform object.
      */
     private void resolveCollisionPlatform(Player player, Rectangle platform) {
+
         //Calculate horizontal overlap
         double overlapLeft = player.getX() + player.getWidth() - platform.getX();
         double overlapRight = platform.getX() + platform.getWidth() - player.getX();

@@ -212,6 +212,7 @@ public class GameState {
         jumpHoldTime = 0;
 
         SoundController.getInstance().playRandomJump();
+        GameLogger.getInstance().fine("Player jumped");
 
     }
 
