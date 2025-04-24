@@ -98,10 +98,10 @@ public class JsonDataLoader {
 
 
             if (type.equals("key")) {
-                Key key = new Key(x, y, id);
+                Key key = new Key(x, Constants.GAME_HEIGHT - y, id);
                 collectables.add((T) key);
             } else {
-                PowerUp powerUp = new PowerUp(x, y, id);
+                PowerUp powerUp = new PowerUp(x, Constants.GAME_HEIGHT - y, id);
                 collectables.add((T) powerUp);
             }
         }

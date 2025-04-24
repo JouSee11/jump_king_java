@@ -1,0 +1,42 @@
+{
+  "levels": [
+    {
+      "id": 1,
+      "platforms": [
+        {"x": 0, "y": 350, "width": 400, "height": 350, "type": "stone"}
+      ],
+      "keys": [
+        {"x": 850, "y": 350, "id": 1}
+      ],
+      "powerUp": [
+        {"x": 200, "y": 300, "id": 1}
+      ]
+    },
+    {
+      "id": 2,
+      "platforms": [
+        {"x": 100, "y": 800, "width": 120, "height": 100, "type": "stone"}
+      ],
+      "keys": [],
+      "powerUp": [
+        {"x": 900, "y": 100, "id": 2}
+      ],
+      "end": {
+        "x": 700,
+        "y": 800
+      }
+    }
+  ],
+  "keysStats": {
+    "allCount": 1,
+    "collected": []
+  },
+  "playerStart": {
+    "x": 0,
+    "y": 450
+  },
+  "levelStats": {
+    "levelCount": 2,
+    "startingLevel": 1
+  }
+}
