@@ -98,10 +98,10 @@ public class JsonDataLoader {
 
 
             if (type.equals("key")) {
-                Key key = new Key(x, Constants.GAME_HEIGHT - y, id);
+                Key key = new Key(x, y, id);
                 collectables.add((T) key);
             } else {
-                PowerUp powerUp = new PowerUp(x, Constants.GAME_HEIGHT - y, id);
+                PowerUp powerUp = new PowerUp(x, y, id);
                 collectables.add((T) powerUp);
             }
         }
@@ -130,7 +130,7 @@ public class JsonDataLoader {
             PlatformTypes platformType = PlatformTypes.getPlatformType(type);
             Platform platform = new Platform(
                     x,
-                    Constants.GAME_HEIGHT - y,
+                    y,
                     width,
                     height,
                     platformType);
@@ -205,7 +205,7 @@ public class JsonDataLoader {
         int x = endObj.get("x").getAsInt();
         int y = endObj.get("y").getAsInt();
 
-        return new End(x, Constants.GAME_HEIGHT - y);
+        return new End(x, y);
     }
 
     /**
