@@ -1,0 +1,122 @@
+{
+  "levels": [
+    {
+      "id": 1,
+      "platforms": [
+        {"x": 415, "y": 725, "width": 300, "height": 75, "type": "dirt"},
+        {"x": 50, "y": 415, "width": 250, "height": 75, "type": "dirt"},
+        {"x": 450, "y": 140, "width": 290, "height": 50, "type": "dirt"},
+        {"x": 940, "y": 515, "width": 260, "height": 65, "type": "dirt"}
+      ],
+      "keys": [
+        {"x": 130, "y": 400, "id": 1}
+      ],
+      "powerUp": [
+      ]
+    },
+    {
+      "id": 2,
+      "platforms": [
+        {"x": 815, "y": 765, "width": 310, "height": 55, "type": "dirt"},
+        {"x": 235, "y": 500, "width": 590, "height": 40, "type": "dirt"},
+        {"x": 700, "y": 220, "width": 365, "height": 95, "type": "dirt"},
+        {"x": 125, "y": 70, "width": 290, "height": 70, "type": "dirt"}
+      ],
+      "keys": [
+        {"x": 270, "y": 405, "id": 2}
+      ],
+      "powerUp": [
+      ]
+    },
+    {
+      "id": 3,
+      "platforms": [
+        {"x": 800, "y": 750, "width": 305, "height": 50, "type": "stone"},
+        {"x": 1050, "y": 505, "width": 150, "height": 40, "type": "stone"},
+        {"x": 445, "y": 310, "width": 405, "height": 45, "type": "stone"},
+        {"x": 880, "y": 105, "width": 280, "height": 40, "type": "stone"}
+
+      ],
+      "keys": [
+        {"x": 260, "y": 230, "id": 3}
+      ],
+      "powerUp": [
+      ]
+    },
+    {
+      "id": 4,
+      "platforms": [
+        {"x": 60, "y": 750, "width": 380, "height": 50, "type": "stone"},
+        {"x": 630, "y": 515, "width": 120, "height": 100, "type": "stone"},
+        {"x": 750, "y": 415, "width": 120, "height": 100, "type": "stone"},
+        {"x": 870, "y": 320, "width": 140, "height": 100, "type": "stone"},
+        {"x": 130, "y": 135, "width": 400, "height": 60, "type": "stone"}
+
+      ],
+      "keys": [
+        {"x": 965, "y": 780, "id": 4}
+      ],
+      "powerUp": []
+    },
+    {
+      "id": 5,
+      "platforms": [
+        {"x": 875, "y": 810, "width": 230, "height": 35, "type": "dirt"},
+        {"x": 515, "y": 500, "width": 60, "height": 215, "type": "dirt"},
+        {"x": 55, "y": 460, "width": 205, "height": 40, "type": "dirt"},
+        {"x": 850, "y": 150, "width": 350, "height": 130, "type": "dirt"}
+
+      ],
+      "keys": [
+        {"x": 80, "y": 375, "id": 5}
+      ],
+      "powerUp": [
+        {"x": 200, "y": 200, "id": 4}
+      ]
+    },
+    {
+      "id": 6,
+      "platforms": [
+        {"x": 215, "y": 745, "width": 200, "height": 120, "type": "stone"},
+        {"x": 30, "y": 580, "width": 100, "height": 185, "type": "stone"},
+        {"x": 600, "y": 415, "width": 385, "height": 75, "type": "stone"},
+        {"x": 0, "y": 155, "width": 400, "height": 70, "type": "stone"}
+
+      ],
+      "keys": [
+        {"x": 40, "y": 490, "id": 6}
+      ],
+      "powerUp": [
+      ]
+    },
+    {
+      "id": 7,
+      "platforms": [
+        {"x": 750, "y": 780, "width": 350, "height": 40, "type": "stone"},
+        {"x": 350, "y": 450, "width": 265, "height": 45, "type": "stone"},
+        {"x": 0, "y": 400, "width": 350, "height": 55, "type": "stone"},
+        {"x": 250, "y": 180, "width": 175, "height": 45, "type": "stone"},
+        {"x": 710, "y": 150, "width": 300, "height": 55, "type": "stone"}
+      ],
+      "keys": [],
+      "powerUp": [
+      ],
+      "end": {
+        "x": 905,
+        "y": 50
+      }
+    }
+  ],
+  "keysStats": {
+    "allCount": 6,
+    "collected": []
+  },
+  "playerStart": {
+    "x": 100,
+    "y": 150
+  },
+  "levelStats": {
+    "levelCount": 7,
+    "startingLevel": 1
+  }
+}
