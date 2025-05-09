@@ -11,7 +11,6 @@ import javafx.stage.Stage;
  * including transitioning between the game and menu scenes, applying styles, and exiting the game.
  */
 public class SceneController{
-    private GameController gameController;
     private MenuController menuController;
 
     public final Stage stage;
@@ -35,8 +34,7 @@ public class SceneController{
      */
     public void showGameScene(String levelName, Boolean isLoaded) {
         try{
-
-            this.gameController = new GameController(this, levelName, isLoaded);
+            GameController gameController = new GameController(this, levelName, isLoaded);
             Scene gameScene = gameController.setGameScene();
 
             if (gameScene != null) {

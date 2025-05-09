@@ -17,7 +17,7 @@ public class Player extends Entity {
     private boolean isBounced = false;
     private int jumpDirection = 0;
 
-    //phycics stats - not a constant because it can be changed by powerups
+    //physics stats - not a constant because it can be changed by power ups
     private double jumpPowerMultiplier = 1.0;
     private double moveSpeedMultiplier = 1.0;
 

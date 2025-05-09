@@ -6,9 +6,7 @@ import cz.cvut.fel.pjv.talacjos.jump_up.controller.MenuController;
 import cz.cvut.fel.pjv.talacjos.jump_up.controller.SceneController;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -139,30 +137,29 @@ public class MenuView {
         try {
             String videoPath = getClass().getResource("/video/background_animation.mp4").toExternalForm();
             Media media = new Media(videoPath);
-            MediaPlayer mediaPlayer = new MediaPlayer(media);
-            MediaView mediaView = new MediaView(mediaPlayer);
 
-            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-            mediaPlayer.setMute(true);
-
-            mediaPlayer.setOnError(() -> {
-                GameLogger.getInstance().warning("Error playing video: " + mediaPlayer.getError());
-            });
-
-            mediaPlayer.setOnReady(() -> {
-                mediaPlayer.play();
-            });
-
-            mediaView.setFitWidth(Constants.GAME_WIDTH);
-            mediaView.setFitHeight(Constants.GAME_HEIGHT);
-
-            return mediaView;
+            return getMediaView(media);
         } catch (Exception e) {
             GameLogger.getInstance().warning("Failed to load video: " + e.getMessage());
-            e.printStackTrace();
         }
 
         return null;
+    }
+
+    private static MediaView getMediaView(Media media) {
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        MediaView mediaView = new MediaView(mediaPlayer);
+
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.setMute(true);
+
+        mediaPlayer.setOnError(() -> GameLogger.getInstance().warning("Error playing video: " + mediaPlayer.getError()));
+
+        mediaPlayer.setOnReady(mediaPlayer::play); //method reference instead of lambda
+
+        mediaView.setFitWidth(Constants.GAME_WIDTH);
+        mediaView.setFitHeight(Constants.GAME_HEIGHT);
+        return mediaView;
     }
 
     /**
@@ -182,7 +179,6 @@ public class MenuView {
             return imgView;
         } catch (Exception e) {
             GameLogger.getInstance().warning("Menu button image doesnt exist: " + filePath);
-            e.printStackTrace();
             return new ImageView();
         }
 

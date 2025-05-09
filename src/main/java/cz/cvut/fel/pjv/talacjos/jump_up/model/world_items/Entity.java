@@ -46,7 +46,7 @@ abstract public class Entity extends Rectangle {
                 GameLogger.getInstance().warning("Animated Entity image not found: " + path + i + ".png");
                 frames[i] = new Image(getDefaultImage());
             } else {
-                frames[i] = new Image(imageLink);;
+                frames[i] = new Image(imageLink);
             }
         }
         return frames;

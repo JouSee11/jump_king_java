@@ -42,17 +42,10 @@ public class FinishDialogView extends OverlayView<GameController> {
 
         Label title = new Label("VICTORY!");
         title.getStyleClass().add("victory_title");
-//
-//        Label statsLabel = new Label("Keys collected: " + collectedKeys + "/" + totalKeys);
-//        statsLabel.getStyleClass().add("victory_text");
 
         Button menuBtn = new Button("Return to Menu");
         menuBtn.getStyleClass().add("finish_button");
         menuBtn.setOnAction(e -> controller.endGame());
-
-//        Button exitBtn = new Button("Exit Game");
-//        exitBtn.getStyleClass().add("victory_button");
-//        exitBtn.setOnAction(e -> gameController.exitGame());
 
         dialogBox.getChildren().addAll(title, menuBtn);
         overlay.getChildren().addAll(background, dialogBox);

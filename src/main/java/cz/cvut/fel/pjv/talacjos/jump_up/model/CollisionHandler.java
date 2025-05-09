@@ -15,7 +15,7 @@ import java.util.List;
  * between the player, platforms, keys, power-ups, and other game elements.
  */
 public class CollisionHandler{
-    private GameState gameState;
+    private final GameState gameState;
 
     private boolean wasOnGround  = false;
 
@@ -89,7 +89,7 @@ public class CollisionHandler{
         }
 
         //handle key collect collision
-        List<Key> keyToCollect = new ArrayList<Key>();
+        List<Key> keyToCollect = new ArrayList<>();
         for (Key key : gameState.getKeyList()) {
             if(checkCollision(player, key)) {
                 keyToCollect.add(key);
@@ -99,8 +99,8 @@ public class CollisionHandler{
             gameState.keyCollected(key);
         }
 
-        //handle powerup collect collision
-        List<PowerUp> powerUpsToCollect = new ArrayList<PowerUp>();
+        //handle power up collect collision
+        List<PowerUp> powerUpsToCollect = new ArrayList<>();
         for (PowerUp powerUp : gameState.getCurPowerupList()) {
             if(checkCollision(player, powerUp)) {
                 powerUpsToCollect.add(powerUp);

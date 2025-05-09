@@ -2,11 +2,7 @@ package cz.cvut.fel.pjv.talacjos.jump_up;
 
 import cz.cvut.fel.pjv.talacjos.jump_up.controller.SceneController;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 /**
  * The main entry point for the JumpUP application.
@@ -18,10 +14,9 @@ public class Main extends Application {
      * Starts the JavaFX application by setting up the primary stage and displaying the main menu.
      *
      * @param stage The primary stage for this application.
-     * @throws IOException If an error occurs during loading resources.
      */
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         stage.setTitle("JumpUP");
 
         //set window size

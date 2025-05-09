@@ -28,7 +28,7 @@ public class JsonDataLoader {
      */
     public static HashMap<Integer,Level> loadLevelsJson(String filePath) {
         Gson gson = new Gson();
-        HashMap<Integer, Level> levels = new HashMap<Integer, Level>();
+        HashMap<Integer, Level> levels = new HashMap<>();
 
         try (FileReader reader = new FileReader(filePath)) {
             // Convert JSON File to Java Object
@@ -57,7 +57,7 @@ public class JsonDataLoader {
                 JsonArray powerUpsArray = levelObj.getAsJsonArray("powerUp");
                 List<PowerUp> powerUps = getCollectableList(powerUpsArray, "powerUp");
 
-                //load the end if the map if it is end level
+                //load the end if the map it is end level
                 JsonObject endObj = levelObj.getAsJsonObject("end");
                 End endElement = null;
                 if (endObj != null) {
@@ -115,7 +115,7 @@ public class JsonDataLoader {
      * @return A list of Platform objects.
      */
     private static List<Platform> getPlatformList(JsonArray platformsArray) {
-        List<Platform> platforms = new ArrayList<Platform>();
+        List<Platform> platforms = new ArrayList<>();
 
         //go through all platforms
         for (JsonElement platformElement : platformsArray) {
@@ -175,7 +175,7 @@ public class JsonDataLoader {
     public static List<Integer> loadKeysStatsJson(String filePath) {
         Gson gson = new Gson();
 
-        List<Integer> keysStats = new ArrayList<Integer>();
+        List<Integer> keysStats = new ArrayList<>();
 
         try (FileReader reader = new FileReader(filePath)) {
             JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
@@ -228,7 +228,7 @@ public class JsonDataLoader {
             //get all the collected keys indexes
             JsonElement levelCountElement = levelsStatsObject.getAsJsonPrimitive("levelCount");
             JsonElement startingLevelElement = levelsStatsObject.getAsJsonPrimitive("startingLevel");
-            levelStats[0] = levelCountElement != null ? levelCountElement.getAsInt() : 1;;
+            levelStats[0] = levelCountElement != null ? levelCountElement.getAsInt() : 1;
             levelStats[1] = startingLevelElement != null ? startingLevelElement.getAsInt() : 1;
 
             return levelStats;
@@ -268,7 +268,7 @@ public class JsonDataLoader {
      */
     public static HashMap<String, Double> loadPlayerDataFromSave(String filePath) {
         Gson gson = new Gson();
-        HashMap<String, Double> playerData = new HashMap<String, Double>();
+        HashMap<String, Double> playerData = new HashMap<>();
 
         try (FileReader reader = new FileReader(filePath)){
             JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
@@ -308,7 +308,7 @@ public class JsonDataLoader {
     public static List<Integer> loadCollectedKeysFromSave(String filePath) {
         Gson gson = new Gson();
 
-        List<Integer> collectedKeys = new ArrayList<Integer>();
+        List<Integer> collectedKeys = new ArrayList<>();
 
         try (FileReader reader = new FileReader(filePath)) {
             JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
@@ -334,7 +334,7 @@ public class JsonDataLoader {
     public static List<Integer> loadCollectedPowerUpsFromSave(String filePath) {
         Gson gson = new Gson();
 
-        List<Integer> collectedKeys = new ArrayList<Integer>();
+        List<Integer> collectedKeys = new ArrayList<>();
 
         try (FileReader reader = new FileReader(filePath)) {
             JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);

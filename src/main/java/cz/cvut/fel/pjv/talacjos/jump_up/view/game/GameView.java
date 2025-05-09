@@ -26,21 +26,19 @@ import java.util.Map;
  */
 public class GameView {
     private final Scene scene;
-    private final SceneController sceneController;
     private final GameState gameState; // get the game state data
 
     private final Canvas canvas;
 
-    //cashing data - optimalisation
+    //cashing data - optimisation
     private Image backgroundImage;
-    private final Map<Integer, Image> backgroundCache = new HashMap<Integer, Image>();
+    private final Map<Integer, Image> backgroundCache = new HashMap<>();
 //    private Map<String, Image> platformsImageCache = new HashMap<String, Image>();
 
     //ui parts
     private Label keyCountLabel;
     private Label powerUpTimerLabel;
 
-    private ImageView keyIconView;
     private ImageView timerIconView;
 
     /**
@@ -51,7 +49,6 @@ public class GameView {
      * @param gameState       The current state of the game.
      */
     public GameView(SceneController sceneController, GameController gameController, GameState gameState) {
-        this.sceneController = sceneController;
         this.gameState = gameState;
 
         this.canvas = new Canvas(Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
@@ -100,7 +97,7 @@ public class GameView {
 
         //update interface elements
         updateKeyCountUI();
-        updatePowerUpTimer(gc);
+        updatePowerUpTimer();
 
         // Render player with animation
         renderPlayer(gc);
@@ -222,7 +219,7 @@ public class GameView {
 
         //load the icon
         Image keyImage = new Image(getClass().getResource("/images/assets/key.png").toExternalForm());
-        keyIconView = new ImageView(keyImage);
+        ImageView keyIconView = new ImageView(keyImage);
         keyIconView.setFitWidth(50);
         keyIconView.setFitHeight(50);
         keyIconView.setPreserveRatio(true);
@@ -315,7 +312,7 @@ public class GameView {
      *
      * @param gc The graphics context used for rendering.
      */
-    private void updatePowerUpTimer(GraphicsContext gc) {
+    private void updatePowerUpTimer() {
         if (gameState.isPowerUpActive()) {
             int timeRemaining = gameState.getPowerUpTimeRemaining();
             String formattedString = String.format("%02d:%02d", timeRemaining / 60, timeRemaining % 60);

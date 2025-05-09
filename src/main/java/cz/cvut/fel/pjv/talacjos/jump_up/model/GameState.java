@@ -55,16 +55,16 @@ public class GameState {
      */
     public GameState(GameController gameController, String mapName, Boolean isLoadedFromSave) {
         this.gameController = gameController;
-        this.curPlatformList = new ArrayList<Platform>();
-        this.curKeyList = new ArrayList<Key>();
-        this.curPowerupList = new ArrayList<PowerUp>();
+        this.curPlatformList = new ArrayList<>();
+        this.curKeyList = new ArrayList<>();
+        this.curPowerupList = new ArrayList<>();
 
         //set levels data
         try {
             if (!isLoadedFromSave) {
-                if (!loadLevelsData(mapName)) {gameController.endGame(); return;};
+                if (!loadLevelsData(mapName)) {gameController.endGame();}
             } else {
-                if(!loadSavedData(mapName)) {gameController.endGame(); return;};
+                if(!loadSavedData(mapName)) {gameController.endGame();}
             }
 
         } catch (Exception e) {
@@ -254,11 +254,14 @@ public class GameState {
             player = JsonDataLoader.loadPlayerJson(filePath);
             //keys data stats
             List<Integer> keyStats = JsonDataLoader.loadKeysStatsJson(filePath);
-            allKeys = keyStats.get(0);
+            assert keyStats != null;
+            allKeys = keyStats.getFirst();
             collectedKeys = keyStats.subList(1, keyStats.size());
-            collectedPowerUps = new ArrayList<Integer>();
+            collectedPowerUps = new ArrayList<>();
             //get levels data - set the starting level and maximum level
             int[] levelsData = JsonDataLoader.loadLevelStatsJson(filePath);
+
+            assert levelsData != null;
             setMaxLevel(levelsData[0]);
             setCurLevel(levelsData[1]);
 
@@ -297,7 +300,7 @@ public class GameState {
             player.setVelocityX(playerDataLoaded.get("velocityX"));
             player.setVelocityY(playerDataLoaded.get("velocityY"));
 
-            //setup the powerup when it was active
+            //set up the powerup when it was active
             if (playerDataLoaded.get("isPowerUpActive") == 1.0) {
                 savePowerUpLoad(playerDataLoaded.get("powerUpTimeRemaining").intValue());
             }
@@ -498,6 +501,7 @@ public class GameState {
                }
                javafx.application.Platform.runLater(this::deactivatePowerUp);
            } catch (InterruptedException e) {
+               System.out.println(e.getMessage());
            }
         });
         powerUpTimerThread.setDaemon(true);

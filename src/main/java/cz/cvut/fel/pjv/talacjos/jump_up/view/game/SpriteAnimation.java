@@ -6,11 +6,11 @@ import javafx.scene.image.Image;
  * Represents a sprite animation, which cycles through a series of frames over a specified duration.
  */
 public class SpriteAnimation {
-    private Image[] frames;
-    private double duration;
+    private final Image[] frames;
+    private final double duration;
     private double curTime;
     private int currentFrame;
-    private boolean loop;
+    private final boolean loop;
     private boolean playing;
 
     /**

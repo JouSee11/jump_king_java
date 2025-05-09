@@ -18,8 +18,8 @@ import java.nio.file.Paths;
  * including handling user interactions, displaying dialogs, and loading levels or saves.
  */
 public class MenuController {
-    private SceneController sceneController;
-    private MenuView menuView;
+    private final SceneController sceneController;
+    private final MenuView menuView;
 
     //dialogs
     private LevelSelectView levelSelectView;
@@ -52,7 +52,7 @@ public class MenuController {
         if (levelSelectView != null) {
             levelSelectView.show();
         } else {
-            // create dialog if it doenst work
+            // create dialog if it doesn't work
             levelSelectView = new LevelSelectView(this);
             menuView.addLevelSelectionDialog(levelSelectView.getRoot());
             levelSelectView.show();

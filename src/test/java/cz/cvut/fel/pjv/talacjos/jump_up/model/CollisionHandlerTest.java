@@ -2,7 +2,6 @@ package cz.cvut.fel.pjv.talacjos.jump_up.model;
 
 import cz.cvut.fel.pjv.talacjos.jump_up.Constants;
 import cz.cvut.fel.pjv.talacjos.jump_up.GameLogger;
-import cz.cvut.fel.pjv.talacjos.jump_up.controller.GameController;
 import cz.cvut.fel.pjv.talacjos.jump_up.controller.SoundController;
 import cz.cvut.fel.pjv.talacjos.jump_up.model.world_items.*;
 import javafx.geometry.Bounds;
@@ -10,7 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +24,8 @@ public class CollisionHandlerTest {
     private Platform platformMock;
     private Key keyMock;
     private PowerUp powerUpMock;
-    private End endMock;
     private Bounds playerBounds;
     private Bounds platformBounds;
-    private GameController gameControllerMock;
 
     @BeforeEach
     public void setUp() {
@@ -38,8 +34,6 @@ public class CollisionHandlerTest {
         platformMock = mock(Platform.class, withSettings().lenient());
         keyMock = mock(Key.class, withSettings().lenient());
         powerUpMock = mock(PowerUp.class, withSettings().lenient());
-        endMock = mock(End.class, withSettings().lenient());
-        gameControllerMock = mock(GameController.class);
 
         playerBounds = mock(Bounds.class);
         platformBounds = mock(Bounds.class);

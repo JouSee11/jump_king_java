@@ -34,12 +34,12 @@ abstract public class OverlayView<T> {
     /**
      * Shows the overlay view by making it visible.
      */
-    public void show() {viewRoot.setVisible(true);};
+    public void show() {viewRoot.setVisible(true);}
 
     /**
      * Hides the overlay view by making it invisible.
      */
-    public void hide() {viewRoot.setVisible(false);};
+    public void hide() {viewRoot.setVisible(false);}
 
     protected void onHide() {}
 

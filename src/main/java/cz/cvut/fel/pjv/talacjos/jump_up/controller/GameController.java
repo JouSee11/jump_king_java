@@ -24,14 +24,13 @@ import javafx.scene.input.KeyEvent;
  */
 public class GameController {
     private final SceneController sceneController;
-    private GameState gameState;
+    private final GameState gameState;
     private AnimationTimer gameLoop;
-    private GameView gameView;
-    private PauseMenuView pauseMenuView;
+    private final GameView gameView;
+    private final PauseMenuView pauseMenuView;
 
     private SaveDialogView saveDialogView = null;
-    private boolean isSaveDialogOpened = false;
-    private boolean isLoadedFromSave = false;
+    private final boolean isLoadedFromSave;
 
     private boolean spacePressed = false;
     private boolean leftPressed = false;
@@ -213,10 +212,10 @@ public class GameController {
     public void startGame() {
         //init sounds
 
-        if (!isLoadedFromSave) { // dont play the starting sound when the game is loaded from save
+        if (!isLoadedFromSave) { // don't play the starting sound when the game is loaded from save
             SoundController.getInstance().playSound("startingMsg", 1);
         }
-        if (!gameState.isPowerUpActive()) { // if powerup is active the fast music is playing
+        if (!gameState.isPowerUpActive()) { // if power up is active the fast music is playing
             SoundController.getInstance().playMusic("main_sound.wav");
         }
         SoundController.getInstance().setMusicVolume(Constants.DEFAULT_MUSIC_VOLUME);
@@ -295,21 +294,13 @@ public class GameController {
     public void saveGame(String fileName) {
         String mapName = gameState.getMapName();
 
-        JsonObject saveData = new JsonObject();
-        saveData.addProperty("mapName", mapName);
-        saveData.addProperty("level", gameState.getCurLevel());
-        saveData.addProperty("playerX", gameState.getPlayer().getX());
-        saveData.addProperty("playerY", gameState.getPlayer().getY());
-        saveData.addProperty("playerVelocityX", gameState.getPlayer().getVelocityX());
-        saveData.addProperty("playerVelocityY", gameState.getPlayer().getVelocityY());
-        saveData.addProperty("powerUpActive", gameState.isPowerUpActive());
-        saveData.addProperty("powerUpTimeRemaining", gameState.getPowerUpTimeRemaining());
+        JsonObject saveData = getJsonObject(mapName);
 
         //create new json array and add all the collected keys to the save
         JsonArray collectedKeys = JsonDataLoader.createJsonArrayFromIntList(gameState.getCollectedKeysList());
         saveData.add("collectedKeys", collectedKeys);
 
-        //create list form collected powerups
+        //create list form collected power ups
         JsonArray collectedPowerUps = JsonDataLoader.createJsonArrayFromIntList(gameState.getCollectedPowerUps());
         saveData.add("collectedPowerUps", collectedPowerUps);
 
@@ -322,6 +313,19 @@ public class GameController {
         //call the function to save the data to the file
         FileSaveRead.saveGameToFile(fileName, jsonString, mapName);
 
+    }
+
+    private JsonObject getJsonObject(String mapName) {
+        JsonObject saveData = new JsonObject();
+        saveData.addProperty("mapName", mapName);
+        saveData.addProperty("level", gameState.getCurLevel());
+        saveData.addProperty("playerX", gameState.getPlayer().getX());
+        saveData.addProperty("playerY", gameState.getPlayer().getY());
+        saveData.addProperty("playerVelocityX", gameState.getPlayer().getVelocityX());
+        saveData.addProperty("playerVelocityY", gameState.getPlayer().getVelocityY());
+        saveData.addProperty("powerUpActive", gameState.isPowerUpActive());
+        saveData.addProperty("powerUpTimeRemaining", gameState.getPowerUpTimeRemaining());
+        return saveData;
     }
 
 

@@ -21,7 +21,7 @@ import java.util.Map;
 public class SoundController {
     private static SoundController instance;
 
-    private Map<String, AudioClip> soundEffects;
+    private final Map<String, AudioClip> soundEffects;
     private MediaPlayer musicPlayer;
     private double effectsVolume = 0.7;
     private double musicVolume = 0.5;

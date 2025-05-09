@@ -14,8 +14,8 @@ public class PowerUp extends Entity {
     /**
      * Constructs a PowerUp object with the specified position and identifier.
      *
-     * @param x  The x-coordinate of the power-up's position.
-     * @param y  The y-coordinate of the power-up's position.
+     * @param x  The x-coordinate of the power-ups position.
+     * @param y  The y-coordinate of the power-ups position.
      * @param id The unique identifier for the power-up.
      */
     public PowerUp(double x, double y, int id) {

@@ -115,10 +115,10 @@ public class LoadSelectView extends OverlayView<MenuController> {
      * @return A Callback to create custom ListCell instances.
      */
     private Callback<ListView<String>, ListCell<String>> createCellFactory() {
-        return new Callback<ListView<String>, ListCell<String>>() {
+        return new Callback<>() {
             @Override
             public ListCell<String> call(ListView<String> param) {
-                return new ListCell<String>() {
+                return new ListCell<>() {
                     @Override
                     protected void updateItem(String filename, boolean empty) {
                         super.updateItem(filename, empty);
@@ -138,15 +138,7 @@ public class LoadSelectView extends OverlayView<MenuController> {
 
 
                                 // handle date
-                                String[] dateParts = parts[parts.length - 2].split("-");
-                                StringBuilder dateBuilder = new StringBuilder();
-                                for (int i = 0; i < dateParts.length; i++) {
-                                    if (i == 1 || i == 2) dateBuilder.append(".");
-                                    if (i == 3) dateBuilder.append(" ");
-                                    if (i > 3) dateBuilder.append(":");
-                                    dateBuilder.append(dateParts[i]);
-                                }
-                                String date = dateBuilder.toString();
+                                String date = getDate(parts);
 
                                 // last part is the name of the map
                                 String mapName = parts[parts.length - 1];
@@ -188,6 +180,18 @@ public class LoadSelectView extends OverlayView<MenuController> {
                 };
             }
         };
+    }
+
+    private static String getDate(String[] parts) {
+        String[] dateParts = parts[parts.length - 2].split("-");
+        StringBuilder dateBuilder = new StringBuilder();
+        for (int i = 0; i < dateParts.length; i++) {
+            if (i == 1 || i == 2) dateBuilder.append(".");
+            if (i == 3) dateBuilder.append(" ");
+            if (i > 3) dateBuilder.append(":");
+            dateBuilder.append(dateParts[i]);
+        }
+        return dateBuilder.toString();
     }
 
     /**
