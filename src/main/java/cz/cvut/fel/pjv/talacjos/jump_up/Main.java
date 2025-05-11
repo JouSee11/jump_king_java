@@ -20,8 +20,8 @@ public class Main extends Application {
         stage.setTitle("JumpUP");
 
         //set window size
-        stage.setMinHeight(930);
-        stage.setMinWidth(1200);
+        stage.setMinHeight(920);
+        stage.setMinWidth(1220);
 
         SceneController sceneController = new SceneController(stage);
         sceneController.showMenuScene();

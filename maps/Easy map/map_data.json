@@ -46,7 +46,7 @@
     {
       "id": 4,
       "platforms": [
-        {"x": 60, "y": 750, "width": 380, "height": 50, "type": "stone"},
+        {"x": 150, "y": 820, "width": 400, "height": 50, "type": "stone"},
         {"x": 630, "y": 515, "width": 120, "height": 100, "type": "stone"},
         {"x": 750, "y": 415, "width": 120, "height": 100, "type": "stone"},
         {"x": 870, "y": 320, "width": 140, "height": 100, "type": "stone"},
@@ -61,7 +61,7 @@
     {
       "id": 5,
       "platforms": [
-        {"x": 875, "y": 810, "width": 230, "height": 35, "type": "dirt"},
+        {"x": 875, "y": 850, "width": 230, "height": 35, "type": "dirt"},
         {"x": 515, "y": 500, "width": 60, "height": 215, "type": "dirt"},
         {"x": 55, "y": 460, "width": 205, "height": 40, "type": "dirt"},
         {"x": 850, "y": 150, "width": 350, "height": 130, "type": "dirt"}
