@@ -1,4 +1,4 @@
-🙎 Uživatelská dokumentace
+## Docs
 
 📌 Orientace v menu
 Po spuštění se objevíme v menu, kde jsou tři možnosti - start, load, exit.
